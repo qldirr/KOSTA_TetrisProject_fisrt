@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tetris.mapper.ChatMapper">
+	
+	<select id="login" resultType="org.tetris.domain.EmployeeVO">
+		select * from employee where e_id = #{user}
+	</select>
+	
+	<insert id="registerCR" parameterType="org.tetris.domain.chat.ChatRoomVO">
+		insert into chatroom (cr_num, cr_title, cr_unread, cr_isbookmark) 
+			values(cr_num_seq.nextval, #{cr_title}, #{cr_unread}, #{cr_isbookmark})
+	</insert>
+
+</mapper>
