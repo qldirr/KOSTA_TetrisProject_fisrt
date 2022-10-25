@@ -22,11 +22,11 @@ public class HrController {
 	
 	//개인근태페이지 - e_id로 정보출력
 	@GetMapping("/get")
-	public String get(@RequestParam("e_id") String e_id, Model model) {
+	public String get( Model model) {
 		log.info("/get");
 		
-		model.addAttribute("hrVO", service.get(e_id));
-		return "personal";
+		//model.addAttribute("hrVO", service.get(e_id));
+		return "person";
 	}
 
 	@GetMapping("/listAll")
