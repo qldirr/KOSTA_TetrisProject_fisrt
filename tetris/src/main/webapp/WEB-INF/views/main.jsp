@@ -25,24 +25,15 @@
 
 <body>
 <!-- content -->
+<div style="width: 100%; height: 1000; background: red;">
+
+
 <div class="container-fluid">
 <div class="col-xl-10 col-lg-9 ">
 				<div class="row">
 
-<div align="center">
-회의실 번호:<input>
-회의실 명:<input>
-총 인원수:<input>
-
-
 
 </div>
-<div style="width: 100%; height: 1000; background: red;"></div>
-
-
-
-
-
 
 	<!-- Optional JavaScript; choose one of the two! -->
 
