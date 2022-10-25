@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tetris.mapper.HrMapper">
+
+	
+	<select id="getHr" resultType="org.tetris.domain.HrVO">
+		select * from hr where e_id = #{e_id}
+	</select>
+
+	<!-- 출근하기 -->
+	<insert id="startDate" parameterType="String">
+		insert into hr (Hr_Num, Hr_Date, hr_status) 
+			values (hr_num.nextval, sysdate, "업무중") 
+			where e_id = #{e_id}
+	</insert>
+
+</mapper>
