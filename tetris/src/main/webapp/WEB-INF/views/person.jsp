@@ -46,7 +46,7 @@
 		var date = document.getElementById("date");
 		date.innerHTML = currentDate.getFullYear() + "년 "
 				+ (currentDate.getMonth() + 1) + "월 " + currentDate.getDate()
-				+ "일";
+				+ "일"; 
 		setTimeout("printClock()", 1000); // 1초마다 printClock() 함수 호출
 	}
 
@@ -72,6 +72,7 @@
 			alert('출근하셨습니다');
 			startTime.innerHTML = currentHours + ":" + currentMinute + ":"
 					+ currentSeconds;
+			
 		}
 	}
 	function endDate() {
@@ -94,7 +95,7 @@
 </script>
 </head>
 
-<body>
+<body onload="printClock()">
 	<div style="width: 100%; height: 1000;">
 
 		<!-- content -->
@@ -164,14 +165,14 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td><c:out value="${hrVO.hrDate }" /></td>
+									<td><c:out value="${hrVO.hr_date }" /></td>
 									<td><c:out value="" /></td>
-									<td><c:out value="${hrVO.e_name }" /></td>
+									<td><c:out value="" /></td>
 									<td><c:out value="" /></td>
 									<td><c:out value="${hrVO.hr_date }" /></td>
 									<td><c:out value="${hrVO.hr_leave }" /></td>
 									<td><c:out value="${hrVO.hr_status }" /></td>
-									<td><c:out value="${hrVO.hr_not }" /></td>
+									<td><c:out value="${hrVO.hr_note }" /></td>
 								</tr>
 							</tbody>
 						</table>

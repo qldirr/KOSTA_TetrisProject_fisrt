@@ -11,8 +11,8 @@
 
 	<!-- 출근하기 -->
 	<insert id="startDate" parameterType="String">
-		insert into hr (Hr_Num, Hr_Date, hr_status) 
-			values (hr_num.nextval, sysdate, "업무중") 
+		insert into hr (Hr_Num, Hr_Date, hr_status, hr_note) 
+			values (hr_num.nextval, sysdate, "업무중", "--") 
 			where e_id = #{e_id}
 	</insert>
 
