@@ -8,6 +8,18 @@
 		select * from employee where e_id = #{user}
 	</select>
 	
+	<select id="getListEmp" resultType="org.tetris.domain.EmployeeVO">
+		select * from employee
+	</select>
+	
+	<select id="getListDept" resultType="org.tetris.domain.DepartmentVO">
+		select * from department
+	</select>
+	
+	<select id="getEmp" resultType="org.tetris.domain.EmployeeVO">
+		select * from employee where e_id = #{e_id}
+	</select>
+	
 	<insert id="registerCR" parameterType="org.tetris.domain.chat.ChatRoomVO">
 		insert into chatroom (cr_num, cr_title, cr_unread, cr_isbookmark) 
 			values(cr_num_seq.nextval, #{cr_title}, #{cr_unread}, #{cr_isbookmark})

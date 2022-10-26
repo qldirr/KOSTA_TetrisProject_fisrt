@@ -22,7 +22,7 @@
 		$('#message').val('')
 	});
 
-	let sock = new SockJS("http://localhost:8081/chatting/");
+	var sock = new SockJS("http://localhost:8081/chatting/");
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;
 	// 메시지 전송
@@ -38,7 +38,6 @@
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {
 		$("#messageArea").append("연결 끊김");
-
 	}
 </script>
 </html>
