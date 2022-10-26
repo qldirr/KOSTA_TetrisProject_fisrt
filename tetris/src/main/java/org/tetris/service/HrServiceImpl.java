@@ -24,8 +24,9 @@ public class HrServiceImpl implements HrService {
 	
 	@Override
 	public void startDate(HrVO hrVO) {
-		// TODO Auto-generated method stub
-
+		log.info("startDate..." + hrVO);
+		
+		hrMapper.startDate(hrVO);
 	}
 
 	@Override

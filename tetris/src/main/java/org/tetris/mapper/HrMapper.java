@@ -11,7 +11,7 @@ public interface HrMapper {
 	
 	public List<HrVO> getList(String date);
 	//출퇴근 
-	public void startDate(String date);
+	public void startDate(HrVO hrvo);
 	
 	
 }

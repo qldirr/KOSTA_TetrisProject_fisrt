@@ -11,9 +11,8 @@
 
 	<!-- 출근하기 -->
 	<insert id="startDate">
-		insert into hr (Hr_Num, Hr_Date, hr_status, hr_note) 
-			values (1, sysdate, "업무중", "--") 
-			where e_id = #{e_id}
+		insert into hr (hr_num, hr_date, hr_status, hr_note, e_id) 
+			values (seq_hr.nextval, sysdate, '업무중', '--', #{e_id}) 
 	</insert>
 
 </mapper>
