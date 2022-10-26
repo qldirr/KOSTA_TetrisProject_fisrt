@@ -1,5 +1,9 @@
 package org.tetris.domain;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,16 +12,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HrVO {
-	//사원번호
-	private String e_id;
+	
 	//쌓이는 hr번호
 	private long hr_num;
+
+	//사원번호
+	private String e_id;
+	
 	//시작시간 및 당일날짜
-	private String hr_date;
+	@DateTimeFormat(pattern = "yyyy/MM/dd'T'HH:mm:ss")
+	private Date hr_date;
 	//퇴근시간
-	private String hr_leave;
+	@DateTimeFormat(pattern = "yyyy/MM/dd'T'HH:mm:ss")
+	private Date hr_leave;
+	
 	//근무상태
 	private String hr_status;
 	//비고
 	private String hr_note;
+	
+	private String e_name;
+	private String d_num;
+	private Date e_hiredate;
 }

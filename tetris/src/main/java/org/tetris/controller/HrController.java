@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.tetris.domain.HrVO;
 import org.tetris.service.HrService;
 
 import lombok.AllArgsConstructor;
@@ -29,7 +31,16 @@ public class HrController {
 		return "person";
 	}
 	
-
+	//출근하기
+	@PostMapping("/insertAction.do")
+	public String insertAction(HrVO hr, RedirectAttributes rttr) {
+		log.info("insertAction...");
+		service.startDate(hr);
+			
+		rttr.addFlashAttribute("result", hr.getE_id());
+		return "redirect:/attendance/get";
+	}
+	
 	@GetMapping("/listAll")
 	public void listAll() {
 		log.info("main page...");

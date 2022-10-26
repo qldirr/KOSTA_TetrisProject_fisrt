@@ -28,9 +28,55 @@
 
 <title>TETRIS Groupware</title>
 <script>
-	$(function() {
-		$("#datePicker").datepicker({});
+$(document).ready(function(){
+	
+	//출퇴근버튼 활성화
+		var currentDate = new Date();
+		var currentHours = addZeros(currentDate.getHours(), 2);
+		var currentMinute = addZeros(currentDate.getMinutes(), 2);
+		var currentSeconds = addZeros(currentDate.getSeconds(), 2);
+		/* var start_date = currentDate.getFullYear() + "-"
+		+ (currentDate.getMonth() + 1) + "-" + currentDate.getDate() + " "+ currentHours + ":" + currentMinute + ":"
+		+ currentSeconds */
+			
+	$('#startD').click(function(){
+		//dummy
+		if (confirm('출근하시겠습니까?')) {
+			alert('출근하셨습니다');
+			startTime.innerHTML = currentHours + ":" + currentMinute + ":"
+					+ currentSeconds;
+			$.ajax({
+				url: '/insertAction.do',
+				data: {
+					e_id : ${e_id},
+				},
+				contentType: false,
+				type: POST,
+				success: function(result){
+					alert("출근성공");
+				},
+				error: function(result){
+					alert("출근실패");
+				} 
+			}); //$.ajax
+		}
 	});
+	
+	$("#endD").on("click", function() {
+		if (confirm('퇴근하시겠습니까?')) {
+			alert('퇴근하셨습니다');
+			endTime.innerHTML = currentHours + ":" + currentMinute + ":"
+					+ currentSeconds;
+		}
+	});
+
+	$("#outD").on("click", function() {
+		if (confirm('외근하시겠습니까?')) {
+			alert('안녕히다녀오세요');
+		}
+	});
+});
+
 
 	function printClock() {
 		var clock = document.getElementById("clock"); // 출력할 장소 선택
@@ -59,39 +105,9 @@
 			}
 		}
 		return zero + num;
-	}
+	} 
 
-	//출퇴근버튼 활성화
-	function startDate() {
-		var currentDate = new Date();
-		var currentHours = addZeros(currentDate.getHours(), 2);
-		var currentMinute = addZeros(currentDate.getMinutes(), 2);
-		var currentSeconds = addZeros(currentDate.getSeconds(), 2);
-
-		if (confirm('출근하시겠습니까?')) {
-			alert('출근하셨습니다');
-			startTime.innerHTML = currentHours + ":" + currentMinute + ":"
-					+ currentSeconds;
-			
-		}
-	}
-	function endDate() {
-		var currentDate = new Date();
-		var currentHours = addZeros(currentDate.getHours(), 2);
-		var currentMinute = addZeros(currentDate.getMinutes(), 2);
-		var currentSeconds = addZeros(currentDate.getSeconds(), 2);
-		if (confirm('퇴근하시겠습니까?')) {
-			alert('퇴근하셨습니다');
-			endTime.innerHTML = currentHours + ":" + currentMinute + ":"
-					+ currentSeconds;
-		}
-	}
-
-	function outDate() {
-		if (confirm('외근하시겠습니까?')) {
-			alert('안녕히다녀오세요');
-		}
-	}
+	
 </script>
 </head>
 
@@ -104,16 +120,19 @@
 
 				<div class="row">
 
-					<!-- 좌측 navi -->
+				<!-- 좌측바부분 -->
+				<div>
 					<div>
 						<div>
+							<h3>근태관리 페이지</h3>
+							<h5>어서오세요 ${hrVO.e_name }님</h5>
 							<input type="text" id="datePicker">
 							<ul>
 								<li>근태입력</li>
-								<li>일별 부서 근태기록조회</li>
-								<li>월별 개인 근태기록조회</li>
+								<li><a href="">일별 부서 근태기록조회</a></li>
+								<li><a href="">월별 개인 근태기록조회</a></li>
+								<li><a href="">휴가현황</a></li>
 							</ul>
-							<div>휴가현황</div>
 						</div>
 					</div>
 
@@ -141,12 +160,21 @@
 						</dl>
 						<!-- 출퇴근버튼 -->
 						<div>
-							<button onclick="startDate()" data-per="">출근하기</button>
-							<button onclick="endDate()">퇴근하기</button>
-							<button onclick="outDate()">외근</button>
+							<button id="startD">출근하기</button>
+							<button id="endD">퇴근하기</button>
+							<button id="outD">외근</button>
 						</div>
 					</div>
-
+				</div><!-- 좌측바부분의 끝 -->
+				
+				<!-- 상단부분 -->
+				<div>
+					
+				</div>
+				
+				<!-- 정보출력부분 -->
+				<div>
+				
 					<!-- 테이블 -->
 					<div>
 						<table class="table table-striped"
@@ -177,10 +205,8 @@
 							</tbody>
 						</table>
 					</div>
+				</div><!-- 정보출력부분의 끝 -->
 
-					<div align="center">
-						회의실 번호:<input> 회의실 명:<input> 총 인원수:<input>
-					</div>
 				</div>
 			</div>
 		</div>

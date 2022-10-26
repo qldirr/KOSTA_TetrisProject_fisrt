@@ -52,4 +52,5 @@ public class HrServiceImpl implements HrService {
 		return hrMapper.getHr(e_id);
 	}
 
+
 }
