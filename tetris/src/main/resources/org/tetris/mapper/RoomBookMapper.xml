@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tetris.mapper.RoomBookMapper">
+
+	<!-- 회의실 예약등록 -->
+	<insert id="insertResRoom" parameterType="HashMap">
+		insert into
+		RoomBook(rb_num, mr_num,e_id,rb_startday,rd_endday)
+		values
+		(seq_rb_num.nextval, #{rb_num}, #{mr_num}, #{e_id},
+		to_date(#{rb_startday},'yyyy-mm-dd hh24:mi:ss'),
+		to_date(#{rd_endday},'yyyy-mm-dd hh24:mi:ss'))
+	</insert>
+
+	<!-- 회의실 예약하기 -->
+	<select id="getListResRoom" parameterType="HashMap"
+		resultType="org.tetris.domain.RoomBookVO">
+		select rb_num, mr_num, e_id, m.mr_name,m.total ,e.e_name
+		,to_char(rb_startday, 'yyyy-mm-dd hh24:mi:ss') as rb_startday
+		,to_char(rb_endday, 'yyyy-mm-dd hh24:mi:ss') as rb_endday
+		from RoomBook
+		r
+		join m
+		on r.mr_num = m.mr_num
+		join e
+		on m.r_id = e.e_id
+	</select>
+	
+	<!-- 입력받은 일시가 중복된 날짜인지 검사 -->
+	<select id="checkdate" parameterType="HashMap" resultType="int">
+		select count(*)
+		from
+		(
+		SELECT rb_num
+		FROM RoomBook
+		WHERE
+		to_char(rb_endday, 'yyyy-mm-dd hh24:mi:ss') &gt; #{rb_startday}
+		AND
+		to_char(rb_startday, 'yyyy-mm-dd hh24:mi:ss') &lt; #{rb_endday}
+		and
+		mr_num = #{mr_num}
+		)
+	</select>
+
+
+
+
+
+</mapper>
