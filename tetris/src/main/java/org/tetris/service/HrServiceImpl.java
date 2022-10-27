@@ -27,12 +27,11 @@ public class HrServiceImpl implements HrService {
 	}
 
 	@Override
-	public boolean endDate(HrVO hrVO) {
+	public void endDate(HrVO hrVO) {
 		log.info("leaving..." + hrVO);
 		
 		boolean leavingResult = hrMapper.endDate(hrVO) == 1;
 		
-		return leavingResult;
 	}
 
 	@Override

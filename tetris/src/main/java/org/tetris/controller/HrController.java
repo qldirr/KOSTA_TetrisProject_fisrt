@@ -2,6 +2,7 @@ package org.tetris.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -51,22 +52,25 @@ public class HrController {
 	//출근하기
 	@PostMapping("/insertAction.do")
 	@ResponseBody
-	public String insertAction(@RequestBody HrVO hr) {
+	public String insertAction(@RequestBody HrVO hr, Model model) {
 		log.info("/insertAction");
 		service.startDate(hr);
 		log.info(hr);
-			
+		
 		//rttr.addFlashAttribute("result", hr.getE_id());
 		return "redirect:/attendance/get";
 	}
 
 	//퇴근하기
-	@GetMapping("/endAction.do")
+	@PostMapping("/endAction.do")
 	@ResponseBody
-	public void endDate(@RequestBody HrVO hr) {
+	public String endDate(@RequestBody HrVO hr, @Param("e_id") String e_id) {
 		log.info("/endAction");
+		hr.setE_id(e_id);
 		service.endDate(hr);
 		log.info(hr);
-	}
+
+		return "redirect:/attendance/get";
+	} 
 	
 }

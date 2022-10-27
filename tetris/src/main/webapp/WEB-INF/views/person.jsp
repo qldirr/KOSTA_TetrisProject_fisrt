@@ -40,25 +40,25 @@
 						+ (currentDate.getMonth() + 1) + "-"
 						+ currentDate.getDate() + " " + currentHours + ":"
 						+ currentMinute + ":" + currentSeconds;
-				
-				
+
 				//출근클릭
 				$('#startD').click(function() {
 					if (confirm('출근하시겠습니까?')) {
 						alert('출근하셨습니다');
-						startTime.innerHTML = now_date;
+						//startTime.innerHTML = now_date;
 						var e_id = getParam('e_id');
 						e_id = e_id.slice(3, -3);
 						console.log(e_id);
 						$.ajax({
 							url : 'insertAction.do',
 							type : 'POST',
-							contentType: 'application/json',
+							contentType : 'application/json',
 							data : JSON.stringify({
 								e_id : e_id,
 							}),
 							success : function(result) {
 								alert("출근성공");
+								
 							},
 							error : function(result) {
 								alert("출근실패 (관리자에게 문의해주세요)");
@@ -66,21 +66,31 @@
 						}); //$.ajax 
 					}
 				});
-
+				
+				var today = $('#timecheck').val();
+				
+				var lateCheck = '09:00:00';
+				var checkTime = today;//출근시간확인
+				
+				if(checkTime > lateCheck){
+					$('#startTime2').css("color", "red");
+				}
+				
 				//퇴근클릭
 				$("#endD").on("click", function() {
 					if (confirm('퇴근하시겠습니까?')) {
 						alert('퇴근하셨습니다');
-						endTime.innerHTML = now_date;
+						//endTime.innerHTML = now_date;
 						var e_id = getParam('e_id');
 						e_id = e_id.slice(3, -3);
 						console.log(e_id);
+
 						$.ajax({
 							url : 'endAction.do',
-							type : 'GET',
-							contentType: 'application/json',
+							type : 'POST',
+							contentType : 'application/json',
 							data : JSON.stringify({
-								e_id : e_id,
+								e_id : e_id
 							}),
 							success : function(result) {
 								alert("퇴근성공");
@@ -98,12 +108,14 @@
 					}
 				});
 			});
+	
 	function getParameterByName(name) {
-		  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-		  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-		  results = regex.exec(location.search);
-		  return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-		}
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex
+				.exec(location.search);
+		return results == null ? "" : decodeURIComponent(results[1].replace(
+				/\+/g, " "));
+	}
 
 	function getParam(sname) {
 		var params = location.search.substr(location.search.indexOf("?") + 1);
@@ -184,12 +196,18 @@
 							<!-- 출근시간 -->
 							<dl>
 								<dt>출근시간</dt>
-								<dd id="startTime"><fmt:formatDate value="${hrVO.hr_date }" pattern="yyyy-MM-dd HH:mm:ss" /></dd>
+								<dd id="startTime">
+									<fmt:formatDate value="${hrVO.hr_date }"
+										pattern="yyyy-MM-dd HH:mm:ss" />
+								</dd>
 							</dl>
 							<!-- 퇴근시간 -->
 							<dl>
 								<dt>퇴근시간</dt>
-								<dd id="endTime"><fmt:formatDate value="${hrVO.hr_leave }" pattern="yyyy-MM-dd HH:mm:ss" /></dd>
+								<dd id="endTime">
+									<fmt:formatDate value="${hrVO.hr_leave }"
+										pattern="yyyy-MM-dd HH:mm:ss" />
+								</dd>
 							</dl>
 							<!-- 누적근무시간 -->
 							<dl>
@@ -214,6 +232,7 @@
 
 						<!-- 테이블 -->
 						<div>
+							<h5>${hrVO.d_name } 근태목록</h5>
 							<table class="table table-striped"
 								style="text-align: center; border: 1px solid #dddddd">
 								<thead>
@@ -228,14 +247,20 @@
 										<th style="background-color: #eeeeee; text-align: center;">비고</th>
 									</tr>
 								</thead>
-									<tbody>
+								<tbody>
 									<tr>
-										<td><fmt:formatDate value="${hrVO.hr_date }" pattern="yyyy-MM-dd" /></td>
+										<td><fmt:formatDate value="${hrVO.hr_date }"
+												pattern="yyyy-MM-dd" /></td>
 										<td><c:out value="" />${hrVO.e_num }</td>
 										<td><c:out value="" />${hrVO.e_name }</td>
 										<td><c:out value="" />${hrVO.d_name}</td>
-										<td><fmt:formatDate value="${hrVO.hr_date }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-										<td><fmt:formatDate value="${hrVO.hr_leave }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+										<!-- 출근시간 -->
+										<td id="startTime2"><fmt:formatDate
+												value="${hrVO.hr_date }" pattern="HH:mm:ss" />
+										</td>
+										<!-- 퇴근시간 -->
+										<td><fmt:formatDate value="${hrVO.hr_leave }"
+												pattern="HH:mm:ss" /></td>
 										<td><c:out value="${hrVO.hr_status }" /></td>
 										<td><c:out value="${hrVO.hr_note }" /></td>
 									</tr>
@@ -243,6 +268,8 @@
 							</table>
 						</div>
 					</div>
+					<input type="hidden" id="timecheck" value="<fmt:formatDate
+												value="${hrVO.hr_date }" pattern="HH:mm:ss" />">
 					<!-- 정보출력부분의 끝 -->
 
 				</div>

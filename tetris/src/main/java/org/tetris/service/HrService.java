@@ -12,7 +12,7 @@ public interface HrService {
 	//출근하기
 	public void startDate(HrVO hrVO);
 	//퇴근하기
-	public boolean endDate(HrVO hrVO);
+	public void endDate(HrVO hrVO);
 	
 	public boolean outDate(HrVO hrVO);
 	

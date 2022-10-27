@@ -38,13 +38,13 @@ public class HrMapperTest {
 //	}
 	
 	//퇴근테스트
-//	@Test
-//	public void testLeaving() {
-//		HrVO hrVO = new HrVO();
-//		hrVO.setE_id("chulcu625");
-//		
-//		mapper.endDate(hrVO);
-//		log.info(hrVO);
-//	}
+	@Test
+	public void testLeaving() {
+		HrVO hrVO = new HrVO();
+		hrVO.setE_id("chulsu625");
+		
+		mapper.endDate(hrVO);
+		log.info(hrVO);
+	}
 	
 }

@@ -41,25 +41,35 @@ public class HrControllerTests {
 	}
 	
 	@Test
-	public void testInsert()throws Exception{
+	public void testUpdate()throws Exception{
+		String resultPage = 
+				mockMvc.perform(MockMvcRequestBuilders.post("/attendance/endAction.do")
+						.param("e_id", "chulsu625")
+						).andReturn().getModelAndView().getViewName();
 		
-//		String resultPage = 
-//				mockMvc.perform(MockMvcRequestBuilders.post("/attendance/insertAction.do")
-//							.param("e_id", "chulsu625")
-//							.param("hr_date", "2022-12-24"))
-//							.andReturn()
-//							.getModelAndView()
-//							.getViewName();
-//						
-//				
-//				log.info(resultPage);
-		
-		HrVO hr = new HrVO();
-		hr.setE_id("chulsu625");
-		
-		mapper.startDate(hr);
-		log.info(hr);
+		log.info(resultPage);
 	}
+	
+//	@Test
+//	public void testInsert()throws Exception{
+//		
+////		String resultPage = 
+////				mockMvc.perform(MockMvcRequestBuilders.post("/attendance/insertAction.do")
+////							.param("e_id", "chulsu625")
+////							.param("hr_date", "2022-12-24"))
+////							.andReturn()
+////							.getModelAndView()
+////							.getViewName();
+////						
+////				
+////				log.info(resultPage);
+//		
+//		HrVO hr = new HrVO();
+//		hr.setE_id("chulsu625");
+//		
+//		mapper.startDate(hr);
+//		log.info(hr);
+//	}
 	
 //	@Test
 //	public void testGet()throws Exception{
