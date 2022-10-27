@@ -19,9 +19,6 @@ public class HrServiceImpl implements HrService {
 	@Setter(onMethod_ = @Autowired)
 	private HrMapper hrMapper;
 	
-	
-	
-	
 	@Override
 	public void startDate(HrVO hrVO) {
 		log.info("startDate..." + hrVO);
@@ -31,8 +28,11 @@ public class HrServiceImpl implements HrService {
 
 	@Override
 	public boolean endDate(HrVO hrVO) {
-		// TODO Auto-generated method stub
-		return false;
+		log.info("leaving..." + hrVO);
+		
+		boolean leavingResult = hrMapper.endDate(hrVO) == 1;
+		
+		return leavingResult;
 	}
 
 	@Override
@@ -41,16 +41,17 @@ public class HrServiceImpl implements HrService {
 		return false;
 	}
 
+
+
 	@Override
-	public List<HrVO> getList(long depNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public HrVO getHr(String e_id) {
+		return hrMapper.getHr(e_id);
 	}
 
-
 	@Override
-	public HrVO get(String e_id) {
-		return hrMapper.getHr(e_id);
+	public List<HrVO> HrList(long depNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

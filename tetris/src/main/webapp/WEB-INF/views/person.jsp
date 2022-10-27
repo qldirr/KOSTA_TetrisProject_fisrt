@@ -72,6 +72,23 @@
 					if (confirm('퇴근하시겠습니까?')) {
 						alert('퇴근하셨습니다');
 						endTime.innerHTML = now_date;
+						var e_id = getParam('e_id');
+						e_id = e_id.slice(3, -3);
+						console.log(e_id);
+						$.ajax({
+							url : 'endAction.do',
+							type : 'GET',
+							contentType: 'application/json',
+							data : JSON.stringify({
+								e_id : e_id,
+							}),
+							success : function(result) {
+								alert("퇴근성공");
+							},
+							error : function(result) {
+								alert("퇴근실패 (관리자에게 문의해주세요)");
+							}
+						}); //$.ajax 
 					}
 				});
 
@@ -167,12 +184,12 @@
 							<!-- 출근시간 -->
 							<dl>
 								<dt>출근시간</dt>
-								<dd id="startTime"></dd>
+								<dd id="startTime"><fmt:formatDate value="${hrVO.hr_date }" pattern="yyyy-MM-dd HH:mm:ss" /></dd>
 							</dl>
 							<!-- 퇴근시간 -->
 							<dl>
 								<dt>퇴근시간</dt>
-								<dd id="endTime"></dd>
+								<dd id="endTime"><fmt:formatDate value="${hrVO.hr_leave }" pattern="yyyy-MM-dd HH:mm:ss" /></dd>
 							</dl>
 							<!-- 누적근무시간 -->
 							<dl>
@@ -210,15 +227,15 @@
 										<th style="background-color: #eeeeee; text-align: center;">근무상태</th>
 										<th style="background-color: #eeeeee; text-align: center;">비고</th>
 									</tr>
+								</thead>
 									<tbody>
 									<tr>
-										<td><c:out value="${hrVO.hr_date }" /></td>
-							</thead>
-										<td><c:out value="" /></td>
-										<td><c:out value="" /></td>
-										<td><c:out value="" /></td>
-										<td><c:out value="${hrVO.hr_date }" /></td>
-										<td><c:out value="${hrVO.hr_leave }" /></td>
+										<td><fmt:formatDate value="${hrVO.hr_date }" pattern="yyyy-MM-dd" /></td>
+										<td><c:out value="" />${hrVO.e_num }</td>
+										<td><c:out value="" />${hrVO.e_name }</td>
+										<td><c:out value="" />${hrVO.d_name}</td>
+										<td><fmt:formatDate value="${hrVO.hr_date }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+										<td><fmt:formatDate value="${hrVO.hr_leave }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 										<td><c:out value="${hrVO.hr_status }" /></td>
 										<td><c:out value="${hrVO.hr_note }" /></td>
 									</tr>

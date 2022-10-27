@@ -32,6 +32,9 @@ public class HrVO {
 	private String hr_note;
 	
 	private String e_name;
-	private String d_num;
+	private String d_name;
+	private String e_position;
+	
 	private Date e_hiredate;
+	private String e_num;
 }

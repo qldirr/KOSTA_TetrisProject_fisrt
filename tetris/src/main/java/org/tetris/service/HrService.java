@@ -7,15 +7,15 @@ import org.tetris.domain.HrVO;
 public interface HrService {
 
 	//페이지진입시 정보출력
-	public HrVO get(String e_id);
+	public HrVO getHr(String e_id);
 
 	//출근하기
 	public void startDate(HrVO hrVO);
-	
+	//퇴근하기
 	public boolean endDate(HrVO hrVO);
 	
 	public boolean outDate(HrVO hrVO);
 	
-	public List<HrVO> getList(long depNo);
+	public List<HrVO> HrList(long depNo);
 	
 }

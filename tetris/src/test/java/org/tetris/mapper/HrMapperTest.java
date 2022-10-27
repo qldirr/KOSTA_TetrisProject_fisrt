@@ -26,19 +26,25 @@ public class HrMapperTest {
 //		log.info(hr);
 //	}
 	
-	@Test
-	public void testInsert() {
-		Calendar now = Calendar.getInstance();
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-		HrVO hr = new HrVO();
-		hr.setE_id("002");
-		hr.setHr_date(sdf1.format(now.getTime()));
-		hr.setHr_status("업무중");
-		hr.setHr_num(2);
-		hr.setHr_note("--");
-		
-		log.info(hr);
-	}
+	//출근테스트
+//	@Test
+//	public void testInsert() {
+//
+//		HrVO hr = new HrVO();
+//		hr.setE_id("chulsu625");
+//		mapper.startDate(hr);
+//		
+//		log.info(hr);
+//	}
+	
+	//퇴근테스트
+//	@Test
+//	public void testLeaving() {
+//		HrVO hrVO = new HrVO();
+//		hrVO.setE_id("chulcu625");
+//		
+//		mapper.endDate(hrVO);
+//		log.info(hrVO);
+//	}
 	
 }
