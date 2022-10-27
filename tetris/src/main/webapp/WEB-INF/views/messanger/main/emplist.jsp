@@ -32,7 +32,7 @@
 				contentType: 'application/json',
 				data: JSON.stringify({"e_id" : empid}),
 				success : function() {
-					alert("succes");
+					window.location.href="/messanger/chatting";
 				}
 			});
 		})
@@ -40,6 +40,12 @@
 </script>
 </head>
 <body>
+	<form action="/messanger/main/emplist" method='get'>
+		<input type="submit" value="조직도">
+	</form><br>
+	<form action="/messanger/main/chatroomlist" method='get'>
+		<input type="submit" value="채팅방">
+	</form><br>
 
 	<div id="sidetree">
 		<div class="treeheader">&nbsp;</div>

@@ -2,6 +2,7 @@ package org.tetris.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.DepartmentVO;
 import org.tetris.domain.EmployeeVO;
+import org.tetris.domain.chat.ChatParticipantVO;
+import org.tetris.domain.chat.ChatRoomVO;
 import org.tetris.service.ChatService;
 
 import lombok.AllArgsConstructor;
@@ -39,18 +42,13 @@ public class ChatController {
 	
 	@PostMapping("/chatlogin")
 	public String chatLogin(@RequestParam("user") String user, Model model, HttpServletRequest request) {
-		EmployeeVO empvo = service.login(user);
+		EmployeeVO empVO = service.login(user);
 		List<EmployeeVO> listEmp = service.getListEmp();
 		List<DepartmentVO> listDept = service.getListDept();
+		HttpSession session = request.getSession();
+		session.setAttribute("user", empVO);
 		
-		System.out.println(user);
-		System.out.println(empvo);
-		
-		if(empvo != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", empvo);
-			
-			model.addAttribute("empvo", empvo);
+		if(session.getAttribute("user") != null) {
 			model.addAttribute("listEmp", listEmp);
 			model.addAttribute("listDept", listDept);
 			
@@ -60,16 +58,45 @@ public class ChatController {
 		}
 	}
 	
-	@PostMapping("/register")
-	@ResponseBody
-	public String registerCR(@RequestParam Map<String, Object> map) {
-		System.out.println((String)map.get("e_id"));
-		return "redirect:/messanger/register";
+	@GetMapping("/main/emplist")
+	public void empList() {
+		
 	}
 	
-	@GetMapping("/register")
-	public void registerCR() {
+	@GetMapping("/main/chatroomlist")
+	public void chatRoomList(HttpSession session, Model model) {
+		EmployeeVO emp = (EmployeeVO)session.getAttribute("user");
+		String e_id = emp.getE_id();
+		model.addAttribute("listChatRoom", service.getListCRoom(e_id));
+		System.out.println(service.getListCRoom(e_id));
+	}
+	
+	@PostMapping("/register")
+	@ResponseBody
+	public void registerCR(@RequestBody Map<String, Object> map, HttpSession session) {
+		EmployeeVO user = (EmployeeVO)session.getAttribute("user");
+		String user_name = user.getE_name();
 		
+		String e_id = (String)map.get("e_id");
+		EmployeeVO emp = service.getEmp(e_id);
+		String emp_name = emp.getE_name();
+		
+		String cr_title = user_name + ", " + emp_name;
+		
+		String uuid = UUID.randomUUID().toString();
+		ChatRoomVO chatRoomVO = new ChatRoomVO();
+		chatRoomVO.setCr_id(uuid);
+		chatRoomVO.setCr_title(cr_title);
+		service.registerCRoom(chatRoomVO);
+		
+		ChatParticipantVO chatPartVO = new ChatParticipantVO();
+		chatPartVO.setCr_id(chatRoomVO.getCr_id());
+		chatPartVO.setE_id(user.getE_id());
+		service.registerCPart(chatPartVO);
+		
+		chatPartVO.setCr_id(chatRoomVO.getCr_id());
+		chatPartVO.setE_id(emp.getE_id());
+		service.registerCPart(chatPartVO);
 	}
 	
 	@GetMapping("/chatting")

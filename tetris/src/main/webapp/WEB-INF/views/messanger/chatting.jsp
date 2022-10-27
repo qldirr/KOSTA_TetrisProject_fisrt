@@ -32,8 +32,8 @@
 	// 서버로부터 메시지를 받았을 때
 	function onMessage(msg) {
 		var data = msg.data;
-		var userId = "${empvo.e_name}";
-		$("#messageArea").append(userId + ": " + data + "<br/>");
+		var userName = "${user.e_name}";
+		$("#messageArea").append(userName + ": " + data + "<br/>");
 	}
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {
