@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tetris.mapper.ChatMapper">
+<resultMap type="org.tetris.domain.chat.ChatRoomVO" id="chatRoomMap">
+	<result property="cr_id" column="cr_id"/>
+	<result property="cr_title" column="cr_title"/>
+</resultMap>
+<resultMap type="org.tetris.domain.chat.ChatParticipantVO" id="chatPartMap">
+	<result property="cp_num" column="cp_num"/>
+	<result property="cr_id" column="cr_id"/>
+	<result property="e_id" column="e_id"/>
+	<result property="cp_unread" column="cp_unread"/>
+	<result property="cp_isbookmark" column="cp_isbookmark"/>
+	<collection property="chatRoomVO" resultMap="chatRoomMap"/>
+</resultMap>
+	
+	<select id="login" resultType="org.tetris.domain.EmployeeVO">
+		select * from employee where e_id = #{user}
+	</select>
+	
+	<select id="getListEmp" resultType="org.tetris.domain.EmployeeVO">
+		select * from employee
+	</select>
+	
+	<select id="getListDept" resultType="org.tetris.domain.DepartmentVO">
+		select * from department
+	</select>
+	
+	<select id="getEmp" resultType="org.tetris.domain.EmployeeVO">
+		select * from employee where e_id = #{e_id}
+	</select>
+	
+	<insert id="registerCRoom" parameterType="org.tetris.domain.chat.ChatParticipantVO">
+		insert into chatroom (cr_id, cr_title) 
+			values(#{cr_id}, #{cr_title})
+	</insert>
+	
+	<insert id="registerCPart" parameterType="org.tetris.domain.chat.ChatParticipantVO">
+		insert into chatparticipant (cp_num, cr_id, e_id, cp_unread, cp_isbookmark)
+			values(cp_num_seq.nextval, #{cr_id}, #{e_id}, 'false', 'false')
+	</insert>
+	
+	<!-- <select id="getListCPart" parameterType="String" resultType="org.tetris.domain.chat.ChatParticipantVO">
+		select * from chatparticipant where e_id = #{e_id}
+	</select> -->
+	
+	<select id="getListCRoom" parameterType="String" resultMap="chatRoomMap">
+		select cr.cr_id, cr.cr_title, cp.cp_num, cp.e_id, cp.cp_unread, cp.cp_isbookmark
+    		from chatroom cr, chatparticipant cp
+    		where cr.cr_id = cp.cr_id
+    		and cp.e_id = #{e_id}
+	</select>
+
+</mapper>
