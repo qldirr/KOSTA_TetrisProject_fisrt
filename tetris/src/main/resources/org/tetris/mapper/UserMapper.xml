@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tetris.mapper.UserMapper">
+	<resultMap type="org.tetris.domain.UserVO" id="userMap">
+	<id property="userId" column="e_id"/>
+		<result property="userId" column="e_id"/>
+		<result property="userName" column="e_name"/>
+		<result property="userPass" column="e_pw"/>
+		<result property="userPhoneNumber" column="e_pnum"/>
+		<result property="userHireddate" column="e_hireddate"/>
+		<result property="userResigndate" column="e_resigndate"/>
+		<result property="userTotalvaction" column="e_totalvac"/>
+		<result property="userUsevacation" column="e_usevac"/>
+		<result property="userBirth" column="e_birth"/>
+		<result property="userNumber" column="e_num"/>
+		<result property="userPicture" column="e_picfile"/>
+		<result property="userPosition" column="e_position"/>
+		<result property="departmentNumber" column="d_num"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap type="org.tetris.domain.AuthVO" id="authMap">
+	<result property="userId" column="e_id"/>
+	<result property="auth" column="a_auth"/>
+	
+	</resultMap>
+	
+	<select id="read" resultMap="userMap">
+	SELECT
+		e.e_id, e_name,e_pw, e_pnum,e_hireddate,e_resigndate,
+	e_totalvac,e_usevac,e_birth,e_num,e_picfile, e_position,e.d_num,e.enabled,auth.a_auth FROM
+	employee e LEFT OUTER JOIN authmapping auth on e.e_id = auth.e_id
+	WHERE e.e_id = #{e_id}
+	</select>
+	
+	<insert id="insertAuthmapping">
+	INSERT INTO authmapping(
+	e_id,
+	a_auth)
+	VALUES(
+	#{userId},
+	#{auth}
+	)
+	</insert>
+
+
+
+	<insert id="insertUser">
+	 INSERT INTO employee(
+		e_id, 
+		e_name,
+		e_pw,
+		e_pnum,
+		e_hireddate,
+		e_resigndate,
+		e_totalvac,
+		e_usevac,
+		e_birth,
+		e_num,
+		e_picfile, 
+		e_position,
+		d_num,
+		enabled
+	)
+	VALUES
+	(
+	#{userId},
+	#{userName},
+	#{userPass},
+	#{userPhoneNumber},
+	#{userHireddate},
+	#{userResigndate,jdbcType=DATE},
+	#{userTotalvaction},
+	#{userUsevacation},
+	#{userBirth},
+	#{userNumber},
+	#{userPicture, jdbcType=VARCHAR},
+	#{userPosition},
+	#{departmentNumber},
+	'1'	
+	
+		
+	)
+
+	<!--  INSERT ALL 
+	 INTO 
+	 employee
+	VALUES
+	(
+	#{userId},
+	#{userName},
+	#{userPass},
+	#{userPhoneNumber},
+	#{userHireddate},
+	#{userResigndate,jdbcType=DATE},
+	#{userTotalvaction},
+	#{userUsevacation},
+	#{userBirth},
+	#{userNumber},
+	#{userPicture, jdbcType=VARCHAR},
+	#{userPosition},
+	#{departmentNumber},
+	'1'	
+	
+	)
+ 	INTO authmapping VALUES(
+ 	#{userId},
+ 	'ROLE_USER'
+ 	) -->
+	</insert>
+</mapper>
