@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
 <%@ include file="includes/header.jsp"%>
 
@@ -25,21 +26,20 @@
 
 <body>
 
-	<div class="container-fluid ">
-	
-			<div class="row">
 
-				<!-- sidebar -->
-				<div class="col-xl-2 col-lg-3"></div>
-				<div class="col-xl-10 col-lg-9">
-					<div style="width: 100%; height: 1000; background: red;">
-					
-					
-					</div>
+	<div class="container-fluid ">
+
+		<div class="row">
+
+			<!-- sidebar -->
+			<div class="col-xl-2 col-lg-3"></div>
+			<div class="col-xl-10 col-lg-9">
+				<div style="width: 100%; height: 1000; background: red;"></div>
 			</div>
 		</div>
 	</div>
-
+	
+	  <%@ include file="includes/footer.jsp"%>
 
 	<!-- Optional JavaScript; choose one of the two! -->
 
@@ -48,7 +48,10 @@
 	<script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="/resources/js/index.js"></script>
 
-	<%@ include file="includes/footer.jsp"%>
+
+
+	</div>
+	<!-- wrapper 끝 -->
 </body>
 
 </html>

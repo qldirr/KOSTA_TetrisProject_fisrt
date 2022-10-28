@@ -21,15 +21,16 @@ public class MeetingRoomMapperTest {
 	@Autowired
 	private MeetingRoomMapper mapper;
 	
-/*	@Test public void test() { //DBpool.Mybatis,DB
-		MeetingRoomVO mr = new MeetingRoomVO();
-		mr.setMr_num("RS002");
-		mr.setMr_name("콤보");
-		mr.setMr_total("20명");
+	/*
+	 * @Test public void test() { //DBpool.Mybatis,DB MeetingRoomVO mr = new
+	 * MeetingRoomVO(); 
+	 * mr.setMr_num("RS001"); 
+	 * mr.setMr_name("블록");
+	 * mr.setMr_total("7명");
+	 * 
+	 * mapper.insertRoom(mr); }
+	 */
 
-		 mapper.insertRoom(mr);
-	}
-*/
 		
 	     
 	

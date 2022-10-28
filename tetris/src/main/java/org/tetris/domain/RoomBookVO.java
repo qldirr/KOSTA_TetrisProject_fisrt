@@ -6,14 +6,13 @@ import lombok.Data;
 
 @Data
 public class RoomBookVO {
-	private String rb_num;
+	private Long rb_num;
 	private String mr_num;
 		
-	private Date rb_bookdate;
-	private Date rb_starttime;
-	private Date rb_endtime;
+	private String rb_startday;
+	private String rb_endday;
 	private Date rb_moddate;
 	
-	private String e_id;
-		
+	private String e_id;		
 }
+
