@@ -1,5 +1,9 @@
 package org.tetris.mapper;
 
-public class TestMapper {
+import org.tetris.domain.TestVO;
+
+public interface TestMapper {
+	
+	public void insert(TestVO vo);
 
 }
