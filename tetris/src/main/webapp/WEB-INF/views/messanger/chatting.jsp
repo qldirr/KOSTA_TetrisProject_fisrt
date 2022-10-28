@@ -21,8 +21,8 @@
 		sendMessage();
 		$('#message').val('')
 	});
-
-	var sock = new SockJS("http://localhost:8081/chatting/");
+	
+	var sock = new SockJS("http://localhost:8081/chatting");
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;
 	// 메시지 전송

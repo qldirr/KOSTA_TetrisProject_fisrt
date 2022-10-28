@@ -1,5 +1,9 @@
 /* navbar */
 
+.container{width:1200px; max-width:none!important;}
+
+
+
 .sidebar{
 	height: 100vh;
 	background:#FFF5cd;
@@ -12,14 +16,16 @@
 
 
 .bottom-border{
-	border-bottom: 2px groove white; 
+	border-bottom: 5px groove #FFFDEF; 
 }
 
 .sidebar-link{
-	transition: all .4s;	
+	transition: all .4s;
+		
 }
 .sidebar-link:hover {	
 	background-color: #FFFDEF;
+	width:100%;
 	border-radius: 5px;
 }
 

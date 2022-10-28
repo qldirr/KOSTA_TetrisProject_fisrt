@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tetris.mapper.ProjectMapper">
+
+	<select id="listProject" parameterType="org.tetris.domain.user.UserVO" resultType="org.tetris.domain.project.ProjectVO">
+		select * from project where pj_manager = #{e_id}
+	</select>
+
+	<insert id="insert" parameterType="org.tetris.domain.project.ProjectVO">
+		insert into project (pj_num, pj_name, pj_type, pj_startdate, pj_enddate, pj_manager, pl_num) 
+			values (pj_num_seq.nextval, #{pj_name}, #{pj_type}, TO_DATE(#{pj_startdate}, 'YYYY-MM-DD HH24:MI'), TO_DATE(#{pj_enddate}, 'YYYY-MM-DD HH24:MI'), #{pj_manager}, pj_num_seq.nextval)
+	</insert>
+	
+	
+	<select id="listAllMember" resultType="org.tetris.domain.user.UserVO">
+		select * from employee order by d_num
+	</select>
+	
+	
+	<select id="listDept" resultType="org.tetris.domain.user.DepartmentVO">
+		select * from department order by d_num
+	</select>
+	
+	<insert id="insertProjectMember" parameterType="String">
+		insert into projectlist values (#{pl_num}, #{e_id})
+	</insert>
+	
+	<select id="getProjectNum" parameterType="org.tetris.domain.project.ProjectVO" resultType="long">
+		select pj_num from (
+			select * from project where pj_num = pl_num and pj_manager = #{pj_manager} order by pj_num desc)
+		where rownum = 1
+	</select>
+	
+	<update id="insertProjectList" parameterType="org.tetris.domain.project.ProjectVO">
+		update projectlist set pl_num = #{pj_num} where pl_num = #{pj_manager}
+	</update>
+	
+	
+	
+</mapper>
