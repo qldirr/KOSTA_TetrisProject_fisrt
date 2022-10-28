@@ -10,7 +10,6 @@ import org.tetris.domain.EmployeeVO;
 import org.tetris.domain.chat.ChatParticipantVO;
 import org.tetris.domain.chat.ChatRoomVO;
 import org.tetris.mapper.ChatMapper;
-import org.tetris.mapper.TestMapper;
 
 import lombok.AllArgsConstructor;
 
