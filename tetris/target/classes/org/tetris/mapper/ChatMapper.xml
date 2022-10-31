@@ -52,5 +52,17 @@
     		where cr.cr_id = cp.cr_id
     		and cp.e_id = #{e_id}
 	</select>
+	
+	<select id="getCRoom" parameterType="String" resultMap="chatRoomMap">
+		select cr.cr_id, cr.cr_title, cp.cp_num, cp.e_id, cp.cp_unread, cp.cp_isbookmark
+    		from chatroom cr, chatparticipant cp
+    		where cr.cr_id = cp.cr_id
+    		and cr.cr_id = #{cr_id}
+	</select>
+	
+	<insert id="registerMsg" parameterType="org.tetris.domain.chat.ChatMsgVO">
+		insert into chatmsg (cm_num, e_id, cr_id, cm_to, cm_contents, cm_regdate, cm_status)
+			values(cm_num_seq.nextval, #{e_id}, #{cr_id}, #{cm_to}, #{cm_contents}, sysdate, #{cm_status})
+	</insert>
 
 </mapper>

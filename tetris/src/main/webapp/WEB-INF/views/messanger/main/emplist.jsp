@@ -24,15 +24,15 @@
 		});
 		
 		$("#empname li").on('dblclick', function(){
-			var empid = $(this).attr('class');
+			var empId = $(this).attr('class');
 			/* alert(empid); */
 			$.ajax({
 				url: '/messanger/register',
 				type: 'post',
 				contentType: 'application/json',
-				data: JSON.stringify({"e_id" : empid}),
+				data: JSON.stringify({"e_id" : empId}),
 				success : function() {
-					window.location.href="/messanger/chatting";
+					window.location.href = "/messanger/chatting";
 				}
 			});
 		})

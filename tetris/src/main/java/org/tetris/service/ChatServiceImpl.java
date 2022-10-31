@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tetris.domain.DepartmentVO;
 import org.tetris.domain.EmployeeVO;
+import org.tetris.domain.chat.ChatMsgVO;
 import org.tetris.domain.chat.ChatParticipantVO;
 import org.tetris.domain.chat.ChatRoomVO;
 import org.tetris.mapper.ChatMapper;
@@ -57,6 +58,16 @@ public class ChatServiceImpl implements ChatService {
 	public List<ChatRoomVO> getListCRoom(String e_id) {
 		List<ChatRoomVO> listChatRoom = mapper.getListCRoom(e_id);
 		return listChatRoom;
+	}
+
+	@Override
+	public ChatRoomVO getCRoom(String cr_id) {
+		return mapper.getCRoom(cr_id);
+	}
+
+	@Override
+	public int registerMsg(ChatMsgVO chatMsgVO) {
+		return mapper.registerMsg(chatMsgVO);
 	}
 
 }

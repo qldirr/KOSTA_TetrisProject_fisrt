@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -15,25 +16,45 @@
 	<input type="text" id="message" />
 	<input type="button" id="sendBtn" value="submit"/>
 	<div id="messageArea"></div>
+	<input type="hidden" id="roomId" value="${cr_id}">
+	<h1>방이름</h1>
+	<h1>${cr_id}</h1>
 </body>
 <script type="text/javascript">
-	$("#sendBtn").click(function() {
+
+	$("#sendBtn").on('click', function() {
 		sendMessage();
 		$('#message').val('')
 	});
+	$('#message').on('keydown', function(){
+		if(event.keyCode == '13'){
+			sendMessage();
+			$('#message').val('')
+		}
+	});
 	
-	var sock = new SockJS("http://localhost:8081/chatting");
+	var roomId = $("#roomId").val();
+	var webSocket;
+	webSocket = new WebSocket("ws://localhost:8081/chatting/" + roomId);
+	webSocket.onopen = onOpen;
+	webSocket.onmessage = onMessage;
+	webSocket.onclose = onClose;
+	
+	function onOpen(msg){
+		/* alert("채팅 접속"); */
+	}
+	
+	/* var sock = new SockJS("http://localhost:8081/chatting" + "${user.e_name}");
 	sock.onmessage = onMessage;
-	sock.onclose = onClose;
+	sock.onclose = onClose; */
 	// 메시지 전송
 	function sendMessage() {
-		sock.send($("#message").val());
+		webSocket.send($("#message").val());
 	}
 	// 서버로부터 메시지를 받았을 때
 	function onMessage(msg) {
 		var data = msg.data;
-		var userName = "${user.e_name}";
-		$("#messageArea").append(userName + ": " + data + "<br/>");
+		$("#messageArea").append(data + "<br/>");
 	}
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {
