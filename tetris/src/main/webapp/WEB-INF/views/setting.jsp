@@ -26,6 +26,7 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 
+<!-- 설정관련페이지(admin만 접근가능) -->
 <title>TETRIS Groupware</title>
 <script>
 	$(document).ready(

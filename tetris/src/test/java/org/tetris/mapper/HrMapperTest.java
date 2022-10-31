@@ -29,22 +29,20 @@ public class HrMapperTest {
 	//출근테스트
 //	@Test
 //	public void testInsert() {
-//
-//		HrVO hr = new HrVO();
-//		hr.setE_id("chulsu625");
-//		mapper.startDate(hr);
 //		
+//		
+//		HrVO hr = mapper.startDate("jhs123");
 //		log.info(hr);
 //	}
 	
 	//퇴근테스트
-	@Test
-	public void testLeaving() {
-		HrVO hrVO = new HrVO();
-		hrVO.setE_id("chulsu625");
-		
-		mapper.endDate(hrVO);
-		log.info(hrVO);
-	}
+//	@Test
+//	public void testLeaving() {
+//		HrVO hrVO = new HrVO();
+//		hrVO.setE_id("chulsu625");
+//		
+//		mapper.endDate(hrVO);
+//		log.info(hrVO);
+//	}
 	
 }

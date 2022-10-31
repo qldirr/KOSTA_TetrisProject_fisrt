@@ -20,13 +20,19 @@ public class HrServiceTest {
 	@Autowired
 	private HrService service;
 	
+//	@Test
+//	public void testEndDate()throws {
+//		HrVO hr = service.getHr("chulsu625");
+//		hr.setHr_leave(now);
+//		hr.setE_id("chulsu625");
+//		if(hr == null) { return; }
+//		
+//		log.info(service.endDate(hr));
+//	}
+	
 	@Test
-	public void testEndDate() {
-		HrVO hr = service.getHr("chulsu625");
-		hr.setHr_leave(now);
-		hr.setE_id("chulsu625");
-		if(hr == null) { return; }
+	public void test() {
+		service.startDate("jhs123");
 		
-		log.info("endDate result: " + service.endDate(hr));
 	}
 }

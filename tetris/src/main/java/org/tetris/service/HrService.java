@@ -10,12 +10,12 @@ public interface HrService {
 	public HrVO getHr(String e_id);
 
 	//출근하기
-	public void startDate(HrVO hrVO);
+	public void startDate(String e_id);
 	//퇴근하기
-	public void endDate(HrVO hrVO);
+	public void endDate(String e_id);
 	
 	public boolean outDate(HrVO hrVO);
 	
-	public List<HrVO> HrList(long depNo);
+	public List<HrVO> getHrList(String e_id);
 	
 }

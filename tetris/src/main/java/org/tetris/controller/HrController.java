@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/attendance")
+@RequestMapping("/attendance/*")
 @AllArgsConstructor
 public class HrController {
 	
@@ -30,45 +30,35 @@ public class HrController {
 	//근태관련 컨트롤러
 	
 	//개인근태페이지 - e_id로 정보출력
-	@GetMapping("/get")
-	public String get(@RequestParam("e_id") String e_id, Model model) {
+	@GetMapping("/person")
+	public void get(@RequestParam("e_id") String e_id, Model model) {
 		log.info("/get");
 		
 		model.addAttribute("hrVO", service.getHr(e_id));
-		return "person";
+		model.addAttribute("list", service.getHrList(e_id));
 	}
 	
-	//근태리스트 출력
-	@GetMapping("/list")
-	public List<HrVO> HrList(Model model) {
-		log.info("list.....");
-		
-		
-		
-		return null;
-	}
 	
 	
 	//출근하기
 	@PostMapping("/insertAction.do")
 	@ResponseBody
 	public String insertAction(@RequestBody HrVO hr, Model model) {
-		log.info("/insertAction");
-		service.startDate(hr);
-		log.info(hr);
+		log.info("insertAction.do");
+		log.info("e_id: " + hr.getE_id());
+		service.startDate(hr.getE_id());
 		
 		//rttr.addFlashAttribute("result", hr.getE_id());
-		return "redirect:/attendance/get";
+		return "redirect:/attendance/person";
 	}
 
 	//퇴근하기
 	@PostMapping("/endAction.do")
 	@ResponseBody
-	public String endDate(@RequestBody HrVO hr, @Param("e_id") String e_id) {
-		log.info("/endAction");
-		hr.setE_id(e_id);
-		service.endDate(hr);
-		log.info(hr);
+	public String endDate(@RequestBody HrVO hr, Model model) {
+		log.info("/endAction.do");
+		log.info("e_id: " + hr.getE_id());
+		service.endDate(hr.getE_id());
 
 		return "redirect:/attendance/get";
 	} 

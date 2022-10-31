@@ -9,9 +9,9 @@ public interface HrMapper {
 	//사원의 근태정보가져오기 
 	public HrVO getHr(String e_id);
 	
-	public List<HrVO> getList(String date);
+	public List<HrVO> getHrList(String e_id);
 	//출퇴근 
-	public void startDate(HrVO hrvo);
+	public void startDate(String e_id);
 	//퇴근
-	public int endDate(HrVO hrVO);
+	public int endDate(String e_id);
 }

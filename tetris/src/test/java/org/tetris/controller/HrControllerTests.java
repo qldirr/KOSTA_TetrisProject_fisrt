@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.tetris.domain.HrVO;
 import org.tetris.mapper.HrMapper;
+import org.tetris.service.HrService;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -31,7 +32,7 @@ public class HrControllerTests {
 	private WebApplicationContext ctx;
 	
 	@Setter(onMethod_ = @Autowired)
-	private HrMapper mapper;
+	private HrService service;
 	
 	private MockMvc mockMvc;
 	
@@ -41,14 +42,48 @@ public class HrControllerTests {
 	}
 	
 	@Test
-	public void testUpdate()throws Exception{
-		String resultPage = 
-				mockMvc.perform(MockMvcRequestBuilders.post("/attendance/endAction.do")
-						.param("e_id", "chulsu625")
-						).andReturn().getModelAndView().getViewName();
+	public void test() throws Exception{
 		
+		String resultPage = 
+				mockMvc.perform(MockMvcRequestBuilders.post("/attendance/insertAction.do")
+						.param("e_id", "jhs123"))
+						.andReturn()
+						.getModelAndView()
+						.getViewName();
 		log.info(resultPage);
 	}
+	
+	//개인정보
+//	@Test
+//	public void testGetHr() throws Exception{
+//		log.info(
+//				mockMvc.perform(MockMvcRequestBuilders.get("/attendace/get")
+//						.param("e_id", "chulsu625"))
+//						.andReturn()
+//						.getModelAndView()
+//						.getModelMap()
+//						);
+//	}
+	
+	//리스트테스트
+//	@Test
+//	public void testGetList()throws Exception {
+//		
+//		log.info(
+//				mockMvc.perform(MockMvcRequestBuilders.get("/attendance/person")
+//						.param("e_id", "chulsu625")
+//						).andReturn().getModelAndView().getModelMap());
+//	}
+//	
+//	@Test
+//	public void testUpdate()throws Exception{
+//		String resultPage = 
+//				mockMvc.perform(MockMvcRequestBuilders.post("/attendance/endAction.do")
+//						.param("e_id", "chulsu625")
+//						).andReturn().getModelAndView().getViewName();
+//		
+//		log.info(resultPage);
+//	}
 	
 //	@Test
 //	public void testInsert()throws Exception{
