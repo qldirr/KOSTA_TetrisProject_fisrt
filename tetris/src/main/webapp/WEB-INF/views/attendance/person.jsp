@@ -105,6 +105,17 @@
 				$("#outD").on("click", function() {
 					if (confirm('외근하시겠습니까?')) {
 						alert('안녕히다녀오세요');
+						var e_id = getParam('e_id');
+						console.log(e_id);
+						
+						$.ajax({
+							url : 'outAction.do',
+							type : 'POST',
+							contentType : 'application/json',
+							data : JSON.stringify({
+								e_id : e_id
+							})
+						});
 					}
 				});
 			});
@@ -274,8 +285,8 @@
 							</table>
 						</div><!-- 테이블 끝 -->
 						
-						<div><!-- 미출근자/휴가자 -->
-							<h3>미출근자/휴가자</h3>
+						<!-- <div>미출근자/휴가자
+							<h7>미출근자/휴가자</h7>
 							<table>
 								<thead>
 									<tr>
@@ -289,8 +300,8 @@
 										<td></td>
 									</tr>
 								</tbody>
-							</table>
-						</div><!-- 미출근자/휴가자 -->
+							</table> 
+						</div><!-- 오늘 미출근자/휴가자끝 -->
 					</div>
 					<input type="hidden" id="timecheck"
 						value="<fmt:formatDate

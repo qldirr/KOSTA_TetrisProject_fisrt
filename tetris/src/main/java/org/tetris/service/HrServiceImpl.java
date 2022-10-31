@@ -35,9 +35,8 @@ public class HrServiceImpl implements HrService {
 	}
 
 	@Override
-	public boolean outDate(HrVO hrVO) {
-		// TODO Auto-generated method stub
-		return false;
+	public void outDate(String e_id) {
+		hrMapper.outDate(e_id);
 	}
 
 

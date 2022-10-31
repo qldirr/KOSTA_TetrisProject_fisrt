@@ -1,5 +1,7 @@
 package org.tetris.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -27,32 +29,47 @@ import lombok.extern.log4j.Log4j;
 public class HrController {
 	
 	private HrService service;
-	//ê·¼íƒœê´€ë ¨ ì»¨íŠ¸ë¡¤ëŸ¬
+	//±ÙÅÂ°ü·Ã ÄÁÆ®·Ñ·¯
 	
-	//ê°œì¸ê·¼íƒœí˜ì´ì§€ - e_idë¡œ ì •ë³´ì¶œë ¥
+	//°³ÀÎ±ÙÅÂÆäÀÌÁö - e_id·Î Á¤º¸Ãâ·Â
 	@GetMapping("/person")
 	public void get(@RequestParam("e_id") String e_id, Model model) {
 		log.info("/get");
 		
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getHrList(e_id));
+		
 	}
 	
 	
 	
-	//ì¶œê·¼í•˜ê¸°
+	//Ãâ±ÙÇÏ±â
 	@PostMapping("/insertAction.do")
 	@ResponseBody
 	public String insertAction(@RequestBody HrVO hr, Model model) {
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 		log.info("insertAction.do");
 		log.info("e_id: " + hr.getE_id());
+		hr.setHr_Time(formatter.format(date));
+		log.info(hr.getHr_Time());
 		service.startDate(hr.getE_id());
 		
 		//rttr.addFlashAttribute("result", hr.getE_id());
 		return "redirect:/attendance/person";
 	}
+	
+	//¿Ü±Ù
+	@PostMapping("/outAction.do")
+	@ResponseBody
+	public String outAction(@RequestBody HrVO hr, Model model) {
+		log.info("outAction.do...");
+		service.outDate(hr.getE_id());
+		
+		return "redirect:/attendance/person";
+	}
 
-	//í‡´ê·¼í•˜ê¸°
+	//Åğ±ÙÇÏ±â
 	@PostMapping("/endAction.do")
 	@ResponseBody
 	public String endDate(@RequestBody HrVO hr, Model model) {

@@ -42,13 +42,28 @@
 
 	<!-- 출근하기 -->
 	<insert id="startDate">
-		insert into hr (hr_num, hr_date, hr_status, hr_note, e_id) 
-        select seq_hr.nextval, sysdate, '업무중', '--', #{e_id}
-        from dual where not exists
-        (select * from hr where e_id=#{e_id} AND to_char(hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd')) 
+		<![CDATA[
+ 			insert into hr (hr_num, hr_date, hr_status, hr_note, e_id) 
+	        select seq_hr.nextval, sysdate, 
+		       (case when (to_char(sysdate, 'HH24:MI:SS') > cast('09:00:00' as char)) then '지각' else '출근' end)
+	        , '--', #{e_id}
+	        from dual 
+	        where not exists
+       		 (select * from hr where e_id=#{e_id} AND to_char(hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd'))
+		]]>
 	</insert>
+	
+	<!-- 외근 -->
+	<update id="outDate">
+		update hr set hr_status='외근' where e_id = #{e_id}
+	</update>
+	
+	<!-- 퇴근 -->
+	<update id="endDate">
+		update hr set hr_leave = sysdate, hr_status='퇴근' where e_id = #{e_id}
+	</update>
 
-	<!-- 오늘리스트 출력 -->  
+	<!-- 오늘리스트 출력 -->  <!-- 
 	<select id="listHr" resultType="org.tetris.domain.HrVO">
 		select h.hr_num, e.e_name, d.d_name, e.e_position, h.hr_date, h.hr_leave,
 	    	h.hr_status, h.hr_note
@@ -57,11 +72,8 @@
 	    	join department d
 	    	on e.d_num = d.d_num
 	    	where to_char(h.hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd');
-	</select>
+	</select> -->
 	
-	<!-- 퇴근 -->
-	<update id="endDate">
-		update hr set hr_leave = sysdate where e_id = #{e_id}
-	</update>
+	
 
 </mapper>
