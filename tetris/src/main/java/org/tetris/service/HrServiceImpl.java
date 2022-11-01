@@ -53,5 +53,11 @@ public class HrServiceImpl implements HrService {
 		return hrMapper.getHrList(e_id);
 	}
 
+	@Override
+	public List<HrVO> getHrAll() {
+		log.info("getHrAll ServiceImpl: " + hrMapper.getHrAll());
+		return hrMapper.getHrAll();
+	}
+
 
 }

@@ -13,4 +13,6 @@ public interface HrMapper {
 	public int endDate(String e_id);
 	
 	public int outDate(String e_id);
+	
+	public List<HrVO> getHrAll();
 }

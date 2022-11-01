@@ -31,7 +31,7 @@ public class HrController {
 	private HrService service;
 	//근태관련 컨트롤러
 	
-	//개인근태페이지 - e_id로 정보출력
+//person.jsp 개인근태페이지 - e_id로 정보출력
 	@GetMapping("/person")
 	public void get(@RequestParam("e_id") String e_id, Model model) {
 		log.info("/get");
@@ -46,7 +46,7 @@ public class HrController {
 	//출근하기
 	@PostMapping("/insertAction.do")
 	@ResponseBody
-	public String insertAction(@RequestBody HrVO hr, Model model) {
+	public String insertAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
 		Date date = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 		log.info("insertAction.do");
@@ -54,6 +54,7 @@ public class HrController {
 		hr.setHr_Time(formatter.format(date));
 		log.info(hr.getHr_Time());
 		service.startDate(hr.getE_id());
+		rttr.addFlashAttribute("e_id", hr.getE_id());
 		
 		//rttr.addFlashAttribute("result", hr.getE_id());
 		return "redirect:/attendance/person";
@@ -62,9 +63,10 @@ public class HrController {
 	//외근
 	@PostMapping("/outAction.do")
 	@ResponseBody
-	public String outAction(@RequestBody HrVO hr, Model model) {
+	public String outAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
 		log.info("outAction.do...");
 		service.outDate(hr.getE_id());
+		rttr.addFlashAttribute("e_id", hr.getE_id());
 		
 		return "redirect:/attendance/person";
 	}
@@ -72,12 +74,29 @@ public class HrController {
 	//퇴근하기
 	@PostMapping("/endAction.do")
 	@ResponseBody
-	public String endDate(@RequestBody HrVO hr, Model model) {
+	public String endDate(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
 		log.info("/endAction.do");
 		log.info("e_id: " + hr.getE_id());
 		service.endDate(hr.getE_id());
+		rttr.addFlashAttribute("e_id", hr.getE_id());
 
 		return "redirect:/attendance/get";
 	} 
+	
+	
+	
+//personAll.jsp
+	
+	//처음들어가면 리스트 출력
+	@GetMapping("/personAll")
+	public void get(Model model) {
+		log.info("get...");
+		
+		model.addAttribute("list", service.getHrAll());
+	}
+	
+	
+	
+	
 	
 }

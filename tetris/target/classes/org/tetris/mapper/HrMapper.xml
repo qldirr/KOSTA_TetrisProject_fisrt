@@ -55,12 +55,12 @@
 	
 	<!-- 외근 -->
 	<update id="outDate">
-		update hr set hr_status='외근' where e_id = #{e_id}
+		update hr set hr_status='외근' where e_id = #{e_id} and to_char(hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd')
 	</update>
 	
 	<!-- 퇴근 -->
 	<update id="endDate">
-		update hr set hr_leave = sysdate, hr_status='퇴근' where e_id = #{e_id}
+		update hr set hr_leave = sysdate, hr_status='퇴근' where e_id = #{e_id} and to_char(hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd')
 	</update>
 
 	<!-- 오늘리스트 출력 -->  <!-- 
@@ -75,5 +75,24 @@
 	</select> -->
 	
 	
+	
+	<!-- personAll.jsp -->
+	
+	<!-- 들어가자마자 모든부서의 리스트 가져오기(페이징처리, 검색) -->
+	<select id="getHrAll" resultType="org.tetris.domain.HrVO">
+		select h.hr_num as hr_num, e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
+   			 h.hr_status as hr_status, h.hr_note as hr_note
+    		from employee e right join hr h
+    		on e.e_id = h.e_id
+    		join department d
+    		on e.d_num = d.d_num
+	</select>
+	
+	
+
+
+
+
+
 
 </mapper>

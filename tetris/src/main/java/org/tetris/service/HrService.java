@@ -16,4 +16,7 @@ public interface HrService {
 	
 	public List<HrVO> getHrList(String e_id);
 	
+	//personAll.jsp
+	public List<HrVO> getHrAll();
+	
 }
