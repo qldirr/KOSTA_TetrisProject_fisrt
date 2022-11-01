@@ -88,6 +88,30 @@
     		on e.d_num = d.d_num
 	</select>
 	
+	<select id="getHrWithPaging" resultType="org.tetris.domain.HrVO">
+		<![CDATA[
+			select rn, hr_num, e_name, e_num, d_name, e_position, hr_date, hr_leave,
+				hr_status, hr_note from
+				(select /*+INDEX_DESC(hr pk_hr_num) */ rownum as rn, h.hr_num as hr_num, 
+				e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position as e_position, 
+				h.hr_date as hr_date, h.hr_leave as hr_leave,
+	   			 h.hr_status as hr_status, h.hr_note as hr_note
+	    		from employee e right join hr h
+	    		on e.e_id = h.e_id
+	    		join department d
+	    		on e.d_num = d.d_num where rownum <= #{pageNum} * #{amount}) 
+	    		where rn > (#{pageNum} -1) * #{amount}
+		]]>
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from (select h.hr_num as hr_num, e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
+   			 h.hr_status as hr_status, h.hr_note as hr_note
+    		from employee e right join hr h
+    		on e.e_id = h.e_id
+    		join department d
+    		on e.d_num = d.d_num) where hr_num > 0
+	</select>
 	
 
 

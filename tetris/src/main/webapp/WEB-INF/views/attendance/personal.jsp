@@ -26,6 +26,7 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 
+<!-- 개인정보 페이지 -->
 <title>TETRIS Groupware</title>
 <script>
 	$(document).ready(
@@ -118,41 +119,6 @@
 						});
 					}
 				});
-				
-				
-				var result = '<c:out value="${result}"/>';
-				
-				checkModal(result);
-				
-				history.replaceStat({}, null, null);
-				
-				function checkModal(result){
-					
-					if(result === '' || history.state){
-						return;
-					}
-					
-					if(parseInt(result) > 0){
-						$(".modal-body").html(
-								"게시글 " + parseInt(result) + "번이 등록되었습니다.");
-						
-					}
-					$("#myModal").modal("show");
-				}
-				
-				$("#regBtn").on("click", function(){
-					self.location = "/attendance/getAll";
-				});
-				
-				var actionForm = $("#actionForm");
-				$(".paginate_button a").on("click", function(e){
-					e.preventDefault();
-					console.log('click');
-					actionForm.find("input[name='pageNum']"),val($(this).attr("href"));
-					actionForm.submit();
-				});
-				
-				
 			});
 
 	function getParameterByName(name) {
@@ -220,12 +186,14 @@
 					<div>
 						<div>
 							<div>
-								<h3>전사 근태관리 페이지</h3>
-								<h5>어서오세요 admin님</h5>
+								<h3>근태관리 페이지</h3>
+								<h5>어서오세요 ${hrVO.e_name }님</h5>
+								<input type="text" id="datePicker">
 								<ul>
 									<li>근태입력</li>
-									<li><a href="">근태설정</a></li>
-									<li><a href="">전사연차연황</a></li>
+									<li><a href="">일별 부서 근태기록조회</a></li>
+									<li><a href="">월별 개인 근태기록조회</a></li>
+									<li><a href="">휴가현황</a></li>
 								</ul>
 							</div>
 						</div>
@@ -237,6 +205,33 @@
 							<div
 								style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
 								id="clock"></div>
+							<!-- 출근시간 -->
+							<dl>
+								<dt>출근시간</dt>
+								<dd id="startTime">
+									<fmt:formatDate value="${hrVO.hr_date }"
+										pattern="yyyy-MM-dd HH:mm:ss" />
+								</dd>
+							</dl>
+							<!-- 퇴근시간 -->
+							<dl>
+								<dt>퇴근시간</dt>
+								<dd id="endTime">
+									<fmt:formatDate value="${hrVO.hr_leave }"
+										pattern="yyyy-MM-dd HH:mm:ss" />
+								</dd>
+							</dl>
+							<!-- 누적근무시간 -->
+							<dl>
+								<dt>누적근무시간</dt>
+								<dd id=""></dd>
+							</dl>
+							<!-- 출퇴근버튼 -->
+							<div>
+								<button id="startD">출근하기</button>
+								<button id="endD">퇴근하기</button>
+								<button id="outD">외근</button>
+							</div>
 						</div>
 					</div>
 					<!-- 좌측바부분의 끝 -->
@@ -251,31 +246,10 @@
 
 						<!-- 테이블 -->
 						<div>
-						
-						
-							<!-- 리스트 검색폼 -->
-							<form>
-								<div class="container mt-3">
-									<div class="row">
-										<!-- 부서선택 -->
-										<h6>부서선택</h6>
-										<select class="form-control w-25 mx-2" id="dpSelect">
-											<option value=0>전체부서</option>
-											<option value=1>개발부</option>
-											<option value=2>기획부</option>
-											<option value=3>영업부</option>
-										</select>
-										<!-- 선택일자 -->
-										<h6>일자선택</h6>
-										
-										<!-- 지각사원출력 -->
-										
-										<button class="mx-2">검색</button>
-									</div>
-								</div>
-							</form><!-- 검색폼끝 -->
-							
-							<!-- 출력테이블 -->
+							<h5>소속부서: ${hrVO.d_name }</h5>
+							<!-- 
+								<div>선택날짜</div>
+							 -->
 							<table class="table table-striped"
 								style="text-align: center; border: 1px solid #dddddd">
 								<thead>
@@ -290,7 +264,6 @@
 										<th style="background-color: #eeeeee; text-align: center;">비고</th>
 									</tr>
 								</thead>
-								<!-- 부서리스트 받아오기 -->
 								<tbody>
 									<c:forEach items="${list}" var="hr">
 										<tr>
@@ -311,31 +284,6 @@
 									</c:forEach>
 								</tbody>
 							</table>
-							
-							<div class="pull-right">
-								<ul class="pagination">
-									
-									<c:if test="${pageMaker.prev }">
-									<li class="paginate_button previous">
-										<a href="${pageMaker.startPage -1 }">Previous</a>
-									</li>
-									</c:if>
-									
-									<c:forEach var="num" begin="${pageMaker.startPage }"
-										end="${pageMaker.endPage}">
-										<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }">
-											<a href="${num }">${num }</a>
-										</li>
-									</c:forEach>
-									
-									<c:if test="${pageMaker.next }">
-										<li class="paginate_button next">
-											<a href="${pageMaker.endPage +1 }">Next</a>
-										</li>
-									</c:if>
-								</ul>
-							</div>
-							<!-- end Pagination -->
 						</div><!-- 테이블 끝 -->
 						
 						<!-- <div>미출근자/휴가자
@@ -360,7 +308,7 @@
 						value="<fmt:formatDate
 												value="${hrVO.hr_date }" pattern="HH:mm:ss" />">
 					<!-- 정보출력부분의 끝 -->
-					
+
 				</div>
 			</div>
 		</div>

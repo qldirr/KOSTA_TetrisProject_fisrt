@@ -44,16 +44,16 @@ public class HrControllerTests {
 	@Test
 	public void test() throws Exception{
 		
-		String resultPage = 
-				mockMvc.perform(MockMvcRequestBuilders.post("/attendance/insertAction.do")
-						.param("e_id", "jhs123"))
+		log.info(mockMvc.perform(
+				MockMvcRequestBuilders.get("/attendance/personAll")
+						)
 						.andReturn()
 						.getModelAndView()
-						.getViewName();
-		log.info(resultPage);
+						.getModelMap());
+						
 	}
 	
-	//개인정보
+	//媛쒖씤�젙蹂�
 //	@Test
 //	public void testGetHr() throws Exception{
 //		log.info(
@@ -65,7 +65,7 @@ public class HrControllerTests {
 //						);
 //	}
 	
-	//리스트테스트
+	//由ъ뒪�듃�뀒�뒪�듃
 //	@Test
 //	public void testGetList()throws Exception {
 //		

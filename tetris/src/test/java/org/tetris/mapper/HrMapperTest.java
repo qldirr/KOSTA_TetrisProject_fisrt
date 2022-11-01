@@ -2,12 +2,14 @@ package org.tetris.mapper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.tetris.domain.Criteria;
 import org.tetris.domain.HrVO;
 
 import lombok.extern.log4j.Log4j;
@@ -20,13 +22,22 @@ public class HrMapperTest {
 	@Autowired
 	private HrMapper mapper;
 	
+	@Test
+	public void testPaging() {
+		Criteria cri = new Criteria();
+		cri.setPageNum(3);
+		cri.setAmount(10);
+		List<HrVO> list = mapper.getHrWithPaging(cri);
+		list.forEach(hr -> log.info(hr.getHr_num()));
+	}
+	
 //	@Test
 //	public void testGetHr() {
 //		HrVO hr = mapper.getHr("001");
 //		log.info(hr);
 //	}
 	
-	//출근테스트
+	//異쒓렐�뀒�뒪�듃
 //	@Test
 //	public void testInsert() {
 //		
@@ -35,7 +46,7 @@ public class HrMapperTest {
 //		log.info(hr);
 //	}
 	
-	//퇴근테스트
+	//�눜洹쇳뀒�뒪�듃
 //	@Test
 //	public void testLeaving() {
 //		HrVO hrVO = new HrVO();

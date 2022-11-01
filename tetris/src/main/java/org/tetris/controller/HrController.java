@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.tetris.domain.Criteria;
 import org.tetris.domain.HrVO;
+import org.tetris.domain.PageDTO;
 import org.tetris.service.HrService;
 
 import lombok.AllArgsConstructor;
@@ -88,14 +90,24 @@ public class HrController {
 //personAll.jsp
 	
 	//처음들어가면 리스트 출력
-	@GetMapping("/personAll")
-	public void get(Model model) {
-		log.info("get...");
-		
-		model.addAttribute("list", service.getHrAll());
-	}
+//	@GetMapping("/personAll")
+//	public void get(Model model) {
+//		log.info("get...");
+//		
+//		model.addAttribute("list", service.getHrAll());
+//	}
 	
 	
+	  @GetMapping("/personAll") 
+	  public void getAll(Criteria cri, Model model) {
+	  
+		  log.info("list: " + cri);
+		  model.addAttribute("list", service.getHrWithPaging(cri));
+		  int total = service.getTotal(cri);
+		  log.info("total: " + total);
+		  model.addAttribute("pageMaker", new PageDTO(cri, total));
+	  }
+	 
 	
 	
 	

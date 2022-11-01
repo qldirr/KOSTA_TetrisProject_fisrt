@@ -2,6 +2,7 @@ package org.tetris.mapper;
 
 import java.util.List;
 
+import org.tetris.domain.Criteria;
 import org.tetris.domain.HrVO;
 
 public interface HrMapper {
@@ -15,4 +16,8 @@ public interface HrMapper {
 	public int outDate(String e_id);
 	
 	public List<HrVO> getHrAll();
+	
+	public List<HrVO> getHrWithPaging(Criteria cri);
+	
+	public int getTotalCount(Criteria cri);
 }

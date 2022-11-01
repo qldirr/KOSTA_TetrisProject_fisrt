@@ -2,6 +2,7 @@ package org.tetris.service;
 
 import java.util.List;
 
+import org.tetris.domain.Criteria;
 import org.tetris.domain.HrVO;
 
 public interface HrService {
@@ -17,6 +18,10 @@ public interface HrService {
 	public List<HrVO> getHrList(String e_id);
 	
 	//personAll.jsp
+
 	public List<HrVO> getHrAll();
+
+	public List<HrVO> getHrWithPaging(Criteria cri);
 	
+	public int getTotal(Criteria cri);
 }

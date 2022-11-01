@@ -3,6 +3,7 @@ package org.tetris.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.tetris.domain.Criteria;
 import org.tetris.domain.HrVO;
 import org.tetris.mapper.HrMapper;
 
@@ -60,4 +61,19 @@ public class HrServiceImpl implements HrService {
 	}
 
 
+	@Override
+	public List<HrVO> getHrWithPaging(Criteria cri) {
+		
+		log.info("get List with criteria: " + cri);
+		return hrMapper.getHrWithPaging(cri);
+	}
+
+	@Override
+	public int getTotal(Criteria cri) {
+		
+		log.info("get total count");
+		return hrMapper.getTotalCount(cri);
+	}
+
+	
 }
