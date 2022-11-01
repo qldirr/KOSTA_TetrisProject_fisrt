@@ -62,7 +62,11 @@
 	
 	<insert id="registerMsg" parameterType="org.tetris.domain.chat.ChatMsgVO">
 		insert into chatmsg (cm_num, e_id, cr_id, cm_to, cm_contents, cm_regdate, cm_status)
-			values(cm_num_seq.nextval, #{e_id}, #{cr_id}, #{cm_to}, #{cm_contents}, sysdate, #{cm_status})
+			values(cm_num_seq.nextval, #{e_id}, #{cr_id}, 'null', #{cm_contents}, to_char(sysdate,'yyyy/mm/dd hh:mi:ss'), 'null')
 	</insert>
+	
+	<select id="getListMsg" parameterType="String" resultType="org.tetris.domain.chat.ChatMsgVO">
+		select * from chatmsg where cr_id = #{cr_id}
+	</select>
 
 </mapper>

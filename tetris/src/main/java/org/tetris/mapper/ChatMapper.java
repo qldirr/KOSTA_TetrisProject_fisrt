@@ -20,5 +20,6 @@ public interface ChatMapper {
 	public List<ChatRoomVO> getListCRoom(String e_id);
 	public ChatRoomVO getCRoom(String cr_id);
 	public int registerMsg(ChatMsgVO chatMsgVO);
+	public List<ChatMsgVO> getListMsg(String cr_id);
 
 }

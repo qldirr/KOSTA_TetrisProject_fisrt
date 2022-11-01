@@ -13,7 +13,7 @@ public class ChatMsgVO {
 	
 	private String cm_num;
 	private String e_id;
-	private String cr_num;
+	private String cr_id;
 	private String cm_to;
 	private String cm_contents;
 	private String cm_regdate;

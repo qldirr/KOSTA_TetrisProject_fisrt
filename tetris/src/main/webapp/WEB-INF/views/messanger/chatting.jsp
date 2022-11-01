@@ -17,8 +17,11 @@
 	<input type="button" id="sendBtn" value="submit"/>
 	<div id="messageArea"></div>
 	<input type="hidden" id="roomId" value="${cr_id}">
-	<h1>방이름</h1>
 	<h1>${cr_id}</h1>
+	<div><h4><sec:authentication property="principal" var="principal"/></h4></div>
+	<c:forEach items="${listChatMsg }" var="list">
+		<h6>${list.cm_contents }</h6><br>
+	</c:forEach>
 </body>
 <script type="text/javascript">
 
@@ -35,7 +38,8 @@
 	
 	var roomId = $("#roomId").val();
 	var webSocket;
-	webSocket = new WebSocket("ws://localhost:8081/chatting/" + roomId);
+	/* webSocket = new WebSocket("ws://localhost:8081/chatting/" + roomId); */
+	webSocket = new SockJS("http://localhost:8081/chatting/" + roomId);
 	webSocket.onopen = onOpen;
 	webSocket.onmessage = onMessage;
 	webSocket.onclose = onClose;
@@ -44,17 +48,43 @@
 		/* alert("채팅 접속"); */
 	}
 	
-	/* var sock = new SockJS("http://localhost:8081/chatting" + "${user.e_name}");
-	sock.onmessage = onMessage;
-	sock.onclose = onClose; */
 	// 메시지 전송
 	function sendMessage() {
+		/* var data = {
+				"cr_id" : roomId,
+				"e_id" : "e_id"<sec:authentication property="principal.username"/>,
+				"cm_contents" : $("#message").val()
+			}
+			var jsonData = JSON.stringify(data);
+			webSocket.send(jsonData); */
+		var e_id = '${principal.username}';
+		$.ajax({
+			url: '/messanger/registerMsg',
+			type: 'post',
+			contentType: 'application/json',
+			async: false,
+			data: JSON.stringify({
+				"cr_id" : roomId,
+				"e_id" : e_id,
+				"cm_contents" : $("#message").val()
+			}),
+			success : function(){
+				alert("success");
+			}
+		});
 		webSocket.send($("#message").val());
 	}
 	// 서버로부터 메시지를 받았을 때
 	function onMessage(msg) {
+		/* var receive = msg.data.split(",");
+		var data = {
+			"cr_id" : receive[0],
+			"e_id" : receive[1],
+			"cm_contents" : receive[2]
+		}; */
+		
 		var data = msg.data;
-		$("#messageArea").append(data + "<br/>");
+		$("#messageArea").append(data/* .cm_contents */ + "<br/>");
 	}
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {

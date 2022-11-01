@@ -70,4 +70,10 @@ public class ChatServiceImpl implements ChatService {
 		return mapper.registerMsg(chatMsgVO);
 	}
 
+	@Override
+	public List<ChatMsgVO> getListMsg(String cr_id) {
+		List<ChatMsgVO> listChatMsg = mapper.getListMsg(cr_id);
+		return listChatMsg;
+	}
+
 }
