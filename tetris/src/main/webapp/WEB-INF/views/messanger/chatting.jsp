@@ -11,6 +11,50 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+		$(document).ready(function(){
+			
+			$("#uploadBtn").on("submit", function(e){
+				 var formData = new FormData();
+				 var inputFile = $("input[name='uploadFile']");
+				 var files = inputFile[0].files;
+				
+				 console.log(files);
+				 
+				 for(var i=0;i<files.length;i++){
+					 formData.append("uploadFile", files[i]);
+				 }
+				 
+				 $.ajax({
+					 url: '/messanger/uploadAjaxAction',
+					 processData: false,
+					 contentType: false,
+					 data: formData
+					 type: 'POST',
+					 success: function(result){
+					 	alert("Uploaded");
+					 }
+				}); //$.ajax
+				
+				/* $.ajax({
+					 url: '/messanger/uploadAjaxAction',
+					 processData: false,
+					 contentType: 'application/json',
+					 data: JSON.stringify({"cr_id" : cr_id})
+					 type: 'POST',
+					 success: function(result){
+					 	alert("Uploaded");
+					 }
+				}); */
+				 
+			});//end uploadBtn click
+		});//end document read
+</script>
+
 </head>
 <body>
 	<input type="text" id="message" />
@@ -19,9 +63,29 @@
 	<input type="hidden" id="roomId" value="${cr_id}">
 	<h1>${cr_id}</h1>
 	<div><h4><sec:authentication property="principal" var="principal"/></h4></div>
-	<c:forEach items="${listChatMsg }" var="list">
-		<h6>${list.cm_contents }</h6><br>
-	</c:forEach>
+	<form id="uploadBtn" action="/messanger/uploadAjaxAction" method="post">
+	<input type="hidden" id="cr_id" value="${cr_id}">
+	<div class='uploadDiv'>
+		<input type='file' name='uploadFile' multiple>
+	</div>
+
+	<div class='uploadResult'>
+		<ul>
+
+		</ul>
+	</div>
+
+	<input type="submit" value="Upload">
+	<!-- <button id='uploadBtn'>Upload</button> -->
+	</form>
+	
+	<%-- <c:forEach items="${listChatMsg }" var="list">
+		<c:out value="${list.cm_contents}" /><br>
+	</c:forEach> --%>
+	<!-- <form action="/messanger/chatting/{roomId}/fileupload" method='post' enctype='multipart/form-data'>
+		<input type="file" name="uploadFile" multiple />
+		<button>Submit</button>
+	</form><br> -->
 </body>
 <script type="text/javascript">
 
@@ -44,8 +108,13 @@
 	webSocket.onmessage = onMessage;
 	webSocket.onclose = onClose;
 	
-	function onOpen(msg){
-		/* alert("채팅 접속"); */
+	function onOpen(){
+		/* alert("웹소켓 접속"); */
+		html = '<c:forEach items="${listChatMsg }" var="list">';
+		html += '<c:out value="${list.e_id}" />: ';
+		html += '<c:out value="${list.cm_contents}" /><br>';
+		html += '</c:forEach>';
+		$("#messageArea").append(html);
 	}
 	
 	// 메시지 전송

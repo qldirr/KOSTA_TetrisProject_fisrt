@@ -31,8 +31,9 @@
 				type: 'post',
 				contentType: 'application/json',
 				data: JSON.stringify({"e_id" : empId}),
-				success : function() {
-					window.location.href = "/messanger/chatting";
+				success : function(result) {
+					/* alert(result); */
+					location.href = "/messanger/chatting";
 				}
 			});
 		})
