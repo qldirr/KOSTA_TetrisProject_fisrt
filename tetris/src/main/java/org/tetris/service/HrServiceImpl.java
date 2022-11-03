@@ -1,3 +1,4 @@
+
 package org.tetris.service;
 
 import java.util.List;
@@ -73,6 +74,11 @@ public class HrServiceImpl implements HrService {
 		
 		log.info("get total count");
 		return hrMapper.getTotalCount(cri);
+	}
+
+	@Override
+	public List<HrVO> getPersonal(String e_id) {
+		return hrMapper.getPersonal(e_id);
 	}
 
 	

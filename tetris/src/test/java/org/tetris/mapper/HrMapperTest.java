@@ -23,13 +23,26 @@ public class HrMapperTest {
 	private HrMapper mapper;
 	
 	@Test
-	public void testPaging() {
+	public void testSearch() {
+		
 		Criteria cri = new Criteria();
-		cri.setPageNum(3);
-		cri.setAmount(10);
+		cri.setD_num("02");
+		cri.setE_name("철");
+		cri.setType("NDE");	
+		
 		List<HrVO> list = mapper.getHrWithPaging(cri);
-		list.forEach(hr -> log.info(hr.getHr_num()));
+		
+		list.forEach(hr -> log.info(hr));
 	}
+	
+//	@Test
+//	public void testPaging() {
+//		Criteria cri = new Criteria();
+//		cri.setPageNum(3);
+//		cri.setAmount(10);
+//		List<HrVO> list = mapper.getHrWithPaging(cri);
+//		list.forEach(hr -> log.info(hr.getHr_num()));
+//	}
 	
 //	@Test
 //	public void testGetHr() {
@@ -37,7 +50,7 @@ public class HrMapperTest {
 //		log.info(hr);
 //	}
 	
-	//異쒓렐�뀒�뒪�듃
+	//�빊�뮄�젏占쎈�믭옙�뮞占쎈뱜
 //	@Test
 //	public void testInsert() {
 //		
@@ -46,7 +59,7 @@ public class HrMapperTest {
 //		log.info(hr);
 //	}
 	
-	//�눜洹쇳뀒�뒪�듃
+	//占쎈닚域뱀눛�믭옙�뮞占쎈뱜
 //	@Test
 //	public void testLeaving() {
 //		HrVO hrVO = new HrVO();

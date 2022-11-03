@@ -321,7 +321,7 @@
 											<input type="text" id="datePicker" name="seacrh_date">
 											<!-- 사원이름검색 -->
 											<h6>이름검색</h6>
-											<input type="text" name='keyword' value='<c:out value="${pageMaker.cri.e_name}"/>'/>
+											<input type="text" name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
 											<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
 											<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount}"/>'/>
 											<button class="btn btn-default mx-2">검색</button>

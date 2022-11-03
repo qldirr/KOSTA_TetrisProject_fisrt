@@ -24,4 +24,6 @@ public interface HrService {
 	public List<HrVO> getHrWithPaging(Criteria cri);
 	
 	public int getTotal(Criteria cri);
+	
+	public List<HrVO> getPersonal(String e_id);
 }

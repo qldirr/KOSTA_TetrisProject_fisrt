@@ -4,41 +4,43 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tetris.mapper.HrMapper">
 
+	<!-- person.jsp -->
 	<!-- 사원페이지 처음들어갔을때 -->
 	<select id="getHr" resultType="org.tetris.domain.HrVO">
-		select h.hr_num as hr_num, e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, 
-        	e.e_position as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
-        	h.hr_status as hr_status, h.hr_note as hr_note
-    		from employee e right join department d
-    			on e.d_num = d.d_num
-    		left outer join hr h
-    			on e.e_id = h.e_id
-            where e.e_id = #{e_id} 
-            	AND (to_char(h.hr_date,'yyyymmdd') =to_char(sysdate, 'yyyymmdd')OR h.hr_date is null)
+		select h.hr_num as hr_num, e.e_id as e_id,
+		e.e_name as e_name, e.e_num as e_num, d.d_name as d_name,
+		e.e_position as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
+		h.hr_status as hr_status, h.hr_note as hr_note
+		from employee e right join department d
+		on e.d_num = d.d_num
+		left outer join hr h
+		on e.e_id = h.e_id
+		where e.e_id = #{e_id}
+		AND (to_char(h.hr_date,'yyyymmdd') =to_char(sysdate, 'yyyymmdd')OR
+		h.hr_date is null) order by hr_date desc
 	</select>
 
 	<!-- 사원이 속한 부서의 리스트 가지고오기 -->
 	<select id="getHrList" resultType="org.tetris.domain.HrVO">
-		select h.hr_num as hr_num, e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
-   			 h.hr_status as hr_status, h.hr_note as hr_note
-    		from employee e right join hr h
-    		on e.e_id = h.e_id
-    		join department d
-    		on e.d_num = d.d_num
-    		where d.d_num = (select d_num from employee where e_id = #{e_id})
+		select h.hr_num as hr_num,
+		e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position
+		as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
+		h.hr_status as hr_status, h.hr_note as hr_note
+		from employee e right join hr h
+		on e.e_id = h.e_id
+		join department d
+		on e.d_num = d.d_num
+		where d.d_num = (select d_num from employee where e_id = #{e_id}) order by hr_date desc
 	</select>
-	
-	
- 	<!-- 한사원의 정보 -->
-<!--	<select id="getHr" resultType="org.tetris.domain.HrVO">
-		select h.hr_num as hr_num, e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
-   			 h.hr_status as hr_status, h.hr_note as hr_note
-    		from employee e right join hr h
-    		on e.e_id = h.e_id
-    		join department d
-    		on e.d_num = d.d_num
-    		where to_char(hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd')
-	</select> -->
+
+
+	<!-- 한사원의 정보 -->
+	<!-- <select id="getHr" resultType="org.tetris.domain.HrVO"> select h.hr_num 
+		as hr_num, e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position 
+		as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave, h.hr_status 
+		as hr_status, h.hr_note as hr_note from employee e right join hr h on e.e_id 
+		= h.e_id join department d on e.d_num = d.d_num where to_char(hr_date, 'yyyymmdd')=to_char(sysdate, 
+		'yyyymmdd') </select> -->
 
 	<!-- 출근하기 -->
 	<insert id="startDate">
@@ -52,42 +54,86 @@
        		 (select * from hr where e_id=#{e_id} AND to_char(hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd'))
 		]]>
 	</insert>
-	
+
 	<!-- 외근 -->
 	<update id="outDate">
-		update hr set hr_status='외근' where e_id = #{e_id} and to_char(hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd')
-	</update>
-	
-	<!-- 퇴근 -->
-	<update id="endDate">
-		update hr set hr_leave = sysdate, hr_status='퇴근' where e_id = #{e_id} and to_char(hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd')
+		update hr set hr_status='외근' where e_id = #{e_id} and
+		to_char(hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd')
 	</update>
 
-	<!-- 오늘리스트 출력 -->  <!-- 
-	<select id="listHr" resultType="org.tetris.domain.HrVO">
-		select h.hr_num, e.e_name, d.d_name, e.e_position, h.hr_date, h.hr_leave,
-	    	h.hr_status, h.hr_note
-	    	from employee e right join hr h
-	    	on e.e_id = h.e_id
-	    	join department d
-	    	on e.d_num = d.d_num
-	    	where to_char(h.hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd');
-	</select> -->
-	
-	
-	
+	<!-- 퇴근 -->
+	<update id="endDate">
+		update hr set hr_leave = sysdate, hr_status='퇴근'
+		where e_id = #{e_id} and to_char(hr_date, 'yyyymmdd')=to_char(sysdate,
+		'yyyymmdd')
+	</update>
+
+	<!-- 오늘리스트 출력 -->  <!-- <select id="listHr" resultType="org.tetris.domain.HrVO"> select h.hr_num, 
+		e.e_name, d.d_name, e.e_position, h.hr_date, h.hr_leave, h.hr_status, h.hr_note 
+		from employee e right join hr h on e.e_id = h.e_id join department d on e.d_num 
+		= d.d_num where to_char(h.hr_date, 'yyyymmdd')=to_char(sysdate, 'yyyymmdd'); 
+		</select> -->
+
+
+
+
+	<!-- personal.jsp -->
+	<!-- 개인근태페이지 개인정보만 가져온다 -->
+	<select id="getPersonal" resultType="org.tetris.domain.HrVO">
+		select h.hr_num as hr_num,
+		e.e_name as e_name, e.e_num as e_num, d.d_name as d_name,
+		e.e_position as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
+		h.hr_status as hr_status, h.hr_note as hr_note
+		from employee e right join department d
+		on e.d_num = d.d_num
+		left outer join hr h
+		on e.e_id = h.e_id
+		where e.e_id = #{e_id} order by hr_date desc
+	</select>
+
+
+
 	<!-- personAll.jsp -->
-	
 	<!-- 들어가자마자 모든부서의 리스트 가져오기(페이징처리, 검색) -->
 	<select id="getHrAll" resultType="org.tetris.domain.HrVO">
-		select h.hr_num as hr_num, e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
-   			 h.hr_status as hr_status, h.hr_note as hr_note
-    		from employee e right join hr h
-    		on e.e_id = h.e_id
-    		join department d
-    		on e.d_num = d.d_num
+		select h.hr_num as hr_num,
+		e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position
+		as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
+		h.hr_status as hr_status, h.hr_note as hr_note
+		from employee e right join hr h
+		on e.e_id = h.e_id
+		join department d
+		on e.d_num = d.d_num
 	</select>
-	
+
+
+
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'N'.toString()">
+							<if test="d_num != null">
+								d.d_num like '%'||#{d_num}||'%'
+							</if>
+						</when>
+						<when test="type == 'D'.toString()">
+							<if test = "hr_date != null">
+								h.hr_date like '%'||#{hr_date}||'%'
+							</if>
+						</when>
+						<when test="type == 'E'.toString()">
+							<if test="e_name != null">
+								e.e_name like '%'||#{e_name}||'%'
+							</if>
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
 	<select id="getHrWithPaging" resultType="org.tetris.domain.HrVO">
 		<![CDATA[
 			select rn, hr_num, e_name, e_num, d_name, e_position, hr_date, hr_leave,
@@ -99,23 +145,37 @@
 	    		from employee e right join hr h
 	    		on e.e_id = h.e_id
 	    		join department d
-	    		on e.d_num = d.d_num where rownum <= #{pageNum} * #{amount}) 
-	    		where rn > (#{pageNum} -1) * #{amount}
+	    		on e.d_num = d.d_num 
+	    		where 
+		]]>
+		
+		<include refid="criteria"></include>
+		
+		<![CDATA[	    		
+	    		rownum <= #{pageNum} * #{amount}
+	    		) 
+	    	where rn > (#{pageNum} -1) * #{amount}
 		]]>
 	</select>
-	
+
 	<select id="getTotalCount" resultType="int">
-		select count(*) from (select h.hr_num as hr_num, e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
-   			 h.hr_status as hr_status, h.hr_note as hr_note
-    		from employee e right join hr h
-    		on e.e_id = h.e_id
-    		join department d
-    		on e.d_num = d.d_num) where hr_num > 0
+		select count(*) from
+		(select h.hr_num as hr_num, e.e_name as e_name, e.e_num as e_num,
+		d.d_name as d_name, e.e_position as e_position, h.hr_date as hr_date,
+		h.hr_leave as hr_leave,
+		h.hr_status as hr_status, h.hr_note as hr_note
+		from employee e right join hr h
+		on e.e_id = h.e_id
+		join department d
+		on e.d_num = d.d_num) where 
+		
+		<include refid="criteria"></include>
+		
+		hr_num > 0
 	</select>
-	
 
 
-
+											
 
 
 

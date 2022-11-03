@@ -26,7 +26,6 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 
-<!-- 개인정보 페이지 -->
 <title>TETRIS Groupware</title>
 <script>
 	$(document).ready(
@@ -108,7 +107,7 @@
 						alert('안녕히다녀오세요');
 						var e_id = getParam('e_id');
 						console.log(e_id);
-						
+
 						$.ajax({
 							url : 'outAction.do',
 							type : 'POST',
@@ -186,14 +185,13 @@
 					<div>
 						<div>
 							<div>
-								<h3>근태관리 페이지</h3>
+								<h3>개인근태조회페이지</h3>
 								<h5>어서오세요 ${hrVO.e_name }님</h5>
 								<input type="text" id="datePicker">
 								<ul>
 									<li>근태입력</li>
-									<li><a href="">일별 부서 근태기록조회</a></li>
-									<li><a href="">월별 개인 근태기록조회</a></li>
-									<li><a href="">휴가현황</a></li>
+									<li><a href="/attendance/personal?e_id=${hrVO.e_id }">개인근태기록조회</a></li>
+									<li><a href="/attendance/vacation">개인연차현황</a></li>
 								</ul>
 							</div>
 						</div>
@@ -239,18 +237,73 @@
 					<!-- 상단부분 -->
 					<div></div>
 
-					<br>
-					<br>
+					<br> <br>
 					<!-- 정보출력부분 -->
 					<div>
+						<h5 class="my-2">소속부서: ${hrVO.d_name }</h5>
 
+						<!-- 근태누계 -->
+						<div class="panel panel-default my-5">
+							<div class="panel-heading">근태누계</div>
+							<div class="panel-body">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>사원번호</th>
+											<th>이름</th>
+											<th>부서</th>
+											<th>정상출근</th>
+											<th>지각</th>
+											<th>결근</th>
+											<th>휴가</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>${hrVO.e_num }</td>
+											<td>${hrVO.e_name }</td>
+											<td>${hrVO.d_name }</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- 누계정보끝 -->
+
+						<!-- 연차누계 -->
+						<div class="panel panel-default my-5">
+							<div class="panel-heading">연차현황</div>
+							<div class="panel-body">
+								<table class="table table-hover">
+									<thead>
+										<tr class="text-center">
+											<th>Total</th>
+											<th>사용일수</th>
+											<th>잔여일수</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- 누계정보끝 -->
+						
 						<!-- 테이블 -->
 						<div>
-							<h5>소속부서: ${hrVO.d_name }</h5>
 							<!-- 
 								<div>선택날짜</div>
 							 -->
-							<table class="table table-striped"
+							<table class="table table-striped mt-8"
 								style="text-align: center; border: 1px solid #dddddd">
 								<thead>
 									<tr>
@@ -284,8 +337,11 @@
 									</c:forEach>
 								</tbody>
 							</table>
-						</div><!-- 테이블 끝 -->
-						
+
+
+						</div>
+						<!-- 테이블 끝 -->
+
 						<!-- <div>미출근자/휴가자
 							<h7>미출근자/휴가자</h7>
 							<table>

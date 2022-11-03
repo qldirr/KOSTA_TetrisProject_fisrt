@@ -190,9 +190,8 @@
 								<input type="text" id="datePicker">
 								<ul>
 									<li>근태입력</li>
-									<li><a href="">일별 부서 근태기록조회</a></li>
-									<li><a href="">월별 개인 근태기록조회</a></li>
-									<li><a href="">휴가현황</a></li>
+									<li><a href='/attendance/personal?e_id=<c:out value="${hrVO.e_id}"/>' target="_blank">개인근태기록조회</a></li>
+									<li><a href="/attendance/vacation">개인연차현황</a></li>
 								</ul>
 							</div>
 						</div>
@@ -205,7 +204,7 @@
 								style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
 								id="clock"></div>
 							<!-- 출근시간 -->
-							<dl>
+							<dl class="mb-3">
 								<dt>출근시간</dt>
 								<dd id="startTime">
 									<fmt:formatDate value="${hrVO.hr_date }"
@@ -213,7 +212,7 @@
 								</dd>
 							</dl>
 							<!-- 퇴근시간 -->
-							<dl>
+							<dl class="mb-3">
 								<dt>퇴근시간</dt>
 								<dd id="endTime">
 									<fmt:formatDate value="${hrVO.hr_leave }"
@@ -226,7 +225,7 @@
 								<dd id=""></dd>
 							</dl>
 							<!-- 출퇴근버튼 -->
-							<div>
+							<div class="my-5">
 								<button id="startD">출근하기</button>
 								<button id="endD">퇴근하기</button>
 								<button id="outD">외근</button>
@@ -244,7 +243,7 @@
 					<div>
 
 						<!-- 테이블 -->
-						<div>
+						<div class="my-3">
 							<h5>소속부서: ${hrVO.d_name }</h5>
 							<!-- 
 								<div>선택날짜</div>

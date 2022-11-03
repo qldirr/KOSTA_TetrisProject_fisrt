@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,14 +37,13 @@ public class HrController {
 //person.jsp 개인근태페이지 - e_id로 정보출력
 	@GetMapping("/person")
 	public void get(@RequestParam("e_id") String e_id, Model model) {
-		log.info("/get");
+		log.info("/person");
 		
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getHrList(e_id));
 		
+		log.info(service.getHr(e_id));
 	}
-	
-	
 	
 	//출근하기
 	@PostMapping("/insertAction.do")
@@ -85,18 +85,19 @@ public class HrController {
 		return "redirect:/attendance/get";
 	} 
 	
+//personal.jsp 개인근태조회
+	
+	@GetMapping("/personal")
+	public void getPersonal(@RequestParam("e_id") String e_id, @ModelAttribute("cri") Criteria cri, Model model) {
+		log.info("/personal");
+		log.info("e_id: " + e_id);
+		model.addAttribute("hrVO", service.getHr(e_id));
+		model.addAttribute("list", service.getPersonal(e_id));
+	}
 	
 	
-//personAll.jsp
 	
-	//처음들어가면 리스트 출력
-//	@GetMapping("/personAll")
-//	public void get(Model model) {
-//		log.info("get...");
-//		
-//		model.addAttribute("list", service.getHrAll());
-//	}
-	
+//personAll.jsp 전사근태페이지
 	
 	  @GetMapping("/personAll") 
 	  public void getAll(Criteria cri, Model model) {

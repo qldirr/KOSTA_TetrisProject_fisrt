@@ -20,4 +20,6 @@ public interface HrMapper {
 	public List<HrVO> getHrWithPaging(Criteria cri);
 	
 	public int getTotalCount(Criteria cri);
+	
+	public List<HrVO> getPersonal(String e_id);
 }
