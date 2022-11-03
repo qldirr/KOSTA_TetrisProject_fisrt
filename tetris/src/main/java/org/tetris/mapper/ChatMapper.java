@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.tetris.domain.DepartmentVO;
 import org.tetris.domain.EmployeeVO;
+import org.tetris.domain.chat.ChatFileVO;
 import org.tetris.domain.chat.ChatMsgVO;
 import org.tetris.domain.chat.ChatParticipantVO;
 import org.tetris.domain.chat.ChatRoomVO;
@@ -21,5 +22,7 @@ public interface ChatMapper {
 	public ChatRoomVO getCRoom(String cr_id);
 	public int registerMsg(ChatMsgVO chatMsgVO);
 	public List<ChatMsgVO> getListMsg(String cr_id);
+	public int registerCFile(ChatFileVO chatFileVO);
+	public List<ChatFileVO> getListCFile(String cr_id);
 
 }

@@ -16,43 +16,103 @@
 		crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-		$(document).ready(function(){
+	var roomId = $("#roomId").val();
+
+	$(document).ready(function(){
+		//$("#uploadBtn").on("click", function(e){
 			
-			$("#uploadBtn").on("submit", function(e){
-				 var formData = new FormData();
-				 var inputFile = $("input[name='uploadFile']");
-				 var files = inputFile[0].files;
-				
-				 console.log(files);
-				 
-				 for(var i=0;i<files.length;i++){
-					 formData.append("uploadFile", files[i]);
-				 }
-				 
-				 $.ajax({
-					 url: '/messanger/uploadAjaxAction',
-					 processData: false,
-					 contentType: false,
-					 data: formData
-					 type: 'POST',
-					 success: function(result){
-					 	alert("Uploaded");
-					 }
-				}); //$.ajax
-				
-				/* $.ajax({
-					 url: '/messanger/uploadAjaxAction',
-					 processData: false,
-					 contentType: 'application/json',
-					 data: JSON.stringify({"cr_id" : cr_id})
-					 type: 'POST',
-					 success: function(result){
-					 	alert("Uploaded");
-					 }
-				}); */
-				 
-			});//end uploadBtn click
-		});//end document read
+		var regex = new RegExp("(.*?)\.(exe|sh)$");
+		var maxSize = 41943040; //40MB
+
+		function checkExtension(fileName, fileSize) {
+
+			if (fileSize >= maxSize) {
+				alert("파일 사이즈 초과");
+				return false;
+			}
+
+			if (regex.test(fileName)) {
+				alert("해당 종류의 파일은 업로드할 수 없습니다.");
+				return false;
+			}
+			return true;
+		}
+		
+		
+		$("#file").on("change", function(e){
+			var formData = new FormData();
+			var inputFile = $("input[name='uploadFile']");
+			var files = inputFile[0].files;
+		
+			//console.log(files);
+		 
+			/* for(var i=0;i<files.length;i++){
+				formData.append("uploadFile", files[i]);
+			} */
+			
+			for (var i = 0; i < files.length; i++) {
+				if (!checkExtension(files[i].name, files[i].size)) {
+					return false;
+				}
+				formData.append("uploadFile", files[i]);
+				formData.append("cr_id", roomId);
+			}
+		 
+			$.ajax({
+				url: '/messanger/uploadAjaxAction',
+				processData: false,
+				contentType: false,
+				data: formData,
+				type: 'post',
+				dataType: 'json',
+				success: function(result){
+					alert("Uploaded");
+					
+					
+					showUploadedFile(result);
+			 		$(".uploadDi").html(cloneObj.html());
+				}
+			}); //$.ajax
+			
+		});//end uploadBtn click
+		
+		
+		
+		
+		
+		
+		var cloneObj = $(".uploadDiv").clone();
+		var uploadResult = $(".uploadResult ul");
+		
+		function showUploadedFile(uploadResultArr) {
+		var str = "";
+		$(uploadResultArr).each(function(i, obj) {
+			str += "<li>" + obj.fileName + "</li>";
+		});
+		 
+		uploadResult.append(str);
+		}
+		 
+		/* function showUploadedFile(uploadResultArr){
+			var str = "";
+		    
+			$(uploadResultArr).each(function(i, obj){
+			if(!obj.image){
+				var fileCallPath =  encodeURIComponent( obj.uploadPath+"/" + obj.uuid + "_" + obj.fileName);
+				str += "<li><a href='messanger/download?fileName=" + fileCallPath + "'>" 
+		        		+"<img src='/resources/img/attach.png'>" + obj.fileName+"</a></li>"
+				}else{
+				var fileCallPath =  encodeURIComponent( obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+					str += "<li><img src='messanger/display?fileName=" + fileCallPath + "'><li>";
+				}
+		});
+		    
+			uploadResult.append(str);
+		} */
+		 
+		 
+		 
+	});//end document read
 </script>
 
 </head>
@@ -60,13 +120,31 @@
 	<input type="text" id="message" />
 	<input type="button" id="sendBtn" value="submit"/>
 	<div id="messageArea"></div>
+	
+	<c:forEach items="${listChatMsg }" var="listCM">
+		<c:forEach items="${listChatFile }" var="listCF">
+			<c:choose>
+				<c:when test="${listCF.cf_regdate < listCM.cm_regdate }">
+					<c:out value="${listCF.e_id }"/>: <c:out value="${listCF.cf_name }"/><br>
+				</c:when>
+				
+				<c:otherwise>
+					<c:out value="${listCM.e_id }"/>: <c:out value="${listCM.cm_contents }"/><br>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	</c:forEach>
+	
+	
+	
+	
 	<input type="hidden" id="roomId" value="${cr_id}">
 	<h1>${cr_id}</h1>
 	<div><h4><sec:authentication property="principal" var="principal"/></h4></div>
-	<form id="uploadBtn" action="/messanger/uploadAjaxAction" method="post">
-	<input type="hidden" id="cr_id" value="${cr_id}">
+	
+	<!-- 파일 업로드 버튼 -->
 	<div class='uploadDiv'>
-		<input type='file' name='uploadFile' multiple>
+		<input type='file' id="file" name='uploadFile' multiple>
 	</div>
 
 	<div class='uploadResult'>
@@ -75,9 +153,8 @@
 		</ul>
 	</div>
 
-	<input type="submit" value="Upload">
+
 	<!-- <button id='uploadBtn'>Upload</button> -->
-	</form>
 	
 	<%-- <c:forEach items="${listChatMsg }" var="list">
 		<c:out value="${list.cm_contents}" /><br>
@@ -110,11 +187,6 @@
 	
 	function onOpen(){
 		/* alert("웹소켓 접속"); */
-		html = '<c:forEach items="${listChatMsg }" var="list">';
-		html += '<c:out value="${list.e_id}" />: ';
-		html += '<c:out value="${list.cm_contents}" /><br>';
-		html += '</c:forEach>';
-		$("#messageArea").append(html);
 	}
 	
 	// 메시지 전송

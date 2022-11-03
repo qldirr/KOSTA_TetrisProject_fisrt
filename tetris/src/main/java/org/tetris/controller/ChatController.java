@@ -1,10 +1,15 @@
 package org.tetris.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -17,6 +22,9 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,15 +32,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.DepartmentVO;
 import org.tetris.domain.EmployeeVO;
@@ -48,6 +59,7 @@ import com.google.gson.GsonBuilder;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
 @RequestMapping("/messanger/**")
@@ -122,12 +134,14 @@ public class ChatController {
 		String cr_id = (String)map.get("cr_id");
 		session.setAttribute("cr_id", cr_id);
 		List<ChatMsgVO> listChatMsg = chatService.getListMsg(cr_id);
+		List<ChatFileVO> listChatFile = chatService.getListCFile(cr_id);
 //		response.setContentType("application/json; charset=utf-8");
 //		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 //        gson.toJson(listChatMsg, response.getWriter());
 //		model.addAttribute("listChatMsg",listChatMsg);
 //		rttr.addAttribute("listChatMsg", listChatMsg);
 		session.setAttribute("listChatMsg", listChatMsg);
+		session.setAttribute("listChatFile", listChatFile);
 //		return "redirect:/messanger/chatting/{roomId}";
 	}
 	
@@ -152,22 +166,42 @@ public class ChatController {
 		chatService.registerMsg(chatMsgVO);
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ResponseBody
-	public ResponseEntity<List<ChatFileVO>> uploadAjaxPost(
-			MultipartFile[] uploadFile, @RequestBody Map<String, Object> map) {
+	// 이미지 파일 여부 체크
+	private boolean checkImageType(File file) {
+		
+		try {
+			String contentType = Files.probeContentType(file.toPath());
+			
+			return contentType.startsWith("image");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 
-//		MultipartFile[] uploadFile = (MultipartFile[])map.get("formData");
-		String cr_id = (String)map.get("cr_id");
-		List<ChatFileVO> listChatFileVO = new ArrayList<ChatFileVO>();
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	@PostMapping("/uploadAjaxAction")
+	@ResponseBody
+	public void uploadAjaxPost(MultipartFile[] uploadFile, MultipartHttpServletRequest multi, Principal principal) {
+		
+//		String cr_id = (String)map.get("cr_id");
+		String cr_id = multi.getParameter("cr_id");
+		String e_id = principal.getName();
+		
+		
+		
+		
+		
+		
+
+		List<ChatFileVO> list = new ArrayList<ChatFileVO>();
 		String uploadFolder = "C:\\upload";
 
-//		String cr_id = request.getParameter("cr_id");
-		String uploadFolderPath = cr_id;
+//		String uploadFolderPath = getFolder();
 
 		// 년/월/일 폴더의 생성
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
+		File uploadPath = new File(uploadFolder, cr_id);
 		if (uploadPath.exists() == false) {
 			uploadPath.mkdirs();
 		}
@@ -175,6 +209,15 @@ public class ChatController {
 		for (MultipartFile multipartFile : uploadFile) {
 
 			ChatFileVO chatFileVO = new ChatFileVO();
+			
+			chatFileVO.setCr_id(cr_id);
+			chatFileVO.setE_id(e_id);
+			chatFileVO.setCf_size(multipartFile.getSize());
+			
+			
+			
+			
+			
 
 			String uploadFileName = multipartFile.getOriginalFilename();
 
@@ -185,40 +228,110 @@ public class ChatController {
 			chatFileVO.setCf_name(uploadFileName);
 
 			// 중복 방지를 위한 UUID 적용
-//			UUID uuid = UUID.randomUUID();
-//			uploadFileName = uuid.toString() + "_" + uploadFileName;
+			UUID uuid = UUID.randomUUID();
+			String uploadUuidFileName = uuid.toString() + "_" + uploadFileName;
 
 			try {
-				File saveFile = new File(uploadPath, uploadFileName);
+
+				File saveFile = new File(uploadPath, uploadUuidFileName);
 				multipartFile.transferTo(saveFile);
 
 				// UUID 값
-//				chatFileVO.setUuid(uuid.toString());
+				chatFileVO.setCf_uuid(uuid.toString());
 				// 업로드 경로
-				chatFileVO.setCf_path(uploadFolder);
+				chatFileVO.setCf_path(uploadPath.toString());
 
 				// 이미지 파일 체크
-//				if (checkImageType(saveFile)) {
-//
-//					// 이미지 여부
-//					attachDTO.setImage(true);
-//
-//					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
-//
-//					// Thumbnailator는 InputStream과 java.io.File 객체를 이용해서 파일을 생성할 수 있고, 뒤에 사이즈에 대한 부분을 파라미터로 witdh와 height를 지정할 수 있음
-//					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
-//
-//					thumbnail.close();
-//				}
+				if (checkImageType(saveFile)) {
 
-				listChatFileVO.add(chatFileVO);
+					// 이미지 여부
+					chatFileVO.setCf_image("true");
+
+					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadUuidFileName));
+
+					// Thumbnailator는 InputStream과 java.io.File 객체를 이용해서 파일을 생성할 수 있고, 뒤에 사이즈에 대한 부분을 파라미터로 witdh와 height를 지정할 수 있음
+					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
+
+					thumbnail.close();
+				}
+
+				list.add(chatFileVO);
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			chatService.registerCFile(chatFileVO);
 		}
 
-		return new ResponseEntity<>(listChatFileVO, HttpStatus.OK);
+//		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	@GetMapping("/display")
+	@ResponseBody
+	public ResponseEntity<byte[]> getFile(String fileName) {
+
+		log.info("fileName: " + fileName);
+
+		File file = new File("c:\\upload\\" + fileName);
+
+		log.info("file: " + file);
+
+		ResponseEntity<byte[]> result = null;
+
+		try {
+
+			HttpHeaders header = new HttpHeaders();
+
+			header.add("Content-Type", Files.probeContentType(file.toPath()));
+			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	@GetMapping("/download")
+	@ResponseBody
+	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName){
+		Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
+		
+		if(resource.exists() == false) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		String resourceName = resource.getFilename();
+		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_") + 1);
+		HttpHeaders headers = new HttpHeaders();
+		try {
+			String downloadName = null;
+			if(userAgent.contains("Trident")) {
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8").replaceAll("\\+", " ");
+			}else if(userAgent.contains("Edge")) {
+				downloadName = URLEncoder.encode(resourceOriginalName, "UTF-8");
+			}else {
+				downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
+			}
+			
+			headers.add("Content-Disposition", "attachment; filename =" + downloadName);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
