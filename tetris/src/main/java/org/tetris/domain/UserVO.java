@@ -1,9 +1,11 @@
 package org.tetris.domain;
 
+
 import java.sql.Date;
 import java.util.List;
 
 import lombok.Data;
+
 @Data
 public class UserVO {
 	
@@ -21,11 +23,9 @@ public class UserVO {
 	private String e_position;
 	private String d_num;
 	private boolean enabled;
+	private String d_name;
 	
 	private List<AuthVO> authList;
-	
-	
-
 	
 	
 }
