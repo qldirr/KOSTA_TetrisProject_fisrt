@@ -182,53 +182,22 @@
 				<div class="row">
 
 					<!-- 좌측바부분 -->
-					<div>
+					<div class="my-5">
 						<div>
 							<div>
-								<h3>근태관리 페이지</h3>
+								<h3>개인연차관리 페이지</h3>
 								<h5>어서오세요 ${hrVO.e_name }님</h5>
-								<input type="text" id="datePicker">
-								<ul class="list-unstyled">
-									<li>근태입력</li>
-									<li><a href='/attendance/personal?e_id=<c:out value="${hrVO.e_id}"/>' target="_blank">개인근태기록조회</a></li>
-								</ul>
 							</div>
 						</div>
 
 						<!-- 현재시간/출석시간/퇴근시간 -->
-						<div>
+						<div class="my-5">
 							<!--  -->
+							<h5>오늘날짜</h5>
 							<div id="date"></div>
 							<div
 								style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
 								id="clock"></div>
-							<!-- 출근시간 -->
-							<dl class="mb-3">
-								<dt>출근시간</dt>
-								<dd id="startTime">
-									<fmt:formatDate value="${hrVO.hr_date }"
-										pattern="yyyy-MM-dd HH:mm:ss" />
-								</dd>
-							</dl>
-							<!-- 퇴근시간 -->
-							<dl class="mb-3">
-								<dt>퇴근시간</dt>
-								<dd id="endTime">
-									<fmt:formatDate value="${hrVO.hr_leave }"
-										pattern="yyyy-MM-dd HH:mm:ss" />
-								</dd>
-							</dl>
-							<!-- 누적근무시간 -->
-							<dl>
-								<dt>누적근무시간</dt>
-								<dd id=""></dd>
-							</dl>
-							<!-- 출퇴근버튼 -->
-							<div class="my-5">
-								<button id="startD">출근하기</button>
-								<button id="endD">퇴근하기</button>
-								<button id="outD">외근</button>
-							</div>
 						</div>
 					</div>
 					<!-- 좌측바부분의 끝 -->
@@ -251,32 +220,27 @@
 								style="text-align: center; border: 1px solid #dddddd">
 								<thead>
 									<tr>
-										<th style="background-color: #eeeeee; text-align: center;">일자</th>
+										<th style="background-color: #eeeeee; text-align: center;">연차번호</th>
 										<th style="background-color: #eeeeee; text-align: center;">사원번호</th>
 										<th style="background-color: #eeeeee; text-align: center;">이름</th>
-										<th style="background-color: #eeeeee; text-align: center;">부서</th>
-										<th style="background-color: #eeeeee; text-align: center;">출근시간</th>
-										<th style="background-color: #eeeeee; text-align: center;">퇴근시간</th>
-										<th style="background-color: #eeeeee; text-align: center;">근무상태</th>
-										<th style="background-color: #eeeeee; text-align: center;">비고</th>
+										<th style="background-color: #eeeeee; text-align: center;">시작날짜</th>
+										<th style="background-color: #eeeeee; text-align: center;">종료날짜</th>
+										<th style="background-color: #eeeeee; text-align: center;">결제번호</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${list}" var="hr">
+									<c:forEach items="${list}" var="vacVO">
 										<tr>
-											<td><fmt:formatDate value="${hr.hr_date }"
+											<td><c:out value="${vacVO.v_num }" /></td>
+											<td><c:out value="${vacVO.e_num }" /></td>
+											<td><c:out value="${vacVO.e_name }" /></td>
+											<!-- 연차시작날짜 -->
+											<td><fmt:formatDate
+													value="${vacVO.v_startdate }" pattern="yyyy-MM-dd" /></td>
+											<!-- 연차종료날짜 -->
+											<td><fmt:formatDate value="${vacVO.v_enddate }"
 													pattern="yyyy-MM-dd" /></td>
-											<td><c:out value="" />${hr.e_num }</td>
-											<td><c:out value="" />${hr.e_name }</td>
-											<td><c:out value="" />${hr.d_name}</td>
-											<!-- 출근시간 -->
-											<td id="startTime2"><fmt:formatDate
-													value="${hr.hr_date }" pattern="HH:mm:ss" /></td>
-											<!-- 퇴근시간 -->
-											<td><fmt:formatDate value="${hr.hr_leave }"
-													pattern="HH:mm:ss" /></td>
-											<td><c:out value="${hr.hr_status }" /></td>
-											<td><c:out value="${hr.hr_note }" /></td>
+											<td><c:out value="${vacVO.el_num }" /></td>
 										</tr>
 									</c:forEach>
 								</tbody>

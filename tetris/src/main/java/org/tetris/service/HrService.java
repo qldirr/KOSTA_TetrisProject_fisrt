@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.tetris.domain.Criteria;
 import org.tetris.domain.HrVO;
+import org.tetris.domain.HrVO2;
+import org.tetris.domain.VacVO;
 
 public interface HrService {
 
@@ -26,4 +28,8 @@ public interface HrService {
 	public int getTotal(Criteria cri);
 	
 	public List<HrVO> getPersonal(String e_id);
+	
+	public HrVO2 getAttendance(String e_id);
+	
+	public List<VacVO> getVac(String e_id);
 }

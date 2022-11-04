@@ -93,6 +93,7 @@ public class HrController {
 		log.info("e_id: " + e_id);
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getPersonal(e_id));
+		model.addAttribute("hrVO2", service.getAttendance(e_id));
 	}
 	
 	
@@ -109,7 +110,12 @@ public class HrController {
 		  model.addAttribute("pageMaker", new PageDTO(cri, total));
 	  }
 	 
-	
+//vacation list 출력페이지
+	  @GetMapping("/vacation")
+	  public void getVac(@RequestParam("e_id") String e_id, Model model) {
+		  log.info("getVac");
+		  model.addAttribute("list", service.getVac(e_id));
+	  }
 	
 	
 }

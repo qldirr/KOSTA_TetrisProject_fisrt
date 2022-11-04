@@ -188,10 +188,10 @@
 								<h3>개인근태조회페이지</h3>
 								<h5>어서오세요 ${hrVO.e_name }님</h5>
 								<input type="text" id="datePicker">
-								<ul>
+								<ul class="list-unstyled">
 									<li>근태입력</li>
 									<li><a href="/attendance/personal?e_id=${hrVO.e_id }">개인근태기록조회</a></li>
-									<li><a href="/attendance/vacation">개인연차현황</a></li>
+									<li><a href="/attendance/vacation?e_id=${hrVO.e_id }" target="_blank">개인연차사용현황</a></li>
 								</ul>
 							</div>
 						</div>
@@ -248,7 +248,7 @@
 							<div class="panel-body">
 								<table class="table table-hover">
 									<thead>
-										<tr>
+										<tr class="text-center">
 											<th>사원번호</th>
 											<th>이름</th>
 											<th>부서</th>
@@ -259,14 +259,14 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
+										<tr class="text-center">
 											<td>${hrVO.e_num }</td>
 											<td>${hrVO.e_name }</td>
 											<td>${hrVO.d_name }</td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
+											<td>${hrVO2.working_day }</td>
+											<td>${hrVO2.late_day }</td>
+											<td>${hrVO2.skip_day }</td>
+											<td>${hrVO2.holi_day }</td>
 										</tr>
 									</tbody>
 								</table>
@@ -287,10 +287,10 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td></td>
-											<td></td>
-											<td></td>
+										<tr class="text-center">
+											<td>${hrVA.e_totalvac }</td>
+											<td>${hrVA.e_usevac }</td>
+											<td>${hrVA.e_totalvac-hrVA.e_usevac}</td>
 										</tr>
 									</tbody>
 								</table>
