@@ -11,8 +11,8 @@
 <body>
 <h1>user</h1>
 user
-<p>어서오세요.<sec:authentication property="principal.user.userName"/>님</p>
+<p>어서오세요.<sec:authentication property="principal.user.e_name"/>님</p>
 <p>아이디: <sec:authentication property="principal.username"/></p>	
-<a href="member/customLogout">Logout</a>
+<a href="/member/customLogout">Logout</a>
 </body>
 </html>

@@ -18,6 +18,9 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication auth) throws IOException, ServletException {
+		
+		
+		
 		log.warn("Login Success");
 		List<String> rolenames = new ArrayList<>();
 		auth.getAuthorities().forEach(authority->{
@@ -40,5 +43,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		response.sendRedirect("/");
 		
 	}
+	
 
 }

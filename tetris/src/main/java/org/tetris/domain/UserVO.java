@@ -7,19 +7,19 @@ import lombok.Data;
 @Data
 public class UserVO {
 	
-	private String userId;
-	private String userName;
-	private String userPass;
-	private String userPhoneNumber;
-	private String userHireddate;
-	private String userResigndate;
-	private int userTotalvaction;
-	private int userUsevacation;
-	private String userBirth;
-	private String userNumber;
-	private String userPicture;
-	private String userPosition;
-	private String departmentNumber;
+	private String e_id;
+	private String e_name;
+	private String e_pw;
+	private String e_pnum;
+	private String e_hireddate;
+	private String e_resigndate;
+	private int e_totalvac;
+	private int e_usevac;
+	private String e_birth;
+	private int e_num;
+	private String e_picfile;
+	private String e_position;
+	private String d_num;
 	private boolean enabled;
 	
 	private List<AuthVO> authList;
