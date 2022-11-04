@@ -183,7 +183,7 @@ public class ChatController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/uploadAjaxAction")
 	@ResponseBody
-	public void uploadAjaxPost(MultipartFile[] uploadFile, MultipartHttpServletRequest multi, Principal principal) {
+	public ResponseEntity<List<ChatFileVO>> uploadAjaxPost(MultipartFile[] uploadFile, MultipartHttpServletRequest multi, Principal principal) {
 		
 //		String cr_id = (String)map.get("cr_id");
 		String cr_id = multi.getParameter("cr_id");
@@ -263,7 +263,7 @@ public class ChatController {
 			chatService.registerCFile(chatFileVO);
 		}
 
-//		return new ResponseEntity<>(list, HttpStatus.OK);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")

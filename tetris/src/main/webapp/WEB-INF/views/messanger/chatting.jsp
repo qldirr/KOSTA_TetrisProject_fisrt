@@ -38,6 +38,7 @@
 			return true;
 		}
 		
+		var cloneObj = $(".uploadDiv").clone();
 		
 		$("#file").on("change", function(e){
 			var formData = new FormData();
@@ -66,11 +67,10 @@
 				type: 'post',
 				dataType: 'json',
 				success: function(result){
-					alert("Uploaded");
-					
+					alert("uploaded");
 					
 					showUploadedFile(result);
-			 		$(".uploadDi").html(cloneObj.html());
+			 		$(".uploadDiv").html(cloneObj.html());
 				}
 			}); //$.ajax
 			
@@ -81,34 +81,38 @@
 		
 		
 		
-		var cloneObj = $(".uploadDiv").clone();
+		
 		var uploadResult = $(".uploadResult ul");
 		
-		function showUploadedFile(uploadResultArr) {
+		/* function showUploadedFile(uploadResultArr) {
 		var str = "";
 		$(uploadResultArr).each(function(i, obj) {
 			str += "<li>" + obj.fileName + "</li>";
 		});
 		 
 		uploadResult.append(str);
-		}
+		} */
 		 
-		/* function showUploadedFile(uploadResultArr){
+		function showUploadedFile(uploadResultArr){
 			var str = "";
 		    
 			$(uploadResultArr).each(function(i, obj){
-			if(!obj.image){
-				var fileCallPath =  encodeURIComponent( obj.uploadPath+"/" + obj.uuid + "_" + obj.fileName);
-				str += "<li><a href='messanger/download?fileName=" + fileCallPath + "'>" 
-		        		+"<img src='/resources/img/attach.png'>" + obj.fileName+"</a></li>"
+			if(!obj.cf_image){
+				/* var fileCallPath =  encodeURIComponent( obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName); */
+				var fileCallPath =  encodeURIComponent( obj.cf_path + "/" + obj.cf_uuid + "_" + obj.cf_name);
+				str += "<li><a href='download?fileName=" + fileCallPath + "'>" 
+		        		/* + "<img src='/resources/img/attach.png'>"  */ + obj.cf_name + "</a></li>"
 				}else{
-				var fileCallPath =  encodeURIComponent( obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
-					str += "<li><img src='messanger/display?fileName=" + fileCallPath + "'><li>";
+				/* var fileCallPath =  encodeURIComponent( obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName); */
+				var fileCallPath =  encodeURIComponent( obj.cf_path + "/s_" + obj.cf_uuid + "_" + obj.cf_name);
+					/* str += "<li><img src='display?fileName=" + fileCallPath + "'><li>"; */
+					str += "<li><a href='download?fileName=" + fileCallPath + "'>" 
+						+ "<img src='display?fileName=" + fileCallPath + "'></a></li>"
 				}
 		});
 		    
 			uploadResult.append(str);
-		} */
+		}
 		 
 		 
 		 
@@ -121,19 +125,19 @@
 	<input type="button" id="sendBtn" value="submit"/>
 	<div id="messageArea"></div>
 	
-	<c:forEach items="${listChatMsg }" var="listCM">
+	<%-- <c:forEach items="${listChatMsg }" var="listCM">
 		<c:forEach items="${listChatFile }" var="listCF">
 			<c:choose>
-				<c:when test="${listCF.cf_regdate < listCM.cm_regdate }">
-					<c:out value="${listCF.e_id }"/>: <c:out value="${listCF.cf_name }"/><br>
+				<c:when test="${listCM.cm_regdate < listCF.cf_regdate }">
+					<c:out value="${listCM.e_id }"/>: <c:out value="${listCM.cm_contents }"/><br>
 				</c:when>
 				
 				<c:otherwise>
-					<c:out value="${listCM.e_id }"/>: <c:out value="${listCM.cm_contents }"/><br>
+					<c:out value="${listCF.e_id }"/>: <c:out value="${listCF.cf_name }"/><br>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
-	</c:forEach>
+	</c:forEach> --%>
 	
 	
 	
@@ -187,6 +191,11 @@
 	
 	function onOpen(){
 		/* alert("웹소켓 접속"); */
+		html = '<c:forEach items="${listChatMsg }" var="list">';
+		html += '<c:out value="${list.e_id}" />: ';
+		html += '<c:out value="${list.cm_contents}" /><br>';
+		html += '</c:forEach>';
+		$("#messageArea").append(html);
 	}
 	
 	// 메시지 전송
@@ -210,7 +219,7 @@
 				"cm_contents" : $("#message").val()
 			}),
 			success : function(){
-				alert("success");
+				/* alert("success"); */
 			}
 		});
 		webSocket.send($("#message").val());
