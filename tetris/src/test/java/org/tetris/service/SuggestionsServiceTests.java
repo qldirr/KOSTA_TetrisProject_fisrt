@@ -7,9 +7,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.tetris.controller.SuggestionsMapperTests;
+import org.tetris.domain.Criteria;
 import org.tetris.domain.SuggestionsVO;
 
+import jdk.jshell.SourceCodeAnalysis.Suggestion;
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,7 +29,7 @@ public class SuggestionsServiceTests {
 		
 	}*/
 	
-	@Test
+	/*@Test
 	public void testRegister() {
 		SuggestionsVO suggestion = new SuggestionsVO();
 		suggestion.setS_num(111);
@@ -37,7 +38,7 @@ public class SuggestionsServiceTests {
 		suggestion.setS_contents("새로 작성하는 내용");
 		
 		service.register(suggestion);
-	}
+	}*/
 	
 	/*@Test
 	public void testGetList() {
@@ -67,4 +68,16 @@ public class SuggestionsServiceTests {
 		
 	}*/
 
+	@Test
+	public void testGetList() {
+		service.getList(new Criteria(2,10)).forEach(Suggestion -> log.info(Suggestion));
+	}
+	
+	
+	
+	
 };
+
+
+
+

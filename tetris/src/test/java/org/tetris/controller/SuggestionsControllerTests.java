@@ -72,18 +72,18 @@ public class SuggestionsControllerTests {
 			.getModelAndView().getModelMap());
 	}*/
 	
-	/*@Test
+	@Test
 	public void testModify() throws Exception {
 	
 		String resultPage = mockMvc
-				.perform(MockMvcRequestBuilders.post("/suggestions/modify")
-					.param("s_num", "444")
+				.perform(MockMvcRequestBuilders.post("/suggestions/suggestionsmodify")
+					.param("s_num", "226")
 					.param("s_title", "수정된 테스트 새글 제목")
 					.param("s_contents", "수정된 테스트 새글 내용"))
 					
 				.andReturn().getModelAndView().getViewName();
 		log.info(resultPage);
-		}*/
+		}
 	
 	/*@Test
 	public void testRemove() throws Exception {	
@@ -95,4 +95,25 @@ public class SuggestionsControllerTests {
 		log.info(resultPage);
 	
 	}*/
+	
+	/*@Test
+	public void testListPaging() throws Exception {
+		
+		log.info(mockMvc.perform(
+			MockMvcRequestBuilders.get("/suggestions/suggestionslist")
+			.param("pageNum", "2")
+			.param("amount", "10"))
+				.andReturn().getModelAndView().getModelMap());
+	}*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

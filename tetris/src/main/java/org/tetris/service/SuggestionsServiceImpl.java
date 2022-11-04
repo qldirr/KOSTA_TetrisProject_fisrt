@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tetris.domain.Criteria;
 import org.tetris.domain.SuggestionsVO;
 import org.tetris.mapper.SuggestionsMapper;
 
@@ -62,4 +63,16 @@ public class SuggestionsServiceImpl implements SuggestionsService {
 		return mapper.getList();
 	}
 
+	@Override
+	public List<SuggestionsVO> getList(Criteria cri) {
+		log.info("get List with criteria" + cri);
+		return mapper.getListWithPaging(cri);
+	}
+
 }
+
+
+
+
+
+

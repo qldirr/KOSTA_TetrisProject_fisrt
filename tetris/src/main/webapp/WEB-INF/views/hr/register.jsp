@@ -71,7 +71,7 @@
   <label for="authmapping">권한</label>
   <input type="text" id="auth" name ="a_auth" placeholder="권한을 입력해주세요..."/>
   </div>
-	
+  
   <button type="submit" id="insertUser_btn" name="insertUser_btn">회원가입</button>
   
  </form>   

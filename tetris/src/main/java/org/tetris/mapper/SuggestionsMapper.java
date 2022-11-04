@@ -3,7 +3,7 @@ package org.tetris.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
-import org.tetris.domain.CriteriaVO;
+import org.tetris.domain.Criteria;
 import org.tetris.domain.SuggestionsVO;
 
 import jdk.jshell.SourceCodeAnalysis.Suggestion;
@@ -14,7 +14,7 @@ public interface SuggestionsMapper {
 	
 	public List<SuggestionsVO> getList();
 	
-	///public List<SuggestionsVO> getListWithPaging(CriteriaVO cri);
+	public List<SuggestionsVO> getListWithPaging(Criteria cri);
 	
 	public void insert(SuggestionsVO suggestions);
 	

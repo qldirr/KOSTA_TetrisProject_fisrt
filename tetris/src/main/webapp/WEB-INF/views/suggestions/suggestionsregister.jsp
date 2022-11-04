@@ -24,13 +24,21 @@
 <head>
 </head>
 <body>
+<h1>.</h1>
+ <div class="container-fluid ">
+      <div class="row">
+         <!-- sidebar -->
+         <div class="col-xl-2 col-lg-3"></div>
+         <div class="col-xl-10 col-lg-9">        
+<div style=""width: 100%; height: 1000; ;">
+
 	<h1>Suggestions Register</h1>
 
 	<table class="table table-striped table-bordered table-hover">	
     <form role="form" action="/suggestions/suggestionsregister" method="post"> 
 
 
-
+			
           <div class="form-group">
             <label>Title</label> <input class="form-control" name='s_title' id="floatingInput" placeholder="건의합니다.">
           </div>
@@ -42,6 +50,14 @@
           <button type="submit" class="btn btn-secondary"> Sumbmit Button</button>
           <!-- <button type="reset" class="btn btn-secondary"> Reset Button</button> -->
         </form>	
+
+
+
+</table>
+</div>
+</div>
+</div>
+</div>
 	
 	
       <!-- Optional JavaScript; choose one of the two! -->
@@ -55,3 +71,4 @@
 	
 </body>
 </html>
+

@@ -5,7 +5,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class TablechartVO {
+public class TmenuVO {
 
 	private long t_num;
 	private String e_id;

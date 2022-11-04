@@ -26,9 +26,9 @@ public class HrMapperTest {
 	public void testSearch() {
 		
 		Criteria cri = new Criteria();
-		cri.setD_num("02");
-		cri.setE_name("철");
-		cri.setType("NDE");	
+//		cri.setD_num("02");
+//		cri.setE_name("철");
+//		cri.setType("NDE");	
 		
 		List<HrVO> list = mapper.getHrWithPaging(cri);
 		

@@ -12,11 +12,9 @@
 	</select>
 
 	<insert id="insert">
-		insert into Suggestions (s_num, e_id,
-		s_title,s_contents,s_regdate,s_moddate)
+		insert into Suggestions (s_num, e_id, s_title,s_contents,s_regdate,s_moddate)
 		values
-		(seq_suggestions.nextval,'익명',
-		#{s_title},#{s_contents},sysdate,sysdate)
+		(seq_suggestions.nextval,'익명', #{s_title},#{s_contents}, sysdate, sysdate)
 	</insert>
 
 	<!-- <insert id="insertSelectKey"> <selectKey keyProperty="s_num" order="BEFORE" 
@@ -33,18 +31,36 @@
 		delete from Suggestions where s_num = #{s_num}
 	</delete>
 
-	<update id="update"
-		parameterType="org.tetris.domain.SuggestionsVO">
+	<update id="update" parameterType="org.tetris.domain.SuggestionsVO">
 		update Suggestions set
 		s_title = #{s_title},
-		s_contents =
-		#{s_contents},
+		s_contents = #{s_contents},
 		s_moddate = sysdate
 		where s_num = #{s_num}
 	</update>
 
-
+	<select id="getListWithPaging" 
+		resultType="org.tetris.domain.SuggestionsVO">
+		<![CDATA[ 
+		select 			
+			s_num, e_id, s_title, s_contents, s_regdate, s_moddate
+		from ( 
+			 select /*+INDEX_DESC(suggestions pk_suggestions) */
+				rownum rn, s_num, e_id, s_title, s_contents, s_regdate, s_moddate
+			from 
+				suggestions 
+			where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} -1) * #{amount}
+		
+	    ]]>
+	</select>
+	
 
 
 
 </mapper>
+
+
+
+

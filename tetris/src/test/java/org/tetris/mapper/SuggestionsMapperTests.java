@@ -1,4 +1,4 @@
-package org.tetris.controller;
+package org.tetris.mapper;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.tetris.domain.CriteriaVO;
+import org.tetris.domain.Criteria;
 import org.tetris.domain.SuggestionsVO;
 import org.tetris.mapper.SuggestionsMapper;
 
@@ -54,7 +54,7 @@ public class SuggestionsMapperTests {
 		log.info("delete count: " + mapper.delete(90));
 	}*/
 	
-	/*@Test
+	@Test
 	public void testupdate() {
 		SuggestionsVO suggestions = new SuggestionsVO();
 		suggestions.setS_num(1000);		
@@ -64,14 +64,14 @@ public class SuggestionsMapperTests {
 		mapper.update(suggestions);
 		
 		log.info(suggestions);		
-	}*/
+	}
 
 	/*@Test
 	public void testPaging() {
-		CriteriaVO cri = new CriteriaVO();
+		Criteria cri = new Criteria();
 		
 		cri.setPageNum(3);
-		cri.setAmount(3);
+		cri.setAmount(10);
 		
 		List<SuggestionsVO> list = mapper.getListWithPaging(cri);
 		list.forEach(suggestions -> log.info(suggestions.getS_num()));
