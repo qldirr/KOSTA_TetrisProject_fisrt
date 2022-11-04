@@ -20,15 +20,29 @@
 <link href="/resources/css/index.css" rel="stylesheet">
 <link rel="stylesheet"
    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+   <script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>	
+
+	
+	
+	
+	
 	
 <html>
 <head>
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
 </head>
 <body>
+<h1>.</h1>
+ <div class="container-fluid ">
+      <div class="row">
+         <!-- sidebar -->
+         <div class="col-xl-2 col-lg-3"></div>
+         <div class="col-xl-10 col-lg-9">        
+<div style=""width: 100%; height: 1000; ;">
+
 	<h1>Suggestions Modify Page</h1>
 
-	 <form role="form" action="/suggestions/modify" method="post">	 
+	 <form class="aaaform" role="form" action="/suggestions/suggestionsmodify" method="post">	 
 		 
 		<div class="form-group">
 			<label>Num</label> 
@@ -54,17 +68,17 @@
 			value="${suggestions.s_contents}"/></textarea>
 		</div>
 
-		<div class="form-group">
+	 <!-- <div class="form-group">
 			<label>RegDate</label> 
 			<input class="form-control" name='s_regdate'
-				value='<fmt:formatDate pattern="yyyy-MM-dd" value="${suggestions.s_regdate}" />' readonly="readonly">
+				value='<c:out value="${suggestions.s_regdate}"/>' readonly="readonly">
 		</div>
 
 		<div class="form-group">
 			<label>ModDate</label> 
 			<input class="form-control" name='s_moddate'
-				value='<fmt:formatDate pattern="yyyy-MM-dd" value="${suggestions.s_moddate}" />' readonly="readonly">
-		</div>
+				value='<c:out value="${suggestions.s_moddate}"/>' readonly="readonly">
+		</div>   -->
 		
 
 		  <button type="submit" data-oper='modify' class="btn btn-info">Modify</button>
@@ -76,7 +90,8 @@
  
 		<script type="text/javascript">
 		$(document).ready(function(){
-			var formObj = $("form");
+			var formObj = $(".aaaform");
+
 			
 			$('button').on("click", function(e){
 				e.preventDefault();
@@ -89,13 +104,18 @@
 					formObj.attr("action", "/suggestions/remove");
 				}else if(operation === 'list'){
 					
-					self.location="/suggestions/suggestionslist";
+					window.location.href="/suggestions/suggestionslist";
 					return;
 				}
 				formObj.submit();
 			});
 		}); 
 		</script>	
+
+</div>
+</div>
+</div>
+</div>
 
 
       <!-- Optional JavaScript; choose one of the two! -->
@@ -110,3 +130,4 @@
    
 </body>
 </html>
+
