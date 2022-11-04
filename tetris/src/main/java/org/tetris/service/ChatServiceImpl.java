@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tetris.domain.DepartmentVO;
 import org.tetris.domain.EmployeeVO;
+import org.tetris.domain.chat.ChatContentsVO;
 import org.tetris.domain.chat.ChatFileVO;
 import org.tetris.domain.chat.ChatMsgVO;
 import org.tetris.domain.chat.ChatParticipantVO;
@@ -67,8 +68,8 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public int registerMsg(ChatMsgVO chatMsgVO) {
-		return mapper.registerMsg(chatMsgVO);
+	public int registerMsg(ChatContentsVO chatContentsVO) {
+		return mapper.registerMsg(chatContentsVO);
 	}
 
 	@Override
@@ -78,13 +79,18 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public int registerCFile(ChatFileVO chatFileVO) {
-		return mapper.registerCFile(chatFileVO);
+	public int registerCFile(ChatContentsVO chatContentsVO) {
+		return mapper.registerCFile(chatContentsVO);
 	}
 
 	@Override
 	public List<ChatFileVO> getListCFile(String cr_id) {
 		return mapper.getListCFile(cr_id);
+	}
+
+	@Override
+	public List<ChatContentsVO> getListCC(String cr_id) {
+		return mapper.getListCC(cr_id);
 	}
 
 }

@@ -17,9 +17,41 @@
 
 <script type="text/javascript">
 	var roomId = $("#roomId").val();
+	
+	/* function fileDragDrop(){
+		var dropZone = $("#messageArea");
+		
+		dropZone.on('dragenter', function(e){
+			e.stopPropagation();
+			e.preventDefault();
+		});
+		dropZone.on('dragleave', function(e){
+			e.stopPropagation();
+			e.preventDefault();
+		});
+		dropZone.on('dragover', function(e){
+			e.stopPropagation();
+			e.preventDefault();
+		});
+		dropZone.on('drop', function(e){
+			e.preventDefault();
+			
+			var files = e.originalEvent.dataTransfer.files;
+			if(files != null){
+				if(files.length < 1){
+	                alert("폴더 업로드 불가");
+	                return;
+	            }
+				fileUpload(files)
+	        }else{
+	            alert("ERROR");
+	        }
+		});
+	} */
 
 	$(document).ready(function(){
 		//$("#uploadBtn").on("click", function(e){
+		$("#file").on("change", function fileUpload(e){
 			
 		var regex = new RegExp("(.*?)\.(exe|sh)$");
 		var maxSize = 41943040; //40MB
@@ -40,7 +72,7 @@
 		
 		var cloneObj = $(".uploadDiv").clone();
 		
-		$("#file").on("change", function(e){
+		//$("#file").on("change", function(e){
 			var formData = new FormData();
 			var inputFile = $("input[name='uploadFile']");
 			var files = inputFile[0].files;
@@ -82,7 +114,7 @@
 		
 		
 		
-		var uploadResult = $(".uploadResult ul");
+		var uploadResult = $("#messageArea");
 		
 		/* function showUploadedFile(uploadResultArr) {
 		var str = "";
@@ -99,12 +131,12 @@
 			$(uploadResultArr).each(function(i, obj){
 			if(!obj.cf_image){
 				/* var fileCallPath =  encodeURIComponent( obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName); */
-				var fileCallPath =  encodeURIComponent( obj.cf_path + "/" + obj.cf_uuid + "_" + obj.cf_name);
+				var fileCallPath =  encodeURIComponent( obj.cc_path + "/" + obj.cc_uuid + "_" + obj.cc_contents);
 				str += "<li><a href='download?fileName=" + fileCallPath + "'>" 
-		        		/* + "<img src='/resources/img/attach.png'>"  */ + obj.cf_name + "</a></li>"
+		        		+ "<img src='/resources/img/attach.png'>" + obj.cc_contents + "</a></li>"
 				}else{
 				/* var fileCallPath =  encodeURIComponent( obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName); */
-				var fileCallPath =  encodeURIComponent( obj.cf_path + "/s_" + obj.cf_uuid + "_" + obj.cf_name);
+				var fileCallPath =  encodeURIComponent( obj.cc_path + "/s_" + obj.cc_uuid + "_" + obj.cc_contents);
 					/* str += "<li><img src='display?fileName=" + fileCallPath + "'><li>"; */
 					str += "<li><a href='download?fileName=" + fileCallPath + "'>" 
 						+ "<img src='display?fileName=" + fileCallPath + "'></a></li>"
@@ -121,30 +153,62 @@
 
 </head>
 <body>
+	<input type="hidden" id="roomId" value="${cr_id}">
+	<h1>${cr_id}</h1>
+	<div><h4><sec:authentication property="principal" var="principal"/></h4></div>
+	
 	<input type="text" id="message" />
 	<input type="button" id="sendBtn" value="submit"/>
 	<div id="messageArea"></div>
 	
-	<%-- <c:forEach items="${listChatMsg }" var="listCM">
-		<c:forEach items="${listChatFile }" var="listCF">
-			<c:choose>
-				<c:when test="${listCM.cm_regdate < listCF.cf_regdate }">
-					<c:out value="${listCM.e_id }"/>: <c:out value="${listCM.cm_contents }"/><br>
-				</c:when>
-				
-				<c:otherwise>
-					<c:out value="${listCF.e_id }"/>: <c:out value="${listCF.cf_name }"/><br>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
+	<c:forEach items="${listChatContents }" var="listCC">
+		<c:choose>
+			<c:when test="${listCC.cc_file eq false }">
+				<c:out value="${listCC.e_id }"/>: <c:out value="${listCC.cc_contents }"/><br>
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+					<c:when test="${listCC.cc_image eq false }">
+						<li><a href='download?fileName="${listCC.cc_path }"/"${listCC.cc_uuid }"_"${listCC.cc_contents }"'>
+		        			<img src='/resources/img/attach.png'>"${listCC.cc_contents }"</a></li><br>
+					</c:when>
+					<c:otherwise>
+						<li><a href='download?fileName="${listCC.cc_path }"/"${listCC.cc_uuid }"_"${listCC.cc_contents }"'>
+						<img src='display?fileName="${listCC.cc_path }"/s_"${listCC.cc_uuid }"_"${listCC.cc_contents }"'></a></li><br>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+	
+	
+	
+	<%-- <c:forEach var="listCM" items="${listChatMsg }" varStatus="status">
+		<c:choose>
+			<c:when test="${listCM.cm_contents eq listChatFile[status.index].cf_name }">
+				<c:choose>
+					<c:when test="${listChatFile[status.index].cf_image eq true }">
+						<li><a href='download?fileName=${listChatFile[status.index].cf_path }/${listChatFile[status.index].cf_uuid }_${listChatFile[status.index].cf_name }'>
+						<img src='display?fileName=${listChatFile[status.index].cf_path }/${listChatFile[status.index].cf_uuid }_${listChatFile[status.index].cf_name }'></a></li>"
+					</c:when>
+					<c:otherwise>
+						<li><a href='download?fileName=${listChatFile[status.index].cf_path }/${listChatFile[status.index].cf_uuid }_${listChatFile[status.index].cf_name }'>
+		        		<img src='/resources/img/attach.png'>${listChatFile[status.index].cf_name }</a></li>
+					</c:otherwise>
+				</c:choose>
+					<c:out value="${listChatFile[status.index].e_id }"/>: <c:out value="${listChatFile[status.index].cf_path }"/><br>
+			</c:when>
+			
+			<c:otherwise>
+				<c:out value="${listCM.e_id }"/>: <c:out value="${listCM.cm_contents }"/><br>
+			</c:otherwise>
+		</c:choose>
 	</c:forEach> --%>
 	
 	
 	
 	
-	<input type="hidden" id="roomId" value="${cr_id}">
-	<h1>${cr_id}</h1>
-	<div><h4><sec:authentication property="principal" var="principal"/></h4></div>
+	
 	
 	<!-- 파일 업로드 버튼 -->
 	<div class='uploadDiv'>
@@ -191,11 +255,11 @@
 	
 	function onOpen(){
 		/* alert("웹소켓 접속"); */
-		html = '<c:forEach items="${listChatMsg }" var="list">';
-		html += '<c:out value="${list.e_id}" />: ';
-		html += '<c:out value="${list.cm_contents}" /><br>';
+		/* html = '<c:forEach items="${listChatMsg }" var="listCM">';
+		html += '<c:out value="${listCM.e_id}" />: ';
+		html += '<c:out value="${listCM.cm_contents}" /><br>';
 		html += '</c:forEach>';
-		$("#messageArea").append(html);
+		$("#messageArea").append(html); */
 	}
 	
 	// 메시지 전송
@@ -216,7 +280,7 @@
 			data: JSON.stringify({
 				"cr_id" : roomId,
 				"e_id" : e_id,
-				"cm_contents" : $("#message").val()
+				"cc_contents" : $("#message").val()
 			}),
 			success : function(){
 				/* alert("success"); */

@@ -47,6 +47,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.DepartmentVO;
 import org.tetris.domain.EmployeeVO;
+import org.tetris.domain.chat.ChatContentsVO;
 import org.tetris.domain.chat.ChatFileVO;
 import org.tetris.domain.chat.ChatMsgVO;
 import org.tetris.domain.chat.ChatParticipantVO;
@@ -133,15 +134,17 @@ public class ChatController {
 	public void chatting(@RequestBody Map<String, Object> map, /*@ModelAttribute("cr_id") String cr_id, */HttpSession session, Model model, RedirectAttributes rttr, HttpServletResponse response) throws IOException {
 		String cr_id = (String)map.get("cr_id");
 		session.setAttribute("cr_id", cr_id);
-		List<ChatMsgVO> listChatMsg = chatService.getListMsg(cr_id);
-		List<ChatFileVO> listChatFile = chatService.getListCFile(cr_id);
+		List<ChatContentsVO> listChatContents = chatService.getListCC(cr_id);
+//		List<ChatMsgVO> listChatMsg = chatService.getListMsg(cr_id);
+//		List<ChatFileVO> listChatFile = chatService.getListCFile(cr_id);
 //		response.setContentType("application/json; charset=utf-8");
 //		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 //        gson.toJson(listChatMsg, response.getWriter());
 //		model.addAttribute("listChatMsg",listChatMsg);
 //		rttr.addAttribute("listChatMsg", listChatMsg);
-		session.setAttribute("listChatMsg", listChatMsg);
-		session.setAttribute("listChatFile", listChatFile);
+//		session.setAttribute("listChatMsg", listChatMsg);
+//		session.setAttribute("listChatFile", listChatFile);
+		session.setAttribute("listChatContents", listChatContents);
 //		return "redirect:/messanger/chatting/{roomId}";
 	}
 	
@@ -155,7 +158,7 @@ public class ChatController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/registerMsg")
 	@ResponseBody
-	public void registerMsg(@RequestBody ChatMsgVO chatMsgVO) {
+	public void registerMsg(@RequestBody ChatContentsVO chatContentsVO) {
 //		String cr_id = (String)map.get("cr_id");
 //		String e_id = (String)map.get("e_id");
 //		String cm_contents = (String)map.get("cm_contents");
@@ -163,7 +166,7 @@ public class ChatController {
 //		chatMsgVO.setCr_id(cr_id);
 //		chatMsgVO.setE_id(e_id);
 //		chatMsgVO.setCm_contents(cm_contents);
-		chatService.registerMsg(chatMsgVO);
+		chatService.registerMsg(chatContentsVO);
 	}
 	
 	// 이미지 파일 여부 체크
@@ -183,7 +186,7 @@ public class ChatController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/uploadAjaxAction")
 	@ResponseBody
-	public ResponseEntity<List<ChatFileVO>> uploadAjaxPost(MultipartFile[] uploadFile, MultipartHttpServletRequest multi, Principal principal) {
+	public ResponseEntity<List<ChatContentsVO>> uploadAjaxPost(MultipartFile[] uploadFile, MultipartHttpServletRequest multi, Principal principal) {
 		
 //		String cr_id = (String)map.get("cr_id");
 		String cr_id = multi.getParameter("cr_id");
@@ -195,7 +198,7 @@ public class ChatController {
 		
 		
 
-		List<ChatFileVO> list = new ArrayList<ChatFileVO>();
+		List<ChatContentsVO> list = new ArrayList<ChatContentsVO>();
 		String uploadFolder = "C:\\upload";
 
 //		String uploadFolderPath = getFolder();
@@ -208,11 +211,11 @@ public class ChatController {
 
 		for (MultipartFile multipartFile : uploadFile) {
 
-			ChatFileVO chatFileVO = new ChatFileVO();
+			ChatContentsVO chatContentsVO = new ChatContentsVO();
 			
-			chatFileVO.setCr_id(cr_id);
-			chatFileVO.setE_id(e_id);
-			chatFileVO.setCf_size(multipartFile.getSize());
+			chatContentsVO.setCr_id(cr_id);
+			chatContentsVO.setE_id(e_id);
+			chatContentsVO.setCc_size(multipartFile.getSize());
 			
 			
 			
@@ -225,7 +228,7 @@ public class ChatController {
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 
 			// 원본 파일의 이름
-			chatFileVO.setCf_name(uploadFileName);
+			chatContentsVO.setCc_contents(uploadFileName);
 
 			// 중복 방지를 위한 UUID 적용
 			UUID uuid = UUID.randomUUID();
@@ -237,15 +240,15 @@ public class ChatController {
 				multipartFile.transferTo(saveFile);
 
 				// UUID 값
-				chatFileVO.setCf_uuid(uuid.toString());
+				chatContentsVO.setCc_uuid(uuid.toString());
 				// 업로드 경로
-				chatFileVO.setCf_path(uploadPath.toString());
+				chatContentsVO.setCc_path(uploadPath.toString());
 
 				// 이미지 파일 체크
 				if (checkImageType(saveFile)) {
 
 					// 이미지 여부
-					chatFileVO.setCf_image("true");
+					chatContentsVO.setCc_image("true");
 
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadUuidFileName));
 
@@ -253,14 +256,14 @@ public class ChatController {
 					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
 
 					thumbnail.close();
-				}
+				}else chatContentsVO.setCc_image("false");
 
-				list.add(chatFileVO);
+				list.add(chatContentsVO);
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			chatService.registerCFile(chatFileVO);
+			chatService.registerCFile(chatContentsVO);
 		}
 
 		return new ResponseEntity<>(list, HttpStatus.OK);
@@ -273,7 +276,7 @@ public class ChatController {
 
 		log.info("fileName: " + fileName);
 
-		File file = new File("c:\\upload\\" + fileName);
+		File file = new File(/* "c:\\upload\\" + */fileName);
 
 		log.info("file: " + file);
 
@@ -297,7 +300,7 @@ public class ChatController {
 	@GetMapping("/download")
 	@ResponseBody
 	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName){
-		Resource resource = new FileSystemResource("c:\\upload\\" + fileName);
+		Resource resource = new FileSystemResource(/* "c:\\upload\\" + */fileName);
 		
 		if(resource.exists() == false) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
