@@ -11,7 +11,15 @@
 	$(function() {
 		$("#listChatRoom li").on('dblclick', function(){
 			var cr_id = $(this).attr('class');
-			window.location.href="/messanger/chatting";
+			$.ajax({
+				url: '/messanger/chatting',
+				type: 'post',
+				contentType: 'application/json',
+				data: JSON.stringify({"cr_id" : cr_id}),
+				success : function() {
+					window.location.href = "/messanger/chatting";
+				}
+			});
 		})
 	})
 </script>
@@ -20,7 +28,7 @@
 	<div>
 		<ul id="listChatRoom">
 			<c:forEach items="${listChatRoom }" var="list">
-				<li class="${list.cr_id }">${list.cr_title }</li>
+				<li class="${list.cr_id }">${list.cr_id }</li>
 			</c:forEach>
 		</ul>
 	</div>

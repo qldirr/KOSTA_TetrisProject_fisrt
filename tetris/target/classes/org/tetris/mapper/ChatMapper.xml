@@ -13,7 +13,7 @@
 	<result property="e_id" column="e_id"/>
 	<result property="cp_unread" column="cp_unread"/>
 	<result property="cp_isbookmark" column="cp_isbookmark"/>
-	<collection property="chatRoomVO" resultMap="chatRoomMap"/>
+	<!-- <collection property="chatRoomVO" resultMap="chatRoomMap"/> -->
 </resultMap>
 	
 	<select id="login" resultType="org.tetris.domain.EmployeeVO">
@@ -48,9 +48,34 @@
 	
 	<select id="getListCRoom" parameterType="String" resultMap="chatRoomMap">
 		select cr.cr_id, cr.cr_title, cp.cp_num, cp.e_id, cp.cp_unread, cp.cp_isbookmark
-    		from chatroom cr, chatparticipant cp
-    		where cr.cr_id = cp.cr_id
-    		and cp.e_id = #{e_id}
+    		from chatparticipant cp right outer join chatroom cr
+    		on cp.cr_id = cr.cr_id
+    		where cp.e_id = #{e_id}
+	</select>
+	
+	<select id="getCRoom" parameterType="String" resultMap="chatRoomMap">
+		select cr.cr_id, cr.cr_title, cp.cp_num, cp.e_id, cp.cp_unread, cp.cp_isbookmark
+    		from chatparticipant cp right outer join chatroom cr
+    		on cp.cr_id = cr.cr_id
+    		where cr.cr_id = #{cr_id}
+	</select>
+	
+	<insert id="registerMsg" parameterType="org.tetris.domain.chat.ChatMsgVO">
+		insert into chatmsg (cm_num, e_id, cr_id, cm_to, cm_contents, cm_regdate, cm_status)
+			values(cm_num_seq.nextval, #{e_id}, #{cr_id}, 'null', #{cm_contents}, to_char(sysdate,'yyyy/mm/dd hh:mi:ss'), 'null')
+	</insert>
+	
+	<select id="getListMsg" parameterType="String" resultType="org.tetris.domain.chat.ChatMsgVO">
+		select * from chatmsg where cr_id = #{cr_id} order by cm_regdate
+	</select>
+	
+	<insert id="registerCFile" parameterType="org.tetris.domain.chat.ChatFileVO">
+		insert into chatfile (cf_num, e_id, cr_id, cf_uuid, cf_name, cf_size, cf_regdate, cf_status, cf_image, cf_path)
+			values(cf_num_seq.nextval, #{e_id}, #{cr_id}, #{cf_uuid}, #{cf_name}, #{cf_size}, to_char(sysdate,'yyyy/mm/dd hh:mi:ss'), 'null', #{cf_image}, #{cf_path})
+	</insert>
+	
+	<select id="getListCFile" parameterType="String" resultType="org.tetris.domain.chat.ChatFileVO">
+		select * from chatfile where cr_id = #{cr_id} order by cf_regdate
 	</select>
 
 </mapper>
