@@ -26,6 +26,7 @@ public class CalendarServiceImpl implements CalendarService {
 
 	}
 
+	
 	@Override
 	public CalendarVO get(int cl_num) {
 		log.info("get..."+cl_num);
@@ -39,16 +40,16 @@ public class CalendarServiceImpl implements CalendarService {
 	}
 
 	@Override
-	public boolean remove(int cl_num) {
-		log.info("remove..."+cl_num);
-		return mapper.delete(cl_num)==1;
+	public boolean remove(CalendarVO calendar) {
+		log.info("remove..."+calendar);
+		return mapper.delete(calendar)==1;
 	
 	}
 
 	@Override
-	public List<CalendarVO> getList() {
+	public List<CalendarVO> getList(String e_id) {
 		log.info("getlist...");
-		return mapper.getList();
+		return mapper.getList(e_id);
 	}
 
 	

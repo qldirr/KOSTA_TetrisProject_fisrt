@@ -37,7 +37,7 @@ public class CalendarServiceTest {
 	
 	/*@Test
 	public void testGetlist() {
-		service.getList().forEach(calendar -> log.info(calendar));
+		service.getList("gdong123").forEach(calendar -> log.info(calendar));
 	}*/
 	
 	/*@Test
@@ -45,7 +45,7 @@ public class CalendarServiceTest {
 		log.info(service.get(3));
 	}*/
 	
-	@Test
+	/*@Test
 	public void testModify() {
 		CalendarVO calendar = service.get(6);
 		
@@ -53,12 +53,12 @@ public class CalendarServiceTest {
 			return;
 		}
 		
-		calendar.setCl_name("점심약속");
+		calendar.setCl_name("저녁약속");
 		log.info("modify result.."+service.modify(calendar));
-	}
+	}*/
 	
 	/*@Test
 	public void testRemove() {
-		log.info("modify result.."+service.remove(8));
+		log.info("modify result.."+service.remove(5));
 	}*/
 }

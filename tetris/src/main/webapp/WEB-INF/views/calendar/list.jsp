@@ -1,130 +1,117 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link href="/resources/fullcalendar/main.css" rel="stylesheet" />
-    <script src="/resources/fullcalendar/main.js" type="text/javascript"></script>
-    <script src="/resources/fullcalendar/locales-all.js"></script>
-    <script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    	var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            // Tool Bar 목록 document : https://fullcalendar.io/docs/toolbar
-            headerToolbar: {
-                left: 'prev, today, next',
-                center: 'title',
-                right: 'dayGridMonth,dayGridWeek,dayGridDay'
-            },
-			locale: "ko",
-            selectable: true,
-            selectMirror: true,
+<link rel="stylesheet" href="/resources/vender/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/resources/fullcalendar/main.css" />
+<link rel="stylesheet" href="/resources/css/mycss/bootstrap-datepicker3.css" />
+<link rel="stylesheet" href="/resources/css/mycss/jquery.timepicker.min.css" />
+<style type="text/css">
+	#regCalBtn{
+		border-style: none;
+		background-color: #161E67;
+		color: #FFF2CA;
+		border-radius: 10px;
+		padding-bottom: 7px;
+		padding-top: 7px;
+		padding-left: 10px;
+		padding-right: 10px;
+		font-weight: bold;
+		font-family: sans-serif;
+		width: 100px;
+		height: 70px;
+	}
+</style>
 
-            navLinks: true, // can click day/week names to navigate views
-            editable: true,
-            // Create new event
-            select: function (arg) {
-                Swal.fire({
-                    html: "<div class='mb-7'>Create new event?</div><div class='fw-bold mb-5'>Event Name:</div><input type='text' class='form-control' name='event_name' />",
-                    icon: "info",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Yes, create it!",
-                    cancelButtonText: "No, return",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                        cancelButton: "btn btn-active-light"
-                    }
-                }).then(function (result) {
-                    if (result.value) {
-                        var title = document.querySelector("input[name=;event_name']").value;
-                        if (title) {
-                            calendar.addEvent({
-                                title: title,
-                                start: arg.start,
-                                end: arg.end,
-                                allDay: arg.allDay
-                            })
-                        }
-                        calendar.unselect()
-                    } else if (result.dismiss === "cancel") {
-                        Swal.fire({
-                            text: "Event creation was declined!.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary",
-                            }
-                        });
-                    }
-                });
-            },
+<script src="/resources/fullcalendar/main.js" type="text/javascript"></script>
+<script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
+<script src="/resources/fullcalendar/locales-all.js"></script>
+<script src="/resources/vender/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/js/myjs/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="/resources/js/myjs/jquery.timepicker.min.js" type="text/javascript"></script>
+<script type="text/javascript">
 
-            // Delete event
-            eventClick: function (arg) {
-                Swal.fire({
-                    text: "Are you sure you want to delete this event?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    buttonsStyling: false,
-                    confirmButtonText: "Yes, delete it!",
-                    cancelButtonText: "No, return",
-                    customClass: {
-                        confirmButton: "btn btn-primary",
-                        cancelButton: "btn btn-active-light"
-                    }
-                }).then(function (result) {
-                    if (result.value) {
-                        arg.event.remove()
-                    } else if (result.dismiss === "cancel") {
-                        Swal.fire({
-                            text: "Event was not deleted!.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
-                            customClass: {
-                                confirmButton: "btn btn-primary",
-                            }
-                        });
-                    }
-                });
-            },
-            dayMaxEvents: true, // allow "more" link when too many events
-            // 이벤트 객체 필드 document : https://fullcalendar.io/docs/event-object
-            events:  [
-                <c:forEach items="${list}" var="list">
-                {
-                    title: '${list.cl_name}',
-                    start: '${list.cl_startdate}',
-                    end:'${list.cl_enddate}',
-                    color: '${list.cl_color}',
-                    id: '${list.cl_num}',
-                    extendedProps: {
-                        'contents' : '${list.cl_contents}',
-                        'type' : '${list.cl_type}'
-                        
-                        
-                    }
-                },
-                </c:forEach>
-            ]
-            
-                
-            
-        });
 
-        calendar.render();
-    });
 
-    </script>
-  </head>
-  <body>
-    <div id='calendar'></div>
-  </body>
+	document.addEventListener('DOMContentLoaded', function() {
+		
+			var calArr = [];			
+
+			$.ajax({
+				url : '/calendar/listCal',
+				type : 'get',
+				dataType : 'json',
+				contentType : "application/json"
+			}).done(function(data, textStatus, xhr) {
+				
+				$(data).each(function(index, value) {
+					calArr.push(value)
+				});   //controller의 list를 get방식으로 가져옴
+				
+				
+				var calendarEl = document.getElementById('calendar');
+				var calendar = new FullCalendar.Calendar(calendarEl, {
+					headerToolbar: {
+		               	left: '',
+		                center: 'title'
+		                
+		            },
+					locale : 'ko',
+					initialView : 'dayGridMonth',
+					contentHeight : 600,//캘린더 크기 설정
+					editable : true,//수정 여부
+					events : calArr,    //일정 리스트 출력
+					eventClick : function(info){     //일정 클릭 시 일정 상세 페이지로 이동
+						getCal(info.event.id);
+					}
+					
+				});
+				
+				calendar.render();
+
+			});
+			
+		
+	});
+	
+	
+	function getCal(cl_num){     //일정상세 페이지로 이동
+		location.href = "/calendar/get?cl_num="+cl_num;
+	}
+	
+	
+	var moveTo = (function(){     //일정등록 버튼 눌렀을때 등록 폼으로 이동
+		function registerCal(){
+			self.location = "/calendar/register";
+		}
+		
+		return {
+			
+			registerCal : registerCal,
+			}
+		})();
+	
+	$(function() {
+		
+		$('#regCalBtn').on('click', moveTo.registerCal);
+		})     //등록 폼으로 이동 끝
+	
+	
+</script>
+
+</head>
+<body>
+
+	<h1>일정 관리</h1>
+	<div id="calendarMenu">
+		<input type="button" id="regCalBtn" value="일정 등록">
+	</div>
+	<div id='calendar'></div>
+
+	
+</body>
 </html>
