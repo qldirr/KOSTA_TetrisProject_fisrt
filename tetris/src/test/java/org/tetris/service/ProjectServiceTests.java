@@ -26,12 +26,12 @@ public class ProjectServiceTests {
 
 	@Test
 	public void testListProjectMember() {
-		mapper.listAllMember().forEach(member -> log.info(member)); 
+		mapper.getListEmployees().forEach(member -> log.info(member)); 
 	}
 	
 	@Test
 	public void testListDept() {
-		mapper.listDept().forEach(dept -> log.info(dept)); 
+		mapper.getListDept().forEach(dept -> log.info(dept)); 
 	}
 
 }

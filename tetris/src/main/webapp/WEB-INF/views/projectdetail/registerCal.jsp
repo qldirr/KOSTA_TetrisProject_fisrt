@@ -34,16 +34,6 @@
 		            scrollbar: true
 		        });
 				
-				
-				$('#test').on("click", function(){
-					console.log($('input[name=pj_num]').val());
-					console.log($('input[name=pc_name]').val());
-					console.log($('input[name=pc_startdate]').val());
-					console.log($('input[name=pc_starttime]').val());
-					console.log($('input[name=pc_enddate]').val());
-					console.log($('input[name=pc_endtime]').val());
-				})
-				
 		});
 	
 </script>

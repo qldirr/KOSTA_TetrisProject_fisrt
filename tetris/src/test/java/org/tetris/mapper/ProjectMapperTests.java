@@ -51,7 +51,7 @@ public class ProjectMapperTests {
 	@Test
 	public void testListProjectInfo() {
 		Long num = 38L;
-		mapper.getProjectInfo(num).forEach(list -> log.info(list));
+		mapper.readProjectInfo(num).forEach(list -> log.info(list));
 	}
 	
 	

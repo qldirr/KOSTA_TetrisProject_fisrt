@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"
 	type="text/javascript"></script>
+<link rel="stylesheet" href="/resources/vender/bootstrap/css/bootstrap.min.css" >
 <script type="text/javascript">
 
 
@@ -26,8 +27,25 @@ $(document).ready(
 <body>
 
 <input type="button" id="projectRegBtn" value="새 프로젝트 만들기"><br>
+
+
 <c:forEach items="${list }" var="myProject">
-<a href="/projectdetail/home/${myProject.pj_num}">${myProject.pj_name }</a><br><br>
+<div class="container">
+			<div class="card border-light mb-3" style="max-width: 18rem;">
+  				<div class="card-header">${myProject.pj_type }</div>
+ 					 <div class="card-body">
+    					<h5 class="card-title">${myProject.pj_name }</h5>
+    					<p class="card-text">
+    						<%-- 프로젝트 매니저: ${myProject.pj_manager }<br>
+    						프로젝트 시작일: ${myProject.pj_startdate }<br>
+    						프로젝트 마감일: ${myProject.pj_enddate }<br> --%>
+    						${myProject.pj_contents }
+    					</p>
+    					<a href="/projectdetail/home/${myProject.pj_num}" class="card-link"> 입장하기</a>
+  				</div>
+			</div>
+</div>
+
 </c:forEach>
 
 </body>

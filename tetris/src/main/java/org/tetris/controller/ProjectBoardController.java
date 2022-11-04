@@ -3,6 +3,7 @@ package org.tetris.controller;
 import java.io.File;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,10 +29,11 @@ import org.tetris.domain.project.BoardAttachVO;
 import org.tetris.domain.project.BoardReplyVO;
 import org.tetris.domain.project.ProjectBoardVO;
 import org.tetris.domain.project.ProjectCalVO;
-import org.tetris.mapper.ProjectMapper;
+import org.tetris.domain.project.ProjectTaskVO;
+import org.tetris.domain.user.UserVO;
 import org.tetris.service.ProjectBoardService;
 import org.tetris.service.ProjectCalService;
-import org.tetris.service.ProjectService;
+import org.tetris.service.ProjectTaskService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -47,20 +50,24 @@ public class ProjectBoardController {
 	@Autowired
 	private ProjectCalService calService;
 	
+	@Autowired
+	private ProjectTaskService taskService;
+	
 	private static Long projectNum;
 	
 	@GetMapping("/home/{pj_num}")
-	public String getHome(@PathVariable("pj_num") Long pj_num, Model model) {
+	public String getMain(@PathVariable("pj_num") Long pj_num, Model model) {
 		projectNum = pj_num;
 		Long pb_num = 0L;
-		List<String> namelist =	service.getProjectInfo(pj_num);
-		List<ProjectBoardVO> projectboardlist = service.listProjectBoard(pj_num);
-		List<BoardReplyVO> replies = service.listBoardReply(pb_num,  pj_num);
 		
-		model.addAttribute("list", namelist);
-		model.addAttribute("boardlist", projectboardlist);
+		List<UserVO> projectMember =service.getProjectInfo(pj_num);
+		List<ProjectBoardVO> projectBoard = service.getListProjectBoard(pj_num);
+		List<BoardReplyVO> projectReplies = service.getListBoardReply(pb_num,  pj_num);
+		
+		model.addAttribute("member", projectMember);
+		model.addAttribute("board", projectBoard);
+		model.addAttribute("replies", projectReplies);
 		model.addAttribute("pj_num", projectNum);
-		model.addAttribute("replies", replies);
 		
 		return "/projectdetail/board";
 	}
@@ -76,37 +83,38 @@ public class ProjectBoardController {
 		if(board.getPb_status() == null) {
 			board.setPb_status("N");
 		}
-		service.insertProjectBoard(board);
+		service.registerProjectBoard(board);
 		return "redirect:/projectdetail/home/" + projectNum;
 	}
 	
 	
 	@ResponseBody
-	@PostMapping("/registReply")
-	public List<BoardReplyVO> registReply(@RequestBody BoardReplyVO reply) {
-		service.insertReply(reply);
+	@PostMapping("/registerReply")
+	public List<BoardReplyVO> registerReply(@RequestBody BoardReplyVO reply) {
+		service.registerReply(reply);
 		Long pb_num = reply.getPb_num();
-		List<BoardReplyVO> replies = service.listBoardReply(pb_num, projectNum);
+		List<BoardReplyVO> replies = service.getListBoardReply(pb_num, projectNum);
+		return replies;
+	}
+	
+	@Transactional
+	@ResponseBody
+	@PostMapping("/removeReply")
+	public List<BoardReplyVO> removeReply(@RequestBody BoardReplyVO reply) {
+		service.removeReply(reply.getPr_num());
+		List<BoardReplyVO> replies = service.getListBoardReply(reply.getPb_num(), projectNum);
 		return replies;
 	}
 	
 	
-	@GetMapping("/deleteReply{pr_num}")
-	public String deleteReply(@PathVariable("pr_num") Long pr_num) {
-		service.deleteReply(pr_num);
-		
-		return "redirect:/projectdetail/home/" + projectNum;
-	}
-	
-	
 	@GetMapping("/uploadfile")
-	public void uploadFile() {
+	public void uploadFileForm() {
 		
 	}
 	
 	@PostMapping(value = "/uploadfile", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<BoardAttachVO>> uploadAjaxFile(MultipartFile[] uploadFile) {
+	public ResponseEntity<List<BoardAttachVO>> uploadFile(MultipartFile[] uploadFile) {
 		
 		log.info("update ajax post........");
 		
@@ -149,12 +157,23 @@ public class ProjectBoardController {
 	}
 	
 	
-	@GetMapping(value="/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long pj_num){
-		log.info("getAttachList" + pj_num);
+	public ResponseEntity<List<HashMap<Long, Object>>> getAttachList(Long pj_num) {
 		
-		return new ResponseEntity<List<BoardAttachVO>>(service.getAttachList(pj_num), HttpStatus.OK);
+		List<BoardAttachVO> list = service.getAttachList(pj_num);
+		
+		List<HashMap<Long, Object>> attachList = new ArrayList<HashMap<Long,Object>>();
+		HashMap<Long, Object> attachMap;
+
+		for (int i = 0; i < list.size(); i++) {
+			
+			attachMap = new HashMap<Long, Object>();
+			attachMap.put(list.get(i).getPb_num(), list.get(i));
+			attachList.add(attachMap);
+		}
+		
+		return new ResponseEntity<List<HashMap<Long, Object>>>(attachList, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
@@ -192,22 +211,103 @@ public class ProjectBoardController {
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 	
+	
 	@GetMapping("/calendar")
-	public void showCalendar(Model model) {
+	public void getCalendar(Model model) {
 		model.addAttribute("pj_num", projectNum);
+	}
+	
+	
+	@GetMapping(value="/calendarList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<HashMap<String, Object>>> getCalendarList() {
+		
+		List<ProjectCalVO> list = calService.getListCalendar(projectNum);
+		
+		log.info(list);
+		
+		List<HashMap<String, Object>> calList = new ArrayList<HashMap<String,Object>>();
+		HashMap<String, Object> calMap;
+		
+		for(int i=0; i < list.size(); i++) {
+			
+			calMap = new HashMap<String, Object>();
+			calMap.put("title", list.get(i).getPc_name());
+			calMap.put("start", list.get(i).getPc_startdate()+"T"+list.get(i).getPc_starttime());
+			calMap.put("end", list.get(i).getPc_enddate()+"T"+list.get(i).getPc_endtime());
+			
+			calList.add(calMap);
+		}
+		
+		log.info(calList);
+		
+		
+		return new ResponseEntity<>(calList, HttpStatus.OK);
 	}
 	
 	
 	@GetMapping("/registerCal")
 	public void registerCalForm(Model model) {
 		model.addAttribute("pj_num", projectNum);
+		
 	}
 	
 	@PostMapping("/registerCal")
 	public String registerCal(ProjectCalVO calendar) {
 		
-		calService.insertCalendar(calendar);
+		calService.registerCalendar(calendar);
 		return "redirect: /projectdetail/calendar";
+	}
+	
+	
+	@GetMapping("/taskboard")
+	public void getTaskBoard(Model model) {
+		model.addAttribute("pj_num", projectNum);
+	}
+	
+	@GetMapping(value = "/taskList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<ProjectTaskVO>> getTaskList(){
+		List<ProjectTaskVO> list = taskService.getListTask(projectNum);
+		list.forEach(each -> log.info(each));
+		return new ResponseEntity<>(list, HttpStatus.OK);
+		
+	}
+	
+	@GetMapping("/registerTask")
+	public void registerTaskForm(Model model) {
+		List<UserVO> projectMember = service.getProjectInfo(projectNum);
+		model.addAttribute("member", projectMember);
+		model.addAttribute("pj_num", projectNum);
+	}
+	
+	@PostMapping("/registerTask")
+	public String registerTask(ProjectTaskVO task){
+		log.info(task);
+		taskService.registerTask(task);
+		
+		return "redirect: /projectdetail/taskboard";
+	}
+	
+	@PostMapping("/modifyTask")
+	public String modifyTask(@RequestBody ProjectTaskVO task) {
+		
+		log.info(task);
+		taskService.modifyTask(task);
+		
+		return "redirect: /projectdetail/taskboard";
+	}
+	
+	@PostMapping("/removeTask")
+	public String removeTask(Long ts_num) {
+		
+		taskService.removeTask(ts_num);
+		return "redirect: /projectdetail/taskboard";
+	}
+	
+	@GetMapping("/tasklist")
+	public void getTaskList(Model model) {
+		model.addAttribute("pj_num", projectNum);
 	}
 
 }

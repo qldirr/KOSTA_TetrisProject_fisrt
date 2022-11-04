@@ -23,17 +23,12 @@
 					autoclose: true
 				});
 				
-		/* 		$('#click-btn').on('click', function(){
-					
-					var date = $('dateRangePicker').val();
-					alert(date);
-				}) */
 
 				$("#projectMemberRegBtn").on(
 						"click",
 						function() {
 							var child;
-							child = window.open("/project/memberReg", "_blank",
+							child = window.open("/project/member", "_blank",
 									"width=800, height=800");
 						});
 
@@ -57,6 +52,7 @@
 		프로젝트매니저: <input type="text" name="pj_manager" id="pj_manager" value="gdong123"readonly="readonly"><br> 
 		프로젝트참여자: <input type="text" name="e_id" id="pj_members">
 		<input type="button" id="projectMemberRegBtn" value="멤버 추가"><br>
+		프로젝트내용: <input type="text" name="pj_contents" id="pj_contents">
 		<input type="submit" value="새 프로젝트 생성">
 	</form>
 
