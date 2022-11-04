@@ -1,11 +1,15 @@
 package org.tetris.service;
 
+
 import java.util.List;
+
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tetris.domain.RoomBookVO;
+import org.tetris.mapper.MeetingRoomMapper;
 import org.tetris.mapper.RoomBookMapper;
 
 import lombok.AllArgsConstructor;
@@ -17,38 +21,39 @@ import lombok.extern.log4j.Log4j;
 public class RoomBookServicelmpl implements RoomBookService {
 	
 	@Autowired
-	private RoomBookMapper mapper;
-	
-	
-    //회의실 예약테이블 가져오기
+	RoomBookMapper mapper;
+
 	@Override
-	public List<RoomBookVO> getListResRoom(Map<String, String> paraMap) {
-		log.info("getListResRoom........"+paraMap);
-		return mapper.getListResRoom(paraMap);
+	public List<RoomBookVO> getListResRoom() {
+		log.info("list...........");
+		return mapper.getListResRoom();
 	}
-	
-    //회의실 예약등록하기
+
 	@Override
-	public int registerResRoom(Map<String, String> paraMap) {
-		log.info("regoster....."+paraMap);
-		return mapper.insertResRoom(paraMap);
+	public void registerResRoom(RoomBookVO rb) {
+		log.info("register...........");
+		mapper.insertResRoom(rb); 
 	}
-	
-    //회의실 예약중복일 체크하기
+
 	@Override
-	public int checkdate(Map<String, String> paraMap) {
-		log.info("checkdate......."+paraMap);
-		
+	public String checkdate(Map<String, String> paraMap) {
+		log.info("");
 		return mapper.checkdate(paraMap);
 	}
-	
-    //나의 회의실 예약조회하기.
+
 	@Override
-	public List<RoomBookVO> getResRoom(Map<String, String> paraMap) {
-	    log.info("getResRoom..........."+paraMap);
-	    
-	    return mapper.readResRoom(paraMap);
+	public RoomBookVO getResRoom(Long rb_num) {
+		log.info("get");
+		return mapper.readResRoom(rb_num);
+	}
+	
+	@Override
+	public List<RoomBookVO> setResRoom(String mr_num){
+		log.info("set.....");
+		
+		return mapper.setResRoom(mr_num);
 
 	}
-
+	
+	
 }

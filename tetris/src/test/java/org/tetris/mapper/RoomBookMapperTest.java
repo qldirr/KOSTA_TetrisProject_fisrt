@@ -1,4 +1,4 @@
-package org.tetris.Mapper;
+package org.tetris.mapper;
 
 import java.util.HashMap;
 import java.util.List;

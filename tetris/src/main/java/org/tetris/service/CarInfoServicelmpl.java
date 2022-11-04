@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import org.tetris.mapper.CarInfoMapper;
 import org.tetris.domain.CarInfoVO;
+import org.tetris.mapper.CarInfoMapper;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -32,5 +32,14 @@ public class CarInfoServicelmpl implements CarInfoService {
 		log.info("getList.....");
 		return mapper.getListCar();
 	}
+	
+	@Override
+	public CarInfoVO getCar(String ca_num) {
+		log.info("getcar.....");	
+		return mapper.readCar(ca_num);		
+	}
+	
+
+
 
 }

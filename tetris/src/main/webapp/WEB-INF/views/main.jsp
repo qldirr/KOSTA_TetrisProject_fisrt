@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
-<%@ include file="includes/header.jsp"%>
+<%@ include file="includes/menu.jsp"%>
 
 
 <!doctype html>
@@ -17,7 +17,7 @@
 <!-- Bootstrap CSS -->
 <link href="/resources/vender/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-<link href="/resources/css/index.css" rel="stylesheet">
+<link href="/resources/vender/res/index.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 
@@ -46,7 +46,7 @@
 	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
 	<script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
 	<script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="/resources/js/index.js"></script>
+	<script src="/resources/vender/res/index.js"></script>
 
 
 
