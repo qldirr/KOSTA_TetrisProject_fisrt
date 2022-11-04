@@ -4,67 +4,30 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tetris.mapper.RoomBookMapper">
 
-
-	<!-- 회의실 예약테이블 불러오기 -->
-	<select id="getListResRoom" parameterType="HashMap"
-		resultType="org.tetris.domain.RoomBookVO">
-		select rb_num, mr_num, e_id, m.mr_name,m.total ,e.e_name
-		,to_char(rb_startday, 'yyyy-mm-dd hh24:mi:ss') as rb_startday
-		,to_char(rb_endday, 'yyyy-mm-dd hh24:mi:ss') as rb_endday
-		from RoomBook r
-		join m meetingroom
-		on r.mr_num = m.mr_num
-		join e employee
-		on m.r_id = e.e_id
-		where mr_num= #{mr_num}
+   <!-- 회의실 예약 목록 가져오기 -->
+	<select id="getListResRoom" resultType="org.tetris.domain.RoomBookVO">
+		select rb_num, mr_num, e_id, rb_startday, rb_starttime, rb_endday, rb_endtime
+		from roombook 
 	</select>
 	
-
-	
-		<!-- 회의실 예약등록 (모달창 )-->
-	<insert id="insertResRoom" parameterType="HashMap">
-		insert into
-		RoomBook(rb_num, mr_num,e_id,rb_startday,rd_endday)
-		values
-		(seq_rb_num.nextval, #{mr_num}, #{e_id},
-		to_date(#{rb_startday},'yyyy-mm-dd hh24:mi:ss'),
-		to_date(#{rb_endday},'yyyy-mm-dd hh24:mi:ss'))
+    <!-- 회의실 예약 하기 -->
+	<insert id="insertResRoom" parameterType="org.tetris.domain.RoomBookVO">
+		insert into roombook (rb_num,mr_num,rb_startday,rb_starttime,rb_endday,rb_endtime,e_id)
+		values (rb_num_seq.nextval,#{mr_num},#{rb_startday},#{rb_starttime},#{rb_endday},#{rb_endtime},#{e_id})
 	</insert>
+			
+	<!-- 내 예약목록 가져오기 -->
+	<select id="readResRoom" resultType="org.tetris.domain.RoomBookVO">
+	select * from roombook where rb_num =#{rb_num} and e_id #{e_id}
 	
-
-	<!-- 입력받은 일시가 중복된 날짜인지 검사 -->
-	<select id="checkdate" parameterType="HashMap" resultType="int">
-		select count(*)
-		from
-		(
-		SELECT rb_num
-		FROM RoomBook
-		WHERE
-		to_char(rb_endday, 'yyyy-mm-dd hh24:mi:ss') &gt; #{rb_startday}
-		AND
-		to_char(rb_startday, 'yyyy-mm-dd hh24:mi:ss') &lt; #{rb_endday}
-		and
-		mr_num = #{mr_num}
-		)
 	</select>
-
-
-	   <!-- 내 회의실 예약 확인 -->
-	<select id="readResRoom" parameterType="HashMap" resultType="org.tetris.domain.RoomBookVO">
-		select rb_num, mr_num, e_id, m.mr_name,m.total ,e.e_name
-		,to_char(rb_startday, 'yyyy-mm-dd hh24:mi:ss') as rb_startday
-		,to_char(rb_endday, 'yyyy-mm-dd hh24:mi:ss') as rb_endday
-		from RoomBook r
-		join m meetingroom
-		on r.mr_num = m.mr_num
-		join e employee
-		on m.r_id = e.e_id
-		where to_char(sysdate, 'yyyy-mm-dd hh24:mi:ss') &lt; to_char(rb_endday, 'yyyy-mm-dd hh24:mi:ss')
-		and  e_id = #{e_id}
-		order by rb_num
+	
+	<!-- 회의실별 예약목록 가져오기 -->
+	
+	<select id="setResRoom" resultType="org.tetris.domain.RoomBookVO">
+	select * from roombook where mr_num =#{mr_num} 	
 	</select>
-
-
+	
 
 
 </mapper>

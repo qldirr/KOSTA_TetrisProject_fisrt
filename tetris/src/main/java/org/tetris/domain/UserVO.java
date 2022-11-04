@@ -1,6 +1,5 @@
 package org.tetris.domain;
 
-
 import java.sql.Date;
 import java.util.List;
 
@@ -27,5 +26,5 @@ public class UserVO {
 	
 	private List<AuthVO> authList;
 	
-	
+
 }

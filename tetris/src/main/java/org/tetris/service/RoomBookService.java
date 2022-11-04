@@ -7,16 +7,21 @@ import org.tetris.domain.RoomBookVO;
 
 public interface RoomBookService {
 
-	// 회의실 예약테이블 불러오기(예약진행 페이지)
-	public List<RoomBookVO> getListResRoom(Map<String, String> paraMap);
+	// 회의실 예약테이블 불러오기 
+	public List<RoomBookVO> getListResRoom();
 
 	// 회의실 예약하기(모달창에서 전송누르기)
-	public int registerResRoom(Map<String, String> paraMap);
+	public void registerResRoom(RoomBookVO rb);
 
 	// 회의실 예약날짜 중복 확인
-	public int checkdate(Map<String, String> paraMap);
+	public String checkdate(Map<String, String> paraMap);
 
-	// 내 회의실 예약정보 불러오기
-	public List<RoomBookVO> getResRoom(Map<String, String> paraMap);
+	// 내 예약정보 불러오기
+	public RoomBookVO getResRoom(Long rb_num);
+	
+	//회의실별 예약정보 불러오기
+	public List<RoomBookVO> setResRoom(String mr_num);
 
 }
+
+

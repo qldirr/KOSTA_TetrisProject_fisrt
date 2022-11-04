@@ -17,23 +17,19 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class MeetingRoomMapperTest {
-	
+
 	@Autowired
 	private MeetingRoomMapper mapper;
-	
-	/*
-	 * @Test public void test() { //DBpool.Mybatis,DB MeetingRoomVO mr = new
-	 * MeetingRoomVO(); 
-	 * mr.setMr_num("RS001"); 
-	 * mr.setMr_name("블록");
-	 * mr.setMr_total("7명");
-	 * 
-	 * mapper.insertRoom(mr); }
-	 */
 
-		
-	     
-	
+	@Test
+	public void test() { // DBpool.Mybatis,DB 
+		MeetingRoomVO mr = new
+		MeetingRoomVO();
+		mr.setMr_num("RS003");
+		mr.setMr_name("날라가서");
+		mr.setMr_total("88명");
+
+		mapper.insertRoom(mr);
 	}
 
-
+}

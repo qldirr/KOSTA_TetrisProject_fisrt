@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.tetris.domain.CarInfoVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -37,26 +38,30 @@ public class CarInfoControllerTest {
 
 	}
 
-	@Test 
-	public void test() throws Exception{ 
-		String resultPage=
-	  mockMvc.perform(MockMvcRequestBuilders.post("/carInfo/registerCar")
-	  .param("ca_num", "C005") 
-	  .param("ca_model","미니쿠퍼") 
-	  .param("ca_age", "2021")
-	  .param("ca_type", "드림카"))
-	  .andReturn().getModelAndView().getViewName();
-	  
-	  log.info(resultPage);
-	  
-	 }
+	
+	/*
+	 * @Test public void test() throws Exception{ String resultPage=
+	 * mockMvc.perform(MockMvcRequestBuilders.post("/reservation/registercar")
+	 * .param("ca_num", "C005") .param("ca_model","미니쿠퍼") .param("ca_age", "2021")
+	 * .param("ca_type", "드림카")) .andReturn().getModelAndView().getViewName();
+	 * 
+	 * log.info(resultPage);
+	 * 
+	 * }
+	 */
 
 	/*
 	 * @Test public void testList()throws Exception {
-	 * mockMvc.perform(get("/Carinfo/listCar"));
+	 * mockMvc.perform(get("/reservation/listcar"));
 	 * 
 	 * }
-	 * 
 	 */
-
+	
+	  
+	  @Test public void testRead()throws Exception {
+	  log.info(mockMvc.perform(MockMvcRequestBuilders.get("/reservation/readcar")
+	  .param("ca_num", "C001")) .andReturn() .getModelAndView().getModelMap());
+	  
+	  }
+	 
 }
