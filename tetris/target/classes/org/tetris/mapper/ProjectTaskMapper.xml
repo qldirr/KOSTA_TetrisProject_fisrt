@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tetris.mapper.ProjectTaskMapper">
+
+	<insert id="insertTask" parameterType="org.tetris.domain.project.ProjectTaskVO">
+		insert into task (ts_num, ts_name, ts_contents, ts_startdate, ts_enddate, ts_status, ts_importance, ts_manager, pj_num) 
+			values (ts_num_seq.nextval, #{ts_name}, #{ts_contents}, #{ts_startdate}, #{ts_enddate}, #{ts_status}, #{ts_importance}, #{ts_manager}, #{pj_num}) 
+	</insert>
+	
+	<select id="getListTask" resultType="org.tetris.domain.project.ProjectTaskVO">
+		select * from task where pj_num = #{pj_num}
+	</select>
+	
+	<select id="getListWithPaging" resultType="org.tetris.domain.project.ProjectTaskVO">
+		 <![CDATA[ 
+		 select ts_num, ts_name,  ts_contents, ts_startdate, ts_enddate, ts_status, ts_importance, ts_manager, pj_num from
+    		(select rownum rn, ts_num, ts_name,  ts_contents, ts_startdate, ts_enddate, ts_status, ts_importance, ts_manager, pj_num
+        		from task 
+    		where pj_num = #{pj_num}
+    		and ts_num > 0 
+    		and rownum <= #{cri.pageNum} * #{cri.amount}
+    	) where rn > (#{cri.pageNum} - 1) * #{cri.amount};
+		 
+		  ]]> 
+	</select>
+	
+	<select id="readTask">
+	
+	</select>
+	
+	<update id="updateTask">
+		update task set ts_status = #{ts_status} where ts_num = #{ts_num}
+	</update>
+	
+	<delete id="deleteTask">
+		delete from task where ts_num = #{ts_num}
+	</delete>
+	
+	<!-- <delete id="delete">
+		delete from projectfile where uuid = #{uuid}
+	</delete>
+	
+	<select id="findByPbnum" parameterType="Long" resultType="org.tetris.domain.project.BoardAttachVO">
+		select pf_name, pf_path, pf.pb_num, pf_uuid, pf_type, pb.pj_num
+    		from projectfile pf join pboard pb
+   		 		on pf.pb_num = pb.pb_num
+		where pj_num = #{pj_num}
+	</select> -->
+
+</mapper>

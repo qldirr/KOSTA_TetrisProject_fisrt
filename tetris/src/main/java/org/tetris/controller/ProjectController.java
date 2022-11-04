@@ -31,53 +31,54 @@ public class ProjectController {
 	@Autowired
 	private ProjectMapper mapper;
 
-	@GetMapping("/projectmain")
-	public void list(Model model) {
+	@GetMapping("/main")
+	public void listProject(Model model) {
 		UserVO user = new UserVO();
 		user.setE_id("gdong123");
-		List<ProjectVO> list =  service.listProject(user);
-		model.addAttribute("list", list);
+		List<ProjectVO> projectList =  service.getListProject(user);
+		//해당하는 사용자가 속한 프로젝트 목록
+		model.addAttribute("list", projectList);
 	}
 
 	@GetMapping("/register")
-	public void registerPage() {
+	public void registerForm() {
 
 	}
 
 	@PostMapping("/register")
-	public String register(ProjectVO project, Model model) {
-		service.register(project);
+	public String registerProject(ProjectVO project, Model model) {
+		service.registerProject(project);
 		
 		model.addAttribute("project", project);
 		return "/project/reginfo"; 
 	}
 	
-	@PostMapping("/finalregister")
-	public String finalregister(ProjectVO project) {
+	@PostMapping("/registerend")
+	public String registerProjectEnd(ProjectVO project) {
 		Long projectNum = service.getProjectNum(project);
 		project.setPj_num(projectNum);
-		service.insertProjectList(project);
+		service.registerProjectList(project);
 		
-		return "redirect: /project/projectmain";
+		return "redirect: /project/main";
 	}
 	
 
-	@GetMapping("/memberReg")
-	public void memberRegPage(Model model) {
-		model.addAttribute("dept", service.listDept());
-		model.addAttribute("memberList", service.listProjectMember());
+	@GetMapping("/member")
+	public void registerProjectMember(Model model) {
+		model.addAttribute("dept", service.getListDept());
+		model.addAttribute("employees", service.getListEmployees());
 
 	}
 
 	@ResponseBody
-	@PostMapping("/memberReg")
-	public void memberReg(@RequestBody ProjectMemberVO proMember) {
-		
+	@PostMapping("/member")
+	public void registerProjectMember(@RequestBody ProjectMemberVO proMember) {
 		String pl_num = proMember.getPl_num();
 		String e_id = "";
+		
 		for (int i = 0; i < proMember.getPmembers().size(); i++) {
 			e_id = proMember.getPmembers().get(i);
-			service.insertProjectMember(pl_num, e_id);
+			service.registerProjectMember(pl_num, e_id);
 		}
 
 	}

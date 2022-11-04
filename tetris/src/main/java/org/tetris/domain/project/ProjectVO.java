@@ -15,6 +15,7 @@ public class ProjectVO {
 	private String pj_startdate;
 	private String pj_enddate;
 	private String pj_manager;
+	private String pj_contents;
 	private String e_id;
 
 }

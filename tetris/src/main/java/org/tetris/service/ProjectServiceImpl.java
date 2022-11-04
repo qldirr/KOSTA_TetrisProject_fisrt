@@ -23,39 +23,39 @@ public class ProjectServiceImpl implements ProjectService {
 	
 
 	@Override
-	public List<ProjectVO> listProject(UserVO user) {
-		return mapper.listProject(user);
+	public List<ProjectVO> getListProject(UserVO user) {
+		return mapper.getListProject(user);
 	}
 
 	@Override
-	public void register(ProjectVO project) {
-		mapper.insert(project);
+	public void registerProject(ProjectVO project) {
+		mapper.insertProject(project);
 	}
 
 	@Override
-	public List<UserVO> listProjectMember() {
-		return mapper.listAllMember(); 
+	public List<UserVO> getListEmployees() {
+		return mapper.getListEmployees(); 
 	}
 
 	@Override
-	public List<DepartmentVO> listDept() {
-		return mapper.listDept();
+	public List<DepartmentVO> getListDept() {
+		return mapper.getListDept();
 	}
 
 	@Override
-	public void insertProjectMember(String pl_num, String e_id) {
+	public void registerProjectMember(String pl_num, String e_id) {
 		mapper.insertProjectMember(pl_num, e_id);
 		
 	}
 
 	@Override
-	public void insertProjectList(ProjectVO project) {
+	public void registerProjectList(ProjectVO project) {
 		mapper.insertProjectList(project);
 	}
 
 	@Override
 	public Long getProjectNum(ProjectVO project) {
-		return mapper.getProjectNum(project);
+		return mapper.readProjectNum(project);
 	}
 
 	

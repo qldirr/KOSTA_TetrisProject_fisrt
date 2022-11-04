@@ -43,7 +43,7 @@ function showUploadFile(uploadResultArr){
 			str += "><div>";
 			str += "<span>" + obj.pf_name + "</span>";
 			str += "<input type='button' value='삭제'></button><br>";
-			str += "<img src = '/resources/img/attach.png'></a>";
+			str += "<img src = '/resources/img/attachfile.png'></a>";
 			str += "</div>";
 			str += "</li>";
 		}

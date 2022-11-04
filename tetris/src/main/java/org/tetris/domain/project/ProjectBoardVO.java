@@ -17,7 +17,6 @@ public class ProjectBoardVO {
 	private String pb_status;
 	private Long pj_num;
 	
-	private int replyCnt;
 	private List<BoardAttachVO> attachList;
 	
 }
