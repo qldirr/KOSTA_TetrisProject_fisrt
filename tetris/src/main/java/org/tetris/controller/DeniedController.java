@@ -5,8 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.tetris.service.ChatService;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -20,6 +18,7 @@ public void accessDenied(Authentication auth, Model model) {
 	log.info("access Denied: " + auth);
 	model.addAttribute("msg", "ACCESS DENIED");
 }
+
 @GetMapping("/customLogin")
 public void loginInput(String error, String logout, Model model) {
 	log.info("error: " + error);
