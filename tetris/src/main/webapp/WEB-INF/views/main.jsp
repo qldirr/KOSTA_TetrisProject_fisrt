@@ -1,52 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
-<%@ include file="includes/header.jsp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-   content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="UTF-8">
+<title>메인입니다.</title>
 
-<!-- Bootstrap CSS -->
-<link href="/resources/vender/bootstrap/css/bootstrap.min.css"
-   rel="stylesheet">
-<link href="/resources/css/index.css" rel="stylesheet">
-<link rel="stylesheet"
-   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-
-<title>TETRIS Groupware</title>
 </head>
-
 <body>
-   <div style="width: 100%; height: 1000; background: red;">
-      <!-- content -->
-      <div class="container-fluid">
-         <div class="col-xl-10 col-lg-9 ">
-            <div class="row">
 
-               <div align="center">
-                  회의실 번호:<input> 회의실 명:<input> 총 인원수:<input>
-               </div>
-               </div>
-            </div>
-         </div>
-     </div>
+	<!-- jsp 인클루드 사용-->
+	<jsp:include page="includes/header.jsp"></jsp:include>
 
+	
+			<!-- 보조사이드바 -->
+			<div class="s-menu">
+				<div class="s-menu-title">
+					<p>보조바 메뉴바명</p>
+					<i class="fa-solid fa-pen-to-square fa-lg"></i>
+				</div>
+				<div class="s-list-item ">
+				    <input id="newbtn" type="button" value="새 파일" onclick="">
+				</div>
+				<div class="s-list-item ">
+					<a href="">보조메뉴바 1</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="">보조메뉴바 2</a>
+				</div>
+			</div>
+			<!-- 보조사이드바 끝-->
 
-      <!-- Optional JavaScript; choose one of the two! -->
+			<!-- 내용 시작 -->
+			<div class="s-container">
+				<h2 id="c-title">제목</h2>
 
-      <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-      <script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
-      <script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <script src="/resources/js/index.js"></script>
+			</div>
 
-      <%@ include file="includes/footer.jsp"%>
+			<!-- 내용 끝 -->
+
+		<!-- 전체 wrapper 끝 -->
+		<jsp:include page="includes/footer.jsp"></jsp:include>
+	
 </body>
 
 </html>
+
+
+
