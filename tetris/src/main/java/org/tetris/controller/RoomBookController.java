@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.MeetingRoomVO;
 import org.tetris.domain.RoomBookVO;
+import org.tetris.security.domain.CustomUser;
 import org.tetris.service.MeetingRoomService;
 import org.tetris.service.RoomBookService;
 
@@ -55,9 +58,12 @@ public class RoomBookController {
 	}
 	
 	//예약페이지 이동
+	@Secured({"ROLE_USER"})
 	@GetMapping("/registerrseroom")
 	public void registerRseRoomPage(@RequestParam("mr_num") String mr_num, Model model) {
-		
+		CustomUser user = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String userName = user.getUser().getE_name();
+		model.addAttribute("userName",userName);
 		model.addAttribute("registerrseroom",roomservice.getRoom(mr_num));
 
 	}
@@ -65,6 +71,7 @@ public class RoomBookController {
 
 	// 회의실예약 등록하기
 	//@Transactional
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/registerrseroom")
 	public String registerRseRoom( RoomBookVO rb, Model model, RedirectAttributes rttr) {
 		log.info("registerresroom...........");

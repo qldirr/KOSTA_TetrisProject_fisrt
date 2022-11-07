@@ -169,7 +169,7 @@
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="e_id">예약자</label> <input type="text" name="e_id"
-							class="form-control" id="e_id">
+							class="form-control" id="e_id" value= ${userName} readonly="readonly">
 					</div>
 					<div class="form-group col-md-6">
 						<label for="mr_num">예약 회의실</label> <input type="text" name="mr_num"

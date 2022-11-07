@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 
 <!DOCTYPE html>
 <html>
@@ -65,8 +66,9 @@
 		</div>
 	<div class="s-list-item "><a href="/meetingroom/resroomcal?mr_num=RS001">회의실(블록)예약</a></div>
 	<div class="s-list-item "><a href="/meetingroom/resroomcal?mr_num=RS002">회의실(콤보)예약</a></div>
+	<sec:authorize access="hasRole('ROLE_USER')">
 	<div class="s-list-item "><a href="/reservation/rescarmain">차량예약</a></div>
-	
+	</sec:authorize>
 </div>
 <!-- 보조메뉴바 끝 -->
 
@@ -74,10 +76,12 @@
   <div class="s-container">
   
 	<h2 id="c-title">${mr_num.mr_name} 회의실 예약현황 (${mr_num.mr_total})</h2>
-	
+	<sec:authorize access="hasRole('ROLE_USER')">
 	<input type="button" class="write_Btn" id="resRoomBtn" value="회의실예약"
 	onclick="location.href = '/meetingroom/registerrseroom?mr_num=${mr_num.mr_num}'"/>
+	</sec:authorize>
 	<div id='calendar'></div>
+	
 	
  </div>
 </body>
