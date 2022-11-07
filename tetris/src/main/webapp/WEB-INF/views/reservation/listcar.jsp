@@ -6,38 +6,46 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript">
+<title>TetrisGroupware</title>
+<link href="/resources/css/res.css" rel="stylesheet">
 
-var actionForm = $("#actionForm");
-
-$(function(){	
-$(".move") .on(
-			"click",
-			function(e) {
-				console.log("carDetail");
-				e.preventDefault();
-				actionForm
-						.append("<input type='hidden' name='ca_num' value='"
-								+ $(this).attr("href") + "'>");
-				actionForm.attr("action", "/reservation/readcar");
-				actionForm.submit();
-			});
-			
-});
+<script type="text/javascript">	
 
 </script>
 
 
 </head>
 <body>
+	<jsp:include page="../includes/header.jsp"></jsp:include>
+	<!-- 보조메뉴바 시작 -->
+	<div class="s-menu">
+		<div class="s-menu-title">
+			<p>
+				예약 <i class="bi bi-tags"></i>
+				<!-- 메인 메뉴바랑 동일한 i테그 넣음 -->
+		</div>
+		<div class="s-list-item ">
+			<a href="/meetingroom/listroom">회의실관리</a>
+		</div>
+		<div class="s-list-item ">
+			<a href="/reservation/listcar">차량관리</a>
+		</div>
+		<div class="s-list-item ">
+			<a href="/reservation/listrescar">차량예약 관리</a>
+		</div>
 
-<h1>(관리자)차량목록입니다.</h1>
+	</div>
+	<!-- 보조메뉴바 끝 -->
+
+	<!-- 내용 시작 -->
+	<div class="s-container">
+		<h2 id="c-title">차량관리</h2>
+	
 
 		<div class="contents_wrap">
 
-			<div class="contents">
-				<table>
+			<div class ="contents">
+					<table class="table table-hover">
 					<thead>
 						<tr>
 							<th scope="col">차량번호</th>
@@ -65,11 +73,11 @@ $(".move") .on(
 						</c:forEach>
 					</tbody>
 				</table>
-				 <a href="/reservation/registercar">
-					<input type="button" class="auto_wth_btn_b" value="차량등록" id = writeBtn />
+				<a href="/reservation/registercar"> <input type="button"
+					value="차량등록" class="write_Btn" id=write_Btn />
 				</a>
 			</div>
 		</div>
-	
+	</div>
 </body>
 </html>

@@ -6,14 +6,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>TetrisGroupware</title>
 
 <link href="/resources/vender/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 <link href="/resources/vender/res/bootstrap-datepicker3.css"
 	rel="stylesheet">
 <link href="/resources/vender/res/jquery.timepicker.min.css"
-	rel="stylesheet">	
+	rel="stylesheet">
+<link href="/resources/css/res.css" rel="stylesheet">
 
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
 <script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -21,103 +22,118 @@
 <script src="/resources/vender/res/jquery.timepicker.min.js"></script>
 
 <script type="text/javascript">
+	$(function() {
+		//차량등록
+		$("#enroll").click(function() {
+			if (confirm("등록하시겠습니까?")) {
+				chkReq();
+			}
+			return false;
+		})
 
-$(function(){	
-	//차량등록
-	$("#enroll").click(function() {
-		if(confirm("등록하시겠습니까?")){
-			chkReq();										
-		}
-		return false;
-	})
-
-});
+	});
 	//등록 필수 값 체크
-	function chkReq(){
-		if($("#ca_num").val() == null || $("#ca_num").val() == "" ){
+	function chkReq() {
+		if ($("#ca_num").val() == null || $("#ca_num").val() == "") {
 			alert("차량번호를 입력해주세요.");
 			$("#ca_num").focus();
 			return false;
 		}
-				
-		if($("#ca_type").val() == null || $("#ca_type").val() == "" ){
+
+		if ($("#ca_type").val() == null || $("#ca_type").val() == "") {
 			alert("차량모델명을 입력해주세요.");
 			$("#ca_type").focus();
 			return false;
 		}
-		
-		
-		if($("#ca_model").val() == null || $("#ca_model").val() == "" ){
+
+		if ($("#ca_model").val() == null || $("#ca_model").val() == "") {
 			alert("차종을 입력해주세요.");
 			$("#ca_model").focus();
 			return false;
 		}
-				
-		if($("#ca_age").val() == null || $("#ca_age").val() == "" ){
+
+		if ($("#ca_age").val() == null || $("#ca_age").val() == "") {
 			alert("연식을 입력해주세요.");
 			$("#ca_age").focus();
 			return false;
 		}
-		
+
 		var mode = $("#mode").val();
-		if("write" == mode){
+		if ("write" == mode) {
 			$('#registercareform').attr("action", "/reservation/registercar")
 			$("#registercareform").submit()
-		
-		}
-		
-		
-	}
 
-	
+		}
+
+	}
 </script>
 </head>
 <body>
-<h1>(관리자)차량 등록</h1>
-	<div class="contents_wrap">
-		<form action="/reservation/registercar" method="post"
-			id="registercareform">
-			<input type="hidden" name="mode" id="mode" value="write" />
 
-			<div class="contents">
-				<table>
-					<tbody id="contentsTbBody">
-						<tr>
-							<th scope="col">차량 번호</th>
-							<td class="left"><input type="text" name="ca_num"
-								id="ca_num"></td>
-						</tr>
-						<tr>
-							<th scope="col">차량 모델 명</th>
-							<td class="left"><input type="text" name="ca_model"
-								id="ca_model"></td>
-						</tr>
-						<tr>
-							<th scope="col">차종</th>
-							<td class="left"><input type="text" name="ca_type"
-								id="ca_type"></td>
-						</tr>
-						<tr>
-							<th scope="col">연식</th>
-							<td class="left"><input type="text" name="ca_age"
-								id="ca_age"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</form>
-		<div class="btn">
-			<input type="button" class="list_btn" id="listBtn" value="목록"
-				onclick="location.href = '/reservation/listcar'" /> 
-			<input type="button" class="write_btn" value="등록" id="enroll" /> 
-			
-
+	<jsp:include page="../includes/header.jsp"></jsp:include>
+	<!-- 보조메뉴바 시작 -->
+	<div class="s-menu">
+		<div class="s-menu-title">
+			<p>
+				예약 <i class="bi bi-tags"></i>
+				<!-- 메인 메뉴바랑 동일한 i테그 넣음 -->
+		</div>
+		<div class="s-list-item ">
+			<a href="/meetingroom/listroom">회의실관리</a>
+		</div>
+		<div class="s-list-item ">
+			<a href="/reservation/listcar">차량관리</a>
+		</div>
+		<div class="s-list-item ">
+			<a href="/reservation/listrescar">차량예약 관리</a>
 		</div>
 
 	</div>
+	<!-- 보조메뉴바 끝 -->
+
+	<!-- 내용 시작 -->
+	<div class="s-container">
+		<h2 id="c-title">차량 등록</h2>
+
+		<div class="contents_wrap">
+			<div class="contents">
+				<form action="/reservation/registercar" method="post"
+					id="registercareform">
+					<input type="hidden" name="mode" id="mode" value="write" />
 
 
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="e_id">차량 번호</label> <input type="text" name="ca_num"
+								class="form-control" id="ca_num">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="ca_model">차량 모델 명</label> <input type="text"
+								name="ca_model" class="form-control" id="ca_model">
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="ca_type">차종</label> <input type="text" name="ca_type"
+								class="form-control" id="ca_type">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="ca_age">연식</label> <input type="text" name="ca_age"
+								class="form-control" id="ca_age">
+						</div>
+					</div>
 
 
+				</form>
+				<div class="btn">
+					<input type="button" class="list_Btn" id="listBtn" value="목록"
+						onclick="location.href = '/reservation/listcar'" /> <input
+						type="button" class="write_Btn" value="등록" id="enroll" />
+				</div>
+
+			</div>
+		</div>
+	</div>
 </body>
 </html>

@@ -1,109 +1,94 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
-
-<div class="wapper">
-
-<!-- navbar -->
-<nav class="navbar navbar-expand-md navbar-light">
-	<button class="navbar-toggler ml-auto mb-2 bg-light" type="button"
-		data-toggle="collapse" data-target="#sidebar">
-		<span class="navar-toggle-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="siderbar">
-		<div class="container-fluid">
-			<div class="row">
-
-				<!-- sidebar -->
-			
-					<div class="col-xl-2 col-lg-3 sidebar fixed-top">
-					<div class="mt-3"></div>
-						<a href="#" class="navbar-link text-navy p-1 mt-1 sidebar-link">
-							<i class="bi bi-list text-navy "></i>
-						</a>
-						<div class="pb-3">
-							<a href="#"
-								class="navbar-brand text-white text-center d-block mx-auto mb-3 bottom-border">
-								<img src="/resources/img/TETRIS.jpg" width="180px">
-							</a>
-						</div>
-						<ul class="navbar-nav flex-column mt-4">
-							<!-- 근태관리 -->
-							<li class="nav item"><a href="#"
-								class="nav-link text-navy p-3 mb-2 sidebar-link"> <i
-									class="bi bi-clock text-navy fa-lg mr-3"></i>근태관리
-							</a></li>
-							<!-- 일정관리 -->
-							<li class="nav item"><a href="#"
-								class="nav-link text-navy p-3 mb-2 sidebar-link"> <i
-									class="bi bi-table text-navy fa-lg  mr-3"></i>일정관리
-							</a></li>
-							<!-- 프로젝트 -->
-							<li class="nav item"><a href="#"
-								class="nav-link text-navy p-3 mb-2 sidebar-link"> <i
-									class="bi bi-clipboard-data text-navy fa-lg  mr-3"></i>프로젝트
-							</a></li>
-							<!-- 전자결재 -->
-							<li class="nav item"><a href="#"
-								class="nav-link text-navy p-3 mb-2 sidebar-link"> <i
-									class="bi bi-file-text text-navy fa-lg  mr-3"></i>전자결재
-							</a></li>
-							<!-- 예약 -->
-							<li class="nav item"><a href="#"
-								class="nav-link text-navy p-3 mb-2 sidebar-link"> <i
-									class="bi bi-tags text-navy fa-lg  mr-3"></i>예약
-							</a></li>
-							<!--게시판 -->
-							<li class="nav item "><a href="#"
-								class="nav-link text-navy p-3 mb-2 sidebar-link"> <i
-									class="bi bi-easel text-navy fa-lg  mr-3"></i>게시판
-							</a></li>
-							<!--조직도 -->
-							<li class="nav item "><a href="#"
-								class="nav-link text-navy p-3 mb-2 sidebar-link"> <i
-									class="bi bi-diagram-3-fill text-navy fa-lg  mr-3"></i>조직도
-							</a></li>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<!-- <meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+
+<!-- Bootstrap CSS -->
+<link href="/resources/vender/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="/resources/css/main.css" rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
+<script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" 교차 출처>
+<link href="https: //fonts.googleapis.com/css2? family= 노토+산스+KR:wght@300;700;900 & display=swap" rel="stylesheet">
 
 
-						</ul>
-					</div>
-				</div>
+<title>TETRIS Groupware</title>
+</head>
+
+<body>
+
+	<div class="wapper">
+
+		<!-- main sidebar 시작-->
+		<div class="sidebar">
+			<div class="pb-3 bottom-border" style="text-align: center"  >
+			<a id ="brand" href="/main">
+					<img id="brandlogo" src="/resources/img/TETRIS.jpg" width="180px"></a>
+	
 			</div>
-		</div>
-
-
-	<!-- end of sidebar -->
-
-	<!-- top navbar -->
-	<div class="col-xl-10 col-lg-9 ml-auto bg-white fixed-top py-2">
-		<div class="row align-items-center">
-			<div class="col-md-4"></div>
-			<div class="col-md-5"></div>
-			<div class="col-md-3">
-				<ul class="navbar-nav">
-					<li class="nav-item icon-parent"><a href="#"
-						class="nav-link icon-bullet"><i
-							class="bi bi-bell-fill text-muted fa-lg"></i></a>
-					<li class="nav-item icon-parent"><a href="#"
-						class="nav-link icon-bullet"><i class=""></i></a>
-					<li class="nav-item "><a href="#" class=""><i class=""></i></a>
-				</ul>
-
+		
+			<div class="sidebar-item">
+				<a class="a" href="#"><i class="bi bi-clock"></i> 근태관리</a>
+			</div>
+			<div class="sidebar-item">
+				<a class="a" href="#"><i class="bi bi-table"></i> 일정관리</a>
+			</div>
+			<div class="sidebar-item">
+				<a class="a" href="/meetingroom/resroomcal?mr_num=RS001"><i class="bi bi-tags"></i> 예약</a>
+			</div>
+			<div class="sidebar-item">
+				<a class="a" href="#"><i class="bi bi-clipboard-data"></i> 프로젝트</a>
+			</div>
+			<div class="sidebar-item">
+				<a class="a" href="#"><i class="bi bi-file-text"></i> 전자결재</a>
+			</div>
+			<div class="sidebar-item">
+				<a class="a" href="/reservation/listcar"><i class="bi bi-easel"></i> 게시판</a>
+			</div>
+			<div class="sidebar-item">
+				<a class="a" href="#"><i class="bi bi-diagram-3-fill"></i> 조직도</a>
 			</div>
 
 		</div>
+
+		<!--  main sidebar 끝-->
+		<!-- navbar 시작 -->
+
+		<div class="nav-bar">
+
+			<div class="nav-bar-right">
+				<button id="btn-alarm">
+					<span style ="font-size: 30px;"><i class ="bi bi-bell-fill"></i></span>
+					<div id="alarm-count"></div>
+				</button>
+				<button id="btn-info">
+						<img src="../resources/img/res/hi.png"alt="사진">
+					<span class="user">고북이님</span>
+
+				</button>
+			</div>
+
+		</div>
+	
+		<!-- navbar 끝 -->
+		
 	</div>
-	<!-- end of top navbar -->
-</nav>
+	<!-- wrapper 끝 -->
+</body>
 
-<!-- end of nav -->
+</html>
 
-<div class="page-wrapper">
-
-
-
-
-			

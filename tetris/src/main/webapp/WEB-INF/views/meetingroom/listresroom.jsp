@@ -6,21 +6,43 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>TetrisGroupware</title>
+<link href="/resources/css/res.css" rel="stylesheet">
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"
 	type="text/javascript"></script>
-<script type="text/javascript">
-	
+<script type="text/javascript">	
 </script>
 
 </head>
 <body>
+<jsp:include page="../includes/header.jsp"></jsp:include>
+	<!-- 보조메뉴바 시작 -->
+	<div class="s-menu">
+		<div class="s-menu-title">
+			<p>예약 <i class="bi bi-tags"></i>
+				<!-- 메인 메뉴바랑 동일한 i테그 넣음 -->
+		</div>
+		<div class="s-list-item ">
+			<a href="/meetingroom/listroom">회의실 관리</a>
+		</div>
+		<div class="s-list-item ">
+			<a href="/reservation/listcar">차량관리</a>
+		</div>
+		<div class="s-list-item ">
+			<a href="/reservation/listrescar">차량예약 관리</a>
+		</div>
 
-	<h1>(관리자페이지) 회의실 예약목록입니다.</h1>
-	<div class="contents_wrap">
+	</div>
+	<!-- 보조메뉴바 끝 -->
+
+	<!-- 내용 시작 -->
+	<div class="s-container">
+
+		<h2 id="c-title">회의실예약 목록</h2>
+
 
 		<div class="contents">
-			<table>
+			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th scope="col">예약번호</th>
@@ -53,7 +75,7 @@
 		</div>
 	</div>
 	
-		<input type="button" class="list_btn" id="listBtn" value="회의실 관리페이지"
+		<input type="button" class="list_btn" id="listBtn" value="회의실관리페이지"
 				onclick="location.href = '/meetingroom/listroom'" /> 
 
 </body>

@@ -35,11 +35,10 @@ public class RoomBookServicelmpl implements RoomBookService {
 		mapper.insertResRoom(rb); 
 	}
 
-	@Override
-	public String checkdate(Map<String, String> paraMap) {
-		log.info("");
-		return mapper.checkdate(paraMap);
-	}
+	/*
+	 * @Override public String checkdate(Map<String, String> paraMap) {
+	 * log.info(""); return mapper.checkdate(paraMap); }
+	 */
 
 	@Override
 	public RoomBookVO getResRoom(Long rb_num) {
@@ -53,6 +52,14 @@ public class RoomBookServicelmpl implements RoomBookService {
 		
 		return mapper.setResRoom(mr_num);
 
+	}
+	
+	@Override
+	public int checkDate(RoomBookVO rb) {
+		
+		log.info("checkDate...");
+		
+		return mapper.checkDate(rb);
 	}
 	
 	
