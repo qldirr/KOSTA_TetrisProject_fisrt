@@ -13,7 +13,6 @@ import org.tetris.domain.chat.ChatRoomVO;
 
 public interface ChatService {
 	
-	public EmployeeVO login(String user);
 	public List<EmployeeVO> getListEmp();
 	public List<DepartmentVO> getListDept();
 	public EmployeeVO getEmp(String e_id);

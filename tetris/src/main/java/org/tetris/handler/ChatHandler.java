@@ -54,7 +54,9 @@ public class ChatHandler extends TextWebSocketHandler {
 		EmployeeVO loginUser = getLoginUser(wsession);
 		
 		for(WebSocketSession chatPart : userList) {
-			chatPart.sendMessage(new TextMessage(loginUser.getE_name() + "님이 입장하셨습니다."));
+			if(!chatPart.getId().equals(wsession.getId())) {
+				chatPart.sendMessage(new TextMessage(loginUser.getE_name() + "님이 입장하셨습니다."));
+			}
 		}
 	}
 	
@@ -64,12 +66,10 @@ public class ChatHandler extends TextWebSocketHandler {
 		EmployeeVO loginUser = getLoginUser(wsession);
 		List<WebSocketSession> userList = userMap.get(roomId);
 		
-//		ChatMsgVO chatMsgVO = objectMapper.readValue(message.getPayload(), ChatMsgVO.class);
-//		TextMessage textMessage = new TextMessage(chatMsgVO.getE_id() + ", " + chatMsgVO.getCm_contents());
-//		chatService.registerMsg(chatMsgVO);
-		
 		for(WebSocketSession chatPart : userList) {
-			chatPart.sendMessage(new TextMessage(loginUser.getE_name() + ": " + /*textMessage*/message.getPayload()));
+			if(!chatPart.getId().equals(wsession.getId())) {
+				chatPart.sendMessage(new TextMessage(/* loginUser.getE_name() + ": " + */message.getPayload()));
+			}
 		}
 	}
 	
@@ -84,7 +84,9 @@ public class ChatHandler extends TextWebSocketHandler {
 		}
 		
 		for(WebSocketSession chatPart : userList) {
-			chatPart.sendMessage(new TextMessage(loginUser.getE_name() + "님이 나가셨습니다."));
+			if(!chatPart.getId().equals(wsession.getId())) {
+				chatPart.sendMessage(new TextMessage(loginUser.getE_name() + "님이 나가셨습니다."));
+			}
 		}
 	}
 	

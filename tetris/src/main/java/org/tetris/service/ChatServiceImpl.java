@@ -22,11 +22,6 @@ public class ChatServiceImpl implements ChatService {
 	
 	@Autowired
 	private ChatMapper mapper;
-
-	@Override
-	public EmployeeVO login(String user) {
-		return mapper.login(user);
-	}
 	
 	@Override
 	public List<EmployeeVO> getListEmp() {

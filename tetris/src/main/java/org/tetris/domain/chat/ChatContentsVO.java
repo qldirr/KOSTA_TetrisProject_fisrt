@@ -1,5 +1,7 @@
 package org.tetris.domain.chat;
 
+import org.tetris.domain.UserVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +23,7 @@ public class ChatContentsVO {
 	private String cc_image;
 	private String cc_path;
 	private String cc_file;
+	
+	private UserVO userVO;
 
 }
