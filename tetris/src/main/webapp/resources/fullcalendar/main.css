@@ -200,8 +200,8 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 .fc .fc-button-primary {
     color: #fff;
     color: var(--fc-button-text-color, #fff);
-    background-color: #2C3E50;
-    background-color: var(--fc-button-bg-color, #2C3E50);
+    background-color: #161E67;
+    background-color: var(--fc-button-bg-color, #161E67);
     border-color: #2C3E50;
     border-color: var(--fc-button-border-color, #2C3E50);
   }
@@ -428,6 +428,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 .fc .fc-col-header-cell-cushion {
     display: inline-block; /* x-browser for when sticky (when multi-tier header) */
     padding: 2px 4px;
+    color: #000000;
   }
 .fc .fc-bg-event,
   .fc .fc-non-business,
@@ -739,6 +740,7 @@ A HORIZONTAL event
     position: relative;
     z-index: 4;
     padding: 4px;
+    color: black;
   }
 .fc {
 
