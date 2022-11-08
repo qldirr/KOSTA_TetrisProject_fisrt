@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.Criteria;
 import org.tetris.domain.HrVO;
 import org.tetris.domain.PageDTO;
+import org.tetris.security.domain.CustomUser;
 import org.tetris.service.HrService;
 
 import lombok.AllArgsConstructor;
@@ -32,20 +34,21 @@ import lombok.extern.log4j.Log4j;
 public class HrController {
 	
 	private HrService service;
-	//±ÙÅÂ°ü·Ã ÄÁÆ®·Ñ·¯
+	//ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½
 	
-//person.jsp °³ÀÎ±ÙÅÂÆäÀÌÁö - e_id·Î Á¤º¸Ãâ·Â
+//person.jsp ï¿½ï¿½ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - e_idï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@GetMapping("/person")
-	public void get(@RequestParam("e_id") String e_id, Model model) {
+	public void get(Model model) {
 		log.info("/person");
-		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getHrList(e_id));
 		
 		log.info(service.getHr(e_id));
 	}
 	
-	//Ãâ±ÙÇÏ±â
+	//ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	@PostMapping("/insertAction.do")
 	@ResponseBody
 	public String insertAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
@@ -62,7 +65,7 @@ public class HrController {
 		return "redirect:/attendance/person";
 	}
 	
-	//¿Ü±Ù
+	//ï¿½Ü±ï¿½
 	@PostMapping("/outAction.do")
 	@ResponseBody
 	public String outAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
@@ -73,7 +76,7 @@ public class HrController {
 		return "redirect:/attendance/person";
 	}
 
-	//Åð±ÙÇÏ±â
+	//ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	@PostMapping("/endAction.do")
 	@ResponseBody
 	public String endDate(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
@@ -85,7 +88,7 @@ public class HrController {
 		return "redirect:/attendance/get";
 	} 
 	
-//personal.jsp °³ÀÎ±ÙÅÂÁ¶È¸
+//personal.jsp ï¿½ï¿½ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½È¸
 	
 	@GetMapping("/personal")
 	public void getPersonal(@RequestParam("e_id") String e_id, @ModelAttribute("cri") Criteria cri, Model model) {
@@ -94,11 +97,12 @@ public class HrController {
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getPersonal(e_id));
 		model.addAttribute("hrVO2", service.getAttendance(e_id));
+		model.addAttribute("hrVA", service.getHrVA(e_id));
 	}
 	
 	
 	
-//personAll.jsp Àü»ç±ÙÅÂÆäÀÌÁö
+//personAll.jsp ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	
 	  @GetMapping("/personAll") 
 	  public void getAll(Criteria cri, Model model) {
@@ -110,7 +114,7 @@ public class HrController {
 		  model.addAttribute("pageMaker", new PageDTO(cri, total));
 	  }
 	 
-//vacation list Ãâ·ÂÆäÀÌÁö
+//vacation list ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	  @GetMapping("/vacation")
 	  public void getVac(@RequestParam("e_id") String e_id, Model model) {
 		  log.info("getVac");

@@ -1,15 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../includes/header.jsp"%>
 
-
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -171,39 +168,28 @@
 	}
 </script>
 </head>
-
 <body onload="printClock()">
-	<div style="width: 100%; height: 1000;">
 
-		<!-- content -->
-		<div class="container-fluid">
-			<div class="col-xl-10 col-lg-9 ">
+	<!-- jsp 인클루드 사용-->
+	<jsp:include page="../includes/header.jsp"></jsp:include>
 
-				<div class="row">
-
-					<!-- 좌측바부분 -->
-					<div>
-						<div>
-							<div>
-								<h3>근태관리 페이지</h3>
-								<h5>어서오세요 ${hrVO.e_name }님</h5>
-								<input type="text" id="datePicker">
-								<ul class="list-unstyled">
-									<li>근태입력</li>
-									<li><a href='/attendance/personal?e_id=<c:out value="${hrVO.e_id}"/>' target="_blank">개인근태기록조회</a></li>
-								</ul>
-							</div>
-						</div>
-
-						<!-- 현재시간/출석시간/퇴근시간 -->
-						<div>
+	
+			<!-- 보조사이드바 -->
+			<div class="s-menu">
+				<div class="s-menu-title">
+					<p>근태관리</p>
+					<i class="fa-solid fa-pen-to-square fa-lg"></i>
+				</div>
+				<div class="s-list-item text-center">
+				    <div>
 							<!--  -->
 							<div id="date"></div>
 							<div
 								style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
 								id="clock"></div>
+				    		<!-- <input id="newbtn" type="button" value="새 파일" onclick=""> -->
 							<!-- 출근시간 -->
-							<dl class="mb-3">
+							<dl class="my-3 ">
 								<dt>출근시간</dt>
 								<dd id="startTime">
 									<fmt:formatDate value="${hrVO.hr_date }"
@@ -220,7 +206,7 @@
 							</dl>
 							<!-- 누적근무시간 -->
 							<dl>
-								<dt>누적근무시간</dt>
+								<!-- <dt>누적근무시간</dt> -->
 								<dd id=""></dd>
 							</dl>
 							<!-- 출퇴근버튼 -->
@@ -230,31 +216,28 @@
 								<button id="outD">외근</button>
 							</div>
 						</div>
-					</div>
-					<!-- 좌측바부분의 끝 -->
+				</div>
+				<div class="s-list-item ">
+					<a href='/attendance/personal?e_id=<c:out value="${hrVO.e_id}"/>' target="_blank">개인근태기록조회</a>
+				</div>
+			</div>
+			<!-- 보조사이드바 끝-->
 
-					<!-- 상단부분 -->
-					<div></div>
-
-					<br>
-					<br>
-					<!-- 정보출력부분 -->
-					<div>
-
-						<!-- 테이블 -->
-						<div class="my-3">
-							<h5>소속부서: ${hrVO.d_name }</h5>
+			<!-- 내용 시작 -->
+			<div class="s-container mt-3">
+				<h2 id="c-title" class="mt-3">소속부서: ${hrVO.d_name }</h2>
+				<div class="my-4">
 							<!-- 
 								<div>선택날짜</div>
 							 -->
-							<table class="table table-striped"
+							<table class="table table-striped w-auto"
 								style="text-align: center; border: 1px solid #dddddd">
 								<thead>
-									<tr>
-										<th style="background-color: #eeeeee; text-align: center;">일자</th>
-										<th style="background-color: #eeeeee; text-align: center;">사원번호</th>
-										<th style="background-color: #eeeeee; text-align: center;">이름</th>
-										<th style="background-color: #eeeeee; text-align: center;">부서</th>
+									<tr class="something">
+										<th class="col-md-2" style="background-color: #eeeeee; text-align: center;">일자</th>
+										<th class="col-md-" style="background-color: #eeeeee; text-align: center;">사원번호</th>
+										<th class="col-md-2" style="background-color: #eeeeee; text-align: center;">이름</th>
+										<th class="col-md-2" style="background-color: #eeeeee; text-align: center;">부서</th>
 										<th style="background-color: #eeeeee; text-align: center;">출근시간</th>
 										<th style="background-color: #eeeeee; text-align: center;">퇴근시간</th>
 										<th style="background-color: #eeeeee; text-align: center;">근무상태</th>
@@ -282,45 +265,22 @@
 								</tbody>
 							</table>
 						</div><!-- 테이블 끝 -->
-						
-						<!-- <div>미출근자/휴가자
-							<h7>미출근자/휴가자</h7>
-							<table>
-								<thead>
-									<tr>
-										<td>미출근자</td>
-										<td>휴가자</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-								</tbody>
-							</table> 
-						</div><!-- 오늘 미출근자/휴가자끝 -->
-					</div>
-					<input type="hidden" id="timecheck"
+			</div>
+
+			<!-- 내용 끝 -->
+			<input type="hidden" id="timecheck"
 						value="<fmt:formatDate
 												value="${hrVO.hr_date }" pattern="HH:mm:ss" />">
 					<!-- 정보출력부분의 끝 -->
-
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-
-	<!-- Optional JavaScript; choose one of the two! -->
-
-	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-	<script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
+					<script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
 	<script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="/resources/js/index.js"></script>
-
-	<%@ include file="../includes/footer.jsp"%>
+		<!-- 전체 wrapper 끝 -->
+		<jsp:include page="../includes/footer.jsp"></jsp:include>
+	
 </body>
 
 </html>
+
+
+

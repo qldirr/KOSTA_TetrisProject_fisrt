@@ -244,7 +244,7 @@
 
 						<!-- 근태누계 -->
 						<div class="panel panel-default my-5">
-							<div class="panel-heading">근태누계</div>
+							<div class="panel-heading"><h2>근태누계</h2></div>
 							<div class="panel-body">
 								<table class="table table-hover">
 									<thead>
@@ -266,7 +266,7 @@
 											<td>${hrVO2.working_day }</td>
 											<td>${hrVO2.late_day }</td>
 											<td>${hrVO2.skip_day }</td>
-											<td>${hrVO2.holi_day }</td>
+											<td>${hrVA.e_totalvac-hrVA.e_usevac}</td>
 										</tr>
 									</tbody>
 								</table>
