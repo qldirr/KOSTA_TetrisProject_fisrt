@@ -176,11 +176,14 @@ html, body {
 }
 
 
-footer {
-	position: absolute;
-	bottom: 0;
+
+#footer {
 	width: 100%;
+	height: auto;
+	position: relative;
+	transform:translaty(-100%);
 }
+
 
 #calendar a.fc-col-header-cell-cushion {
 	color: black;

@@ -3,6 +3,8 @@ package org.tetris.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.CarBookVO;
 import org.tetris.domain.CarInfoVO;
+import org.tetris.security.domain.CustomUser;
 import org.tetris.service.CarBookService;
 import org.tetris.service.CarInfoService;
 
@@ -65,10 +68,12 @@ public class CarBookController {
 
 	}*/
 	
-
+	@Secured({"ROLE_USER"})
 	@GetMapping("/registerrsecar")
 	public void registerRseCar(@RequestParam("ca_num") String ca_num, Model model) {
-		
+		CustomUser user = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String userName = user.getUser().getE_name();
+		model.addAttribute("userName",userName);
 		model.addAttribute("registerrsecar",carservice.getCar(ca_num));
 
 	}

@@ -42,7 +42,6 @@
 		<h2 id="c-title">차량관리</h2>
 	
 
-		<div class="contents_wrap">
 
 			<div class ="contents">
 					<table class="table table-hover">
@@ -76,8 +75,11 @@
 				<a href="/reservation/registercar"> <input type="button"
 					value="차량등록" class="write_Btn" id=write_Btn />
 				</a>
+				<jsp:include page="../includes/footer.jsp"></jsp:include>
 			</div>
+				
 		</div>
-	</div>
+	
+
 </body>
 </html>

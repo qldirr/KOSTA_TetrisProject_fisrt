@@ -49,7 +49,6 @@
 	<div class="s-container">
 		<h2 id="c-title">회의실 관리</h2>
 
-		<div class="contents_wrap">
 
 			<div class="contents">
 
@@ -89,9 +88,9 @@
 				</a> <a href="/meetingroom/listresroom"> <input type="button"
 					class="list_Btn" value="회의실예약목록" id="reslistBtn" />
 				</a>
+				<jsp:include page="../includes/footer.jsp"></jsp:include>
 			</div>
 		</div>
-	</div>
 
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -132,6 +131,7 @@
 			</div>
 		</div>
 	</div>
+	
 
 
 </body>

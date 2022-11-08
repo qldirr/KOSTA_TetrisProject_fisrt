@@ -72,7 +72,9 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			<jsp:include page="../includes/footer.jsp"></jsp:include>
 		</div>
+		
 	</div>
 	
 		<input type="button" class="list_btn" id="listBtn" value="회의실관리페이지"

@@ -44,7 +44,7 @@
 		<h2 id="c-title">차량예약 정보</h2>
 
 		<div class="contents">
-		<h3>NO.${rescar.cb_num}</h3>
+			<h3>NO.${rescar.cb_num}</h3>
 
 
 			<form action="" method="get" id="rescar">
@@ -101,13 +101,13 @@
 							readonly=readonly>
 					</div>
 				</div>
-		
-		</form>
 
-		<input type="button" class="list_Btn" id="listBtn" value="목록"
-			onclick="location.href = '/reservation/listrescar'" />
-			</div>
+			</form>
 
+			<input type="button" class="list_Btn" id="listBtn" value="목록"
+				onclick="location.href = '/reservation/listrescar'" />
+		</div>
+		<jsp:include page="../includes/footer.jsp"></jsp:include>
 	</div>
 
 

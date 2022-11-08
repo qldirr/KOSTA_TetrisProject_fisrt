@@ -14,6 +14,7 @@
 	<!-- jsp 인클루드 사용-->
 	<jsp:include page="includes/header.jsp"></jsp:include>
 	<!-- 메인내용 container시작 -->
+	<div class="wrap">
 	<div class="container">
 
 		<!-- main-left 시작 -->
@@ -65,12 +66,12 @@
 		</div>
 		<!-- main-rignt 끝 -->
 
-
+	<jsp:include page="includes/footer.jsp"></jsp:include>
 	</div>
 <!-- container 끝 -->
 
-	<jsp:include page="includes/footer.jsp"></jsp:include>
 
+</div>
 </body>
 
 </html>

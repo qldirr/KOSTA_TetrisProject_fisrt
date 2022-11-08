@@ -89,11 +89,10 @@
 						<div id="alarm-count"></div>
 					</button>
 					<button id="btn-info">
-						<img src="../resources/img/res/hi.png" alt="사진"> <span
-							class="user"><sec:authentication
-								property="principal.user.e_name" /></span>
-							<a href="/member/customLogout">로그아웃</a>
+						<img src="../resources/img/res/hi.png" alt="사진"> 
+						<span class="user"><sec:authentication property="principal.user.e_name" /></span>						
 					</button>
+					<a href="/member/customLogout">로그아웃</a>
 						</sec:authorize>
 				
 					

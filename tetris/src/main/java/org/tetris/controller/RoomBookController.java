@@ -83,7 +83,7 @@ public class RoomBookController {
 		  } 
 		 else{
 		     log.info("fail........");
-		     return "/meetingroom//registerrseroom";
+		     return "/meetingroom/registerrseroom";
 		    	     
 		  }
 		 	  		

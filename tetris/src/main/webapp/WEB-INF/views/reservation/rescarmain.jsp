@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,16 +40,13 @@
 	<!-- 보조메뉴바 끝 -->
 
 	<!-- 내용 시작 -->
+	<div class="wrap" >
 	<div class="s-container">
 		<h2 id="c-title">차량예약</h2>
 
-
-
 		<div class="contents">
 		
-
-
-				<c:set var="i" value="0" />
+			<c:set var="i" value="0" />
 				<c:set var="j" value="3" />
 				<table>
 
@@ -77,10 +76,13 @@
 
 					</c:forEach>
 				</table>
+				<jsp:include page="../includes/footer.jsp"></jsp:include>
 			</div>
+				
 		</div>
 	
+	</div>
 
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+	
 </body>
 </html>

@@ -15,6 +15,7 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 @RequestMapping("/member/*")
 public class DeniedController {
+	
 @GetMapping("/accessError")
 public void accessDenied(Authentication auth, Model model) {
 	log.info("access Denied: " + auth);

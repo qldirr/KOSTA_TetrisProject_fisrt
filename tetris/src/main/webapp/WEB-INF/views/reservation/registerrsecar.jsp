@@ -164,7 +164,7 @@ function chkrescar(){
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="e_id">예약자</label> <input type="text" name="e_id"
-						class="form-control" id="e_id">
+							class="form-control" id="e_id" value= ${userName} readonly="readonly">
 				</div>
 				<div class="form-group col-md-6">
 					<label for="ca_num">예약차량</label> <input type="text" name="ca_num"
@@ -198,6 +198,7 @@ function chkrescar(){
 		</form>
 		
 	</div>
+	<jsp:include page="../includes/footer.jsp"></jsp:include>
 </div>
 </body>
 </html>
