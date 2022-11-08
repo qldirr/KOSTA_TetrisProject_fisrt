@@ -94,6 +94,7 @@ public class HrController {
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getPersonal(e_id));
 		model.addAttribute("hrVO2", service.getAttendance(e_id));
+		model.addAttribute("hrVA", service.getHrVA(e_id));
 	}
 	
 	

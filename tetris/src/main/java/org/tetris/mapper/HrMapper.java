@@ -28,4 +28,6 @@ public interface HrMapper {
 	public HrVO2 getAttendance(String e_id);
 	
 	public List<VacVO> getVac(String e_id);
+	
+	public HrVO2 getHrVA(String e_id);
 }

@@ -93,5 +93,10 @@ public class HrServiceImpl implements HrService {
 		return hrMapper.getVac(e_id);
 	}
 
+	@Override
+	public HrVO2 getHrVA(String e_id) {
+		return hrMapper.getHrVA(e_id);
+	}
+
 	
 }

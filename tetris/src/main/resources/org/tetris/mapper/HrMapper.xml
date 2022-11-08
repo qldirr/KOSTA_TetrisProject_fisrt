@@ -185,6 +185,11 @@
 		
 	</select>
 	
+	<select id="getHrVA" resultType="org.tetris.domain.HrVO2">
+		select e_totalvac, e_usevac from employee
+		where e_id = #{e_id}
+	</select>
+	
 	<!-- vacation.jsp -->
 	<select id="getVac" resultType="org.tetris.domain.VacVO">
 		select v.v_num as v_num, v.v_startdate as v_startdate, v.v_enddate as v_enddate, 

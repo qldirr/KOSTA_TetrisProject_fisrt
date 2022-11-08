@@ -1,44 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../includes/header.jsp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css"
-	type="text/css" />
-<link href="/resources/vender/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-<link href="/resources/css/index.css" rel="stylesheet">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link href="/resources/vender/bootstrap/css/bootstrap-datepicker3.css"
-	rel="stylesheet">
-
-<!-- js -->
-<script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
-<script src="/resources/js/index.js"></script>
-<script src="/resources/vender/bootstrap/js/bootstrap-datepicker.js"></script>
-
-
-
+<meta charset="UTF-8">
 <title>TETRIS Groupware</title>
 <script>
-	$(document)
-			.ready(
-					function() {
+	$(document).ready(function(){
 
 						//출퇴근버튼 활성화
 						var currentDate = new Date();
@@ -255,79 +227,73 @@
 	}
 </script>
 </head>
-
 <body onload="printClock()">
-	<div style="width: 100%; height: 1000;">
 
-		<!-- content -->
-		<div class="container-fluid">
-			<div class="col-xl-10 col-lg-9 ">
+	<!-- jsp 인클루드 사용-->
+	<jsp:include page="../includes/header.jsp"></jsp:include>
 
-				<div class="row">
-
-					<!-- 좌측바부분 -->
-					<div>
-						<div>
-							<div>
-								<h3>전사 근태관리 페이지</h3>
-								<h5>어서오세요 admin님</h5>
-								<ul>
-									<li>근태입력</li>
-									<li><a href="">근태설정</a></li>
-									<li><a href="">전사연차연황</a></li>
-								</ul>
-							</div>
-						</div>
-
-						<!-- 현재시간/출석시간/퇴근시간 -->
-						<div>
-							<!--  -->
-							<div id="date"></div>
-							<div
-								style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
+	
+			<!-- 보조사이드바 -->
+			<div class="s-menu">
+				<div class="s-menu-title">
+					<p>전사 근태페이지</p>
+					<i class="fa-solid fa-pen-to-square fa-lg"></i>
+				</div>
+				<div class="s-list-item text-center">
+					<div id="date"></div>
+					<div style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
 								id="clock"></div>
-						</div>
-					</div>
-					<!-- 좌측바부분의 끝 -->
+				    <input id="newbtn" type="button" value="새 파일" onclick="">
+				</div>
+				<div class="s-list-item ">
+					<a href="">보조메뉴바 1</a>
+				</div>
+				<div class="s-list-item ">
+					<!-- <a href="">전사연차연황</a> -->
+				</div>
+			</div>
+			<!-- 보조사이드바 끝-->
 
-					<!-- 상단부분 -->
-					<div></div>
-
-					<br> <br>
-					<!-- 정보출력부분 -->
-					<div>
-
-						<!-- 테이블 -->
-						<div>
-
-
-							<!-- 리스트 검색폼 -->
-							<div class="container mt-3">
-								<div class="row">
-									<div class="col-lg-12">
+			<!-- 내용 시작 -->
+			<div class="s-container">
+			
+				<h2 id="c-title">근태리스트</h2>
+				<div class="container2 mt-3">
 										
-										<form id='searchForm' action="/attendance/personAll" method="get">
+								<form id='searchForm' action="/attendance/personAll" method="get">
+								<div class="form-row">
 											<!-- 부서선택 -->
-											<h6>부서선택</h6>
+											<div class="form-group col-md-3">
+											<h6>부서	</h6>
 											<input type="hidden" name="type" value="NDE">
-											<select class="form-control w-25 mx-2" name="search_dnum">
+											<select class="form-control w-60 mx-2" name="search_dnum">
 												<option>전체부서</option>
 												<option value='01'>개발부</option>
 												<option value='02'>기획부</option>
 												<option value='03'>영업부</option>
 											</select>
+											</div>
+
+
 											<!-- 선택일자 -->
+											<div class="form-group col-md-4">
 											<h6>일자선택</h6>
 											<input type="text" id="datePicker" name="seacrh_date">
+											</div>
+
+											<div class="form-group col-md-3">
 											<!-- 사원이름검색 -->
-											<h6>이름검색</h6>
+											<h6>이름</h6>
 											<input type="text" name='keyword' value='<c:out value="${pageMaker.cri.e_name}"/>'/>
 											<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
 											<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount}"/>'/>
-											<button class="btn btn-default mx-2">검색</button>
-										</form>
-									</div>
-								</div>
+											</div>
+
+											<div class="form-group col-md-2">
+											<button class="btn btn-primary mx-2">검색</button>
+											</div>
+										</div>
+									</form>
 							</div>
 							<!-- container끝 -->
 							<!-- 검색폼끝 -->
@@ -356,7 +322,7 @@
 											<td><fmt:formatDate value="${hr.hr_date }"
 													pattern="yyyy-MM-dd" /></td>
 											<td><c:out value="" />${hr.e_num }</td>
-											<td><a class='move' href='<c:out value="${hr.e_id }"/>'>
+											<td><a class='move' href='/attendance/personal?e_id=<c:out value="${hr.e_id}"/>'>
 													<c:out value="${hr.e_name}" />
 											</a></td>
 											<td><c:out value="" />${hr.d_name}</td>
@@ -375,28 +341,30 @@
 								</tbody>
 							</table>
 
-
+							<!-- 페이징 -->
+							<nav aria-label="page">
 							<div class="pull-right">
 								<ul class="pagination">
 
 									<c:if test="${pageMaker.prev }">
-										<li class="paginate_button previous"><a
-											href="${pageMaker.startPage -1 }">Previous</a></li>
+										<li class="page-item paginate_button previous"><a
+											href="${pageMaker.startPage -1 }" class="page-link">Previous</a></li>
 									</c:if>
 
 									<c:forEach var="num" begin="${pageMaker.startPage }"
 										end="${pageMaker.endPage}">
-										<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }">
-											<a href="${num }">${num }</a>
+										<li class="page-item paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }">
+											<a href="${num }" class="page-link">${num }</a>
 										</li>
 									</c:forEach>
 
 									<c:if test="${pageMaker.next }">
-										<li class="paginate_button next"><a
-											href="${pageMaker.endPage +1 }">Next</a></li>
+										<li class="page-item paginate_button next"><a
+											href="${pageMaker.endPage +1 }" class="page-link">Next</a></li>
 									</c:if>
 								</ul>
 							</div>
+							</nav>
 							<!-- end Pagination -->
 
 							<form id='actionForm' action="/attendance/personAll" method='get'>
@@ -405,43 +373,16 @@
 									name='amount' value='${pageMaker.cri.amount }'>
 
 							</form>
-						</div>
-						<!-- 테이블 끝 -->
-
-						<!-- <div>미출근자/휴가자
-							<h7>미출근자/휴가자</h7>
-							<table>
-								<thead>
-									<tr>
-										<td>미출근자</td>
-										<td>휴가자</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-								</tbody>
-							</table> 
-						</div><!-- 오늘 미출근자/휴가자끝 -->
-					</div>
-
-					<!-- 정보출력부분의 끝 -->
-
-				</div>
 			</div>
-		</div>
 
-	</div>
+			<!-- 내용 끝 -->
 
-
-	<!-- Optional JavaScript; choose one of the two! -->
-
-	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-
-
-	<%@ include file="../includes/footer.jsp"%>
+		<!-- 전체 wrapper 끝 -->
+		<jsp:include page="../includes/footer.jsp"></jsp:include>
+	
 </body>
 
 </html>
+
+
+

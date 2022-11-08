@@ -19,4 +19,5 @@ public class VacVO {
 	private long e_num;
 	private String e_name;
 	private long el_num;
+	
 }

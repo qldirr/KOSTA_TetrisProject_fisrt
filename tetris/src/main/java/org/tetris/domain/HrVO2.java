@@ -25,13 +25,13 @@ public class HrVO2 {
 	private long holi_day;
 	
 	//연차총일수
-	private long total_holiday;
+	private long e_totalvac;
 	
 	//연차사용일수
-	private long used_holiday;
+	private long e_usevac;
 	
 	//연차잔여일수
-	private long left_holiday = total_holiday - used_holiday;
+	private long left_holiday = e_totalvac - e_usevac;
 	
 }
 
