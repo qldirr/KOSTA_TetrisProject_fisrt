@@ -108,57 +108,7 @@
 </head>
 <body>
 	<input type="hidden" id="roomId" value="${cr_id}">
-	<%-- <h1>${cr_id}</h1> --%>
 	<div><h4><sec:authentication property="principal" var="principal"/></h4></div>
-	
-	<!-- <input type="text" id="message" />
-	<input type="button" id="sendBtn" value="submit"/> -->
-	<div id="messageArea">
-		<%-- <c:forEach items="${listChatContents }" var="listCC">
-			<c:choose>
-				<c:when test="${listCC.cc_file eq false }">
-					<c:choose>
-						<c:when test="${listCC.e_id eq principal.username }">
-							<div class="me-chat">
-                        	    <div class="me-chat-col">
-                        	        <span class="balloon"><c:out value="${listCC.cc_contents }"/></span>
-                        	    </div>
-                            	<time datetime="07:32:00+09:00"><c:out value="${listCC.cc_regdate }"/></time>
-                        	</div>
-						</c:when>
-						<c:otherwise>
-							<div class="friend-chat">
-                            	<img class="profile-img" src="/resources/pic/default.png" alt="쀼프로필사진">
-                            	<div class="friend-chat-col">
-                                	<span class="profile-name"></span>
-                                	<span class="balloon"><c:out value="${listCC.cc_contents }"/></span>
-                            	</div>
-                            	<time datetime="07:30:00+09:00"><c:out value="${listCC.cc_regdate }"/></time>
-                        	</div>
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<c:choose>
-						<c:when test="${listCC.cc_image eq false }">
-							<li><a href='<c:url value="download?fileName=${listCC.cc_path }\\${listCC.cc_uuid }_${listCC.cc_contents }" />'>
-		        				<img src="/resources/img/attach.png"><c:out value="${listCC.cc_contents }"/></a>  <c:out value="${listCC.cc_regdate }"/></li><br>
-						</c:when>
-						<c:otherwise>
-							<li><a href='<c:url value="download?fileName=${listCC.cc_path }\\${listCC.cc_uuid }_${listCC.cc_contents }" />'>
-							<img src="display?fileName=${listCC.cc_path }\\s_${listCC.cc_uuid }_${listCC.cc_contents }"></a>  <c:out value="${listCC.cc_regdate }"/></li><br>
-						</c:otherwise>
-					</c:choose>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach> --%>
-	</div>
-	
-	<!-- 파일 업로드 버튼 -->
-	<!-- <div class='uploadDiv'>
-		<input type='file' id="file" name='uploadFile' multiple>
-	</div> -->
-	
 	
 	<!-- bbu-chat-room 적용 -->
 	<div id="chat-body">
@@ -322,7 +272,7 @@
                 </div>
             </main>
         </div>
-    
+    <!-- 파일 업로드 버튼 -->
     <div class='uploadDiv'>
 		<input type='file' id="file" name='uploadFile' multiple>
 	</div>
@@ -332,6 +282,21 @@
 </body>
 <script type="text/javascript">
 
+	var roomId = $("#roomId").val();
+	var webSocket;
+	webSocket = new SockJS("http://localhost:8081/chatting/" + roomId);
+	webSocket.onopen = onOpen;
+	webSocket.onmessage = onMessage;
+	webSocket.onclose = onClose;
+
+	
+	
+	
+	
+	$(document).ready(function(){
+		
+	
+	
 	$("#sendBtn").on('click', function() {
 		sendMessage();
 		$('#message').val('')
@@ -342,13 +307,13 @@
 			$('#message').val('')
 		}
 	});
+	
+	
+	});
+	
+	
 
-	var roomId = $("#roomId").val();
-	var webSocket;
-	webSocket = new SockJS("http://localhost:8081/chatting/" + roomId);
-	webSocket.onopen = onOpen;
-	webSocket.onmessage = onMessage;
-	webSocket.onclose = onClose;
+	
 	
 	function onOpen(){
 		/* alert("접속"); */
@@ -371,6 +336,21 @@
 				/* alert("success"); */
 			}
 		});
+		
+		
+		var msg = {
+			"e_id" : e_id,
+			"cr_id" : roomId,
+			"cc_contents" : $("#message").val()
+			};
+		alert(JSON.stringify(msg));
+
+		/* webSocket.send($("#message").val()); */
+		webSocket.send(JSON.stringify(msg));
+		
+		
+		
+		
 		webSocket.send($("#message").val());
 		
 		var html = '<div class="me-chat">' + '<div class="me-chat-col">' + '<span class="balloon">'
@@ -380,9 +360,20 @@
 		$(".main-chat").append(html);
 	}
 	// 서버로부터 메시지를 받았을 때
-	function onMessage(msg) {
+	/* function onMessage(msg) { */
+		function onMessage(msg) {
 		
 		var data = msg.data;
+		alert(msg);
+		alert(data);
+		
+		/* msgData = JSON.parse(data);
+		var html = msgData.user + ": " msgData.message;
+		alert("msgData"); */
+		
+		
+		
+		
 		
 		var html = '<div class="friend-chat">' + '<img class="profile-img" src="/resource/pic/default.png" alt="쀼프로필사진">'
         			+ '<div class="friend-chat-col">' + '<span class="profile-name"></span>'

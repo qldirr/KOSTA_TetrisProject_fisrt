@@ -24,7 +24,7 @@ li{
     flex-direction: column;
     justify-content: center;
 }
-li > a{
+li {
     안에 또 다른 flex box 생성
     display: flex;
     flex-direction: row;

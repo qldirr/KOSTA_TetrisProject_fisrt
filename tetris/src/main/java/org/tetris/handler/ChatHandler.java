@@ -24,12 +24,14 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import org.tetris.domain.EmployeeVO;
+import org.tetris.domain.chat.ChatContentsVO;
 import org.tetris.domain.chat.ChatMsgVO;
 import org.tetris.domain.chat.ChatRoomVO;
 import org.tetris.security.domain.CustomUser;
 import org.tetris.service.ChatService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 import lombok.extern.log4j.Log4j;
 
@@ -66,9 +68,20 @@ public class ChatHandler extends TextWebSocketHandler {
 		EmployeeVO loginUser = getLoginUser(wsession);
 		List<WebSocketSession> userList = userMap.get(roomId);
 		
+		
+		
+		Gson gson = new Gson(); ChatContentsVO msgVO = gson.fromJson(message.getPayload(), ChatContentsVO.class);
+		TextMessage sendMsg = new TextMessage(gson.toJson(msgVO));
+		System.out.println(msgVO);
+		System.out.println(sendMsg);
+		
+		
+		
+		
 		for(WebSocketSession chatPart : userList) {
 			if(!chatPart.getId().equals(wsession.getId())) {
-				chatPart.sendMessage(new TextMessage(/* loginUser.getE_name() + ": " + */message.getPayload()));
+//				chatPart.sendMessage(new TextMessage(/* loginUser.getE_name() + ": " + */message.getPayload()));
+				chatPart.sendMessage(sendMsg);
 			}
 		}
 	}

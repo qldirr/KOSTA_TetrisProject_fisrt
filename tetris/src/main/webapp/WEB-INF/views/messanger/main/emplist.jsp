@@ -30,8 +30,8 @@
 <script src="/resources/tree/lib/jquery.cookie.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-	$(function() {
-		/* $("#tree").treeview({
+	/* $(function() {
+		$("#tree").treeview({
 			collapsed: true,
 			animated: "medium",
 			control:"#sidetreecontrol",
@@ -76,7 +76,8 @@
 		<input type="submit" value="채팅방">
 	</form><br>
 	<button onclick="notify()">Notify</button>
-
+	
+	<!-- 조직도(tree) -->
 	<%-- <div id="sidetree">
 		<div class="treeheader">&nbsp;</div>
 		
@@ -201,9 +202,9 @@
                 </div>
             </main>
             <!-- aside: 광고 -->
-            <aside>
+            <!-- <aside>
                 <img src="/resources/pic/ad.png" alt="광고이미지">
-            </aside>
+            </aside> -->
         </div>
 	
 </body>
