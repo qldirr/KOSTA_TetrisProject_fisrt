@@ -88,6 +88,7 @@ public class ProjectController {
 
 	@GetMapping("/member")
 	public void registerProjectMember(Model model) {
+		
 		model.addAttribute("dept", service.getListDept());
 		model.addAttribute("employees", service.getListEmployees());
 
