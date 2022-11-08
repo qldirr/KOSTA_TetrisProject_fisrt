@@ -1,5 +1,6 @@
 package org.tetris.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.tetris.domain.project.BoardAttachVO;
 import org.tetris.domain.project.BoardReplyVO;
 import org.tetris.domain.project.ProjectBoardVO;
+import org.tetris.domain.project.ProjectVO;
+import org.tetris.domain.user.UserVO;
 import org.tetris.mapper.BoardAttachMapper;
 import org.tetris.mapper.ProjectBoardMapper;
 import org.tetris.mapper.ProjectMapper;
@@ -28,19 +31,25 @@ public class ProjectBoardServiceImpl implements ProjectBoardService {
 	private BoardAttachMapper attachMapper;
 	
 	@Override
-	public List<String> getProjectInfo(Long pl_num) {
-		return mapper.getProjectInfo(pl_num);
+	public List<UserVO> getProjectInfo(String pl_num) {
+		return mapper.readProjectInfo(pl_num);
 	}
 
+
 	@Override
-	public List<ProjectBoardVO> listProjectBoard(Long pl_num) {
-		return mapper.listProjectBoard(pl_num);
+	public ProjectVO getProject(Long pj_num) {
+		return mapper.readProject(pj_num);
+	}
+	
+	@Override
+	public List<ProjectBoardVO> getListProjectBoard(HashMap<String, Object> map) {
+		return mapper.getListProjectBoard(map);
 	}
 	
 	
 	@Transactional
 	@Override
-	public void insertProjectBoard(ProjectBoardVO board) {
+	public void registerProjectBoard(ProjectBoardVO board) {
 		mapper.insertProjectBoard(board);
 		if(board.getAttachList() == null || board.getAttachList().size() <= 0) {
 			return;
@@ -53,18 +62,18 @@ public class ProjectBoardServiceImpl implements ProjectBoardService {
 	}
 
 	@Override
-	public void insertReply(BoardReplyVO reply) {
+	public void registerReply(BoardReplyVO reply) {
 		mapper.insertReply(reply);
 		
 	}
 
 	@Override
-	public List<BoardReplyVO> listBoardReply(Long pb_num, Long pj_num) {
-		return mapper.listReply(pb_num, pj_num);
+	public List<BoardReplyVO> getListBoardReply(Long pb_num, Long pj_num) {
+		return mapper.getListReply(pb_num, pj_num);
 	}
 
 	@Override
-	public void deleteReply(Long pr_num) {
+	public void removeReply(Long pr_num) {
 		mapper.deleteReply(pr_num);
 	}
 
@@ -72,5 +81,10 @@ public class ProjectBoardServiceImpl implements ProjectBoardService {
 	public List<BoardAttachVO> getAttachList(Long pj_num) {
 		return attachMapper.findByPbnum(pj_num);
 	}
+
+
+
+
+
 	
 }

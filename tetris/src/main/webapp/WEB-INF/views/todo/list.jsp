@@ -1,184 +1,128 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="/resources/css/mycss/index.css" rel="stylesheet" />
+<title>메인입니다.</title>
 
-<title>Insert title here</title>
+<!-- Required meta tags -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link href="/resources/vender/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+<link rel="stylesheet" href="/resources/css/main.css">
+<!-- my CSS -->
+<link rel="stylesheet" href="/resources/css/mycss/reset.css">
+<link rel="stylesheet" href="/resources/css/mycss/style.css">
+<style type="text/css">
+p.info{
+	color: #161E67;
+}
+
+.todo-title{
+	color: #161E67;
+}
+
+.todo-box{
+	
+	border: 2px solid #161E67;
+}
+
+.todo-item{
+	border: 1px #161E67;
+	 border-collapse : collapse
+}
+
+.checkbox{
+	border: 1px solid #161E67;
+}
+</style>
+
+
 </head>
 <body>
-	<div class="list-container">
-	
-	<header>
-		<form id="list-form">
+
+	<!-- jsp 인클루드 사용-->
+	<jsp:include page="../includes/header.jsp"></jsp:include>
+
+
+	<!-- 보조사이드바 -->
+	<div class="s-menu">
+		<div class="s-menu-title">
+			<p>ToDoList<i class="bi bi-calendar-check"></i>
 			
-			<div class="list-form__add-item">
-				<input type="text" id="add-item__input" required autofocus>
-				<input type="submit" value="+">
-			</div>
-			
-			<div class="list-form__search-item">
-				<input type="search" id="search-item__input">
-				<label for="search-item__input">
-					<i class="fa fa-search" aria-hidden="true"></i>
-				</label>
-			</div>
-			
-		</form>
-	</header>
-	
-	<section>
-		<ul class="to-do-list"></ul>
+		</div>
 		
-		<hr>
+		<div class="s-list-item ">
+			<a href="/calendar/list">일정 관리</a>
+		</div>
+		<div class="s-list-item ">
+			<a href="/todo/list">ToDoList</a>
+		</div>
+	</div>
+	<!-- 보조사이드바 끝-->
+
+	<!-- 내용 시작 -->
+	<div class="s-container">
 		
-		<ul class="finished-list"></ul>
-	</section>
-	
-	
-	
-</div>
 
-<script type="text/javascript">
-//model
-var Data =(function() {
-	
-	var list = [];
-	
-	var Item = function(content) {
-		this.content = content;
-	};
-	Item.prototype.finished = false;
-	
-	var addItem = function(content) {
-		var item = new Item(content);
-		list.push(item);
-	}
-	
-	var removeItem = function(item_index) {
-		list.splice(item_index, 1);
-	}
-	
-	var checkItem = function(item_index) {
-		var current_item = list[item_index];
-		current_item.finished = !current_item.finished;
-	}
-	
-	return {
-		list: list,
-		Item: Item,
-		addItem: addItem,
-		removeItem: removeItem,
-		checkItem: checkItem
-	};
-})();
-
-//controller
-var Controller = (function(){
-	
-	var addItem = function(e) {
-		e.preventDefault();
-
-		var add_value = add_input.value;
-
-		Data.addItem(add_value);
-
-		UI.showList(Data.list);
-
-		form.reset();
-	};
-	
-	var searchItem = function() {
-
-		var search_value = search_input.value;
-
-		var filter_list = Data.list.filter(function(item) {
-			return item.content.indexOf(search_value) > -1;
-		});	
 		
-		UI.showList(filter_list);
-	}
+						<!-- content -->
+						<div class="todo-wrapper">
+							<div class="todo-title">Todo List</div>
+							<div class="todo-box">
 
-	var removeItem = function(e) {
-		if(e.target.tagName !== 'I') return;
+								<div class="todo-input-box">
+									<button class="complete-all-btn">✔</button>
+									<input type="text" class="todo-input"
+										placeholder="해야 할 일을 입력해주세요.">
+								</div>
 
-		var item_id = e.target.parentNode.parentNode.id;
-		var item_index = item_id.split('-')[1];
+								<ul class="todo-list">
 
-		Data.removeItem(item_index);
+								</ul>
+								<div class="todo-bottom">
+									<div class="left-items">0 items left</div>
+									<div class="button-group">
+										<button class="show-all-btn selected" data-type="all">All</button>
+										<button class="show-active-btn" data-type="active">Active</button>
+										<button class="show-completed-btn" data-type="completed">Completed</button>
+									</div>
+									<button class="clear-completed-btn">Clear Completed</button>
+								</div>
+							</div>
+							<p class="info">더블클릭 시 수정 가능</p>
 
-		UI.showList(Data.list);
-	}
-
-	var checkItem = function(e) {
-		if(e.target.tagName !== 'INPUT') return;
-
-		var item_id = e.target.parentNode.parentNode.id;
-		var item_index = item_id.split('-')[1];
+						</div>
+					</div>
 		
-		Data.checkItem(item_index);
 
-		UI.showList(Data.list);
-	}
+	<!-- 내용 끝 -->
 
-	var form = document.forms['list-form'];
-	var add_input = form['add-item__input'];
-	var search_input = form['search-item__input'];
-	
-	var section = document.querySelector('section');
-	
-	form.addEventListener('submit', addItem);
-	
-	search_input.addEventListener('input', searchItem);
+	<!-- 전체 wrapper 끝 -->
+	<jsp:include page="../includes/footer.jsp"></jsp:include>
 
-	section.addEventListener('click', removeItem);
-	section.addEventListener('change', checkItem);
-})();
 
-// view
-var UI = (function(){
+	<script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
+	<script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-	var to_do_list = document.querySelector('.to-do-list');
-	var finished_list = document.querySelector('.finished-list');
 
-	var showList = function(list) {
-
-		finished_list.innerHTML = '';
-		to_do_list.innerHTML = '';
-
-		list.forEach(function(item, i) {
-
-			if(!item.finished) {
-				var to_do_item_HTML = 
-						'<li class="to-do-list__item" id="item-'+ i +'">' +
-							'<div class="item__content">'+item.content+'</div>' +
-							'<div class="item__action">' +
-								'<i class="fa fa-trash" aria-hidden="true"></i>' +
-								'<input type="checkbox">' +
-							'</div>' +
-						'</li>';
-				to_do_list.insertAdjacentHTML('afterbegin', to_do_item_HTML);
-			}else {
-				var finished_item_HTML = 
-						'<li class="to-do-list__item" id="item-'+ i +'">' +
-							'<div class="item__content">'+item.content+'</div>' +
-							'<div class="item__action">' +
-								'<i class="fa fa-trash" aria-hidden="true"></i>' +
-								'<input type="checkbox" checked>' +
-							'</div>' +
-						'</li>';
-				finished_list.insertAdjacentHTML('afterbegin', finished_item_HTML);
-			}
-		});
-	}
-	
-	return {
-		showList: showList
-	};
-})();
-</script>
+	<script src="/resources/js/myjs/todo.js"></script>
 </body>
+
 </html>
+
+
+

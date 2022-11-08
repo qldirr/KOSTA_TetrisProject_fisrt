@@ -1,22 +1,28 @@
 package org.tetris.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tetris.domain.CalendarVO;
+import org.tetris.security.domain.CustomUser;
 import org.tetris.service.CalendarService;
 
-import com.google.gson.JsonObject;
+
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -27,72 +33,93 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/calendar")
 public class CalendarController {
 
+	@Autowired
 	private CalendarService service;
 	
-	/*@GetMapping("/list")
-	@ResponseBody
-    public List<Map<String, Object>> list(){
-        List<CalendarVO> list = service.getList();
-        
-        JSONObject jsonObj = new JSONObject();
-		JSONArray jsonArr = new JSONArray();
-		HashMap<String, Object> hash = new HashMap<>();	
-
-		for(int i=0; i < list.size(); i++) {			
-			hash.put("cl_num", list.get(i).getCl_num()); //제목
-			hash.put("cl_name", list.get(i).getCl_name()); //시작일자
-			hash.put("cl_startdate", list.get(i).getCl_startdate()); //종료일자
-			hash.put("cl_enddate", list.get(i).getCl_enddate()); 
-			hash.put("cl_type", list.get(i).getCl_type()); 
-			hash.put("cl_contents", list.get(i).getCl_contents());
-			hash.put("cl_color", list.get(i).getCl_color()); 
-			
-			
-			jsonObj = new JSONObject(hash); //중괄호 {key:value , key:value, key:value}
-			jsonArr.add(jsonObj); // 대괄호 안에 넣어주기[{key:value , key:value, key:value},{key:value , key:value, key:value}]
-		}
-		
-		log.info(jsonArr);
-		
-        return jsonArr;
-        
-    }*/
-
 	
 	
-	/*@RequestMapping(value= "/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ResponseBody
-	public String list(){
-		List<CalendarVO> list = service.getList();
-		
-		JSONObject jsonObj = new JSONObject();
-		JSONArray jsonArr = new JSONArray();
-		HashMap<String, Object> hash = new HashMap<>();	
-		
-		for(int i=0; i < list.size(); i++) {			
-			hash.put("cl_num", list.get(i).getCl_num()); //제목
-			hash.put("cl_name", list.get(i).getCl_name()); //시작일자
-			hash.put("cl_startdate", list.get(i).getCl_startdate()); //종료일자
-			hash.put("cl_enddate", list.get(i).getCl_enddate()); 
-			hash.put("cl_type", list.get(i).getCl_type()); 
-			hash.put("cl_contents", list.get(i).getCl_contents());
-			hash.put("cl_color", list.get(i).getCl_color()); 
-			
-			
-			jsonObj = new JSONObject(hash); //중괄호 {key:value , key:value, key:value}
-			jsonArr.add(jsonObj); // 대괄호 안에 넣어주기[{key:value , key:value, key:value},{key:value , key:value, key:value}]
-		}
-		
-		log.info(jsonArr);
-		
-		return jsonArr.toJSONString();
-		
-	}*/
-	
-	@GetMapping("/list")
-	public void list(Model model) {
-		log.info("list..");
-		model.addAttribute("list", service.getList());
+	@GetMapping(value="/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public void getList() {
 		
 	}
+	
+	@GetMapping(value="/listCal", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<HashMap<String, Object>>> getCalendarList() {
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername(); 
+		List<CalendarVO> list = service.getList(e_id);
+
+		log.info(list);
+
+		List<HashMap<String, Object>> calList = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> calMap;
+
+		for (int i = 0; i < list.size(); i++) {
+
+			calMap = new HashMap<String, Object>();
+			calMap.put("title", list.get(i).getCl_name());
+			calMap.put("start", list.get(i).getCl_startdate()+"T"+list.get(i).getCl_starttime());
+			calMap.put("end", list.get(i).getCl_enddate()+"T"+list.get(i).getCl_endtime());
+			calMap.put("color", list.get(i).getCl_color());
+			calMap.put("id", list.get(i).getCl_num());
+			calMap.put("groupId", list.get(i).getE_id());
+			
+
+			calList.add(calMap);
+		}
+
+		log.info(calList);
+
+		return new ResponseEntity<>(calList, HttpStatus.OK);
+	}
+
+	@GetMapping("/register")
+	public void registerCalForm(Model model) {
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername(); 		
+		model.addAttribute("e_id",e_id);
+
+	}
+
+	@PostMapping("/register")
+	public String registerCal(CalendarVO calendar) {
+
+		service.register(calendar);
+		return "redirect: /calendar/list";
+	}
+	
+	@GetMapping("/get")
+	public void get(@RequestParam("cl_num") int cl_num, Model model) {
+		log.info("get..");
+		CalendarVO calendar = service.get(cl_num);
+		model.addAttribute("calendar", calendar);
+	}
+	
+	@PostMapping("/modify")
+	public String modifyCal(CalendarVO calendarVO) {
+		if (service.modify(calendarVO)) {
+			log.info("modify..");
+		}
+		return "redirect: /calendar/list";
+	}
+	
+	/*@PostMapping("/remove")
+	public String removeCal(@RequestParam("cl_num") int cl_num) {
+		if (service.remove(cl_num)) {
+			log.info("remove..");
+		}
+		return "redirect: /calendar/get";
+	}*/
+	
+
+	@PostMapping("/remove")
+	public String removeCal(CalendarVO calendar) {
+		if (service.remove(calendar)) {
+			log.info("remove..");
+		}
+		return "redirect: /calendar/list";
+	}
+
+	
 }

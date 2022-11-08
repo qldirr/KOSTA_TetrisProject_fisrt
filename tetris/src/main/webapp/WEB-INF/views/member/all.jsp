@@ -16,7 +16,8 @@ all
 
 
 </sec:authorize>
-<sec:authorize access="isAuthenticated()"><a href="/member/customLogout">로그아웃</a>
+<sec:authorize access="isAuthenticated()">
+<a href="/member/customLogout">로그아웃</a>
 <br><a href="/member/user">마이페이지</a>
 </sec:authorize>
 

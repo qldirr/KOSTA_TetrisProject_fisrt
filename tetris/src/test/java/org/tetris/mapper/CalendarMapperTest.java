@@ -19,22 +19,21 @@ public class CalendarMapperTest {
 	@Autowired
 	private CalendarMapper mapper;
 	
-	@Test
+	/*@Test
 	public void testgetList() {
-		mapper.getList().forEach(calendar -> log.info(calendar));
-	}
+		mapper.getList("gdong123").forEach(calendar -> log.info(calendar));
+	}*/
 	
 	/*@Test
 	public void testInsertSelectKey() {
-		CalendarVo calendar = new CalendarVo();
+		CalendarVO calendar = new CalendarVO();
 		calendar.setCl_name("운동");
-		calendar.setCl_startdate("2022-10-06");
-		calendar.setCl_enddate("2022-10-06");
+		calendar.setCl_startdate("2022-10-07");
+		calendar.setCl_enddate("2022-10-07");
 		calendar.setCl_starttime("18:00");
 		calendar.setCl_endtime("19:00");
-		calendar.setCl_type("개인");
 		calendar.setCl_contents(" ");
-		calendar.setCl_color("red");
+		calendar.setCl_color("blue");
 		calendar.setE_id("gdong123");
 		
 		mapper.insertSelectKey(calendar);
@@ -42,11 +41,11 @@ public class CalendarMapperTest {
 		log.info(calendar);
 	}*/
 	
-	/*@Test
+	@Test
 	public void testRead() {
-		CalendarVo calendar = mapper.read(3);
+		CalendarVO calendar = mapper.read(3);
 		log.info(calendar);
-	}*/
+	}
 	
 	/*@Test
 	public void testUpdate() {

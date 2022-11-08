@@ -4,44 +4,46 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tetris.mapper.UserMapper">
 	<resultMap type="org.tetris.domain.UserVO" id="userMap">
-	<id property="userId" column="e_id"/>
-		<result property="userId" column="e_id"/>
-		<result property="userName" column="e_name"/>
-		<result property="userPass" column="e_pw"/>
-		<result property="userPhoneNumber" column="e_pnum"/>
-		<result property="userHireddate" column="e_hireddate"/>
-		<result property="userResigndate" column="e_resigndate"/>
-		<result property="userTotalvaction" column="e_totalvac"/>
-		<result property="userUsevacation" column="e_usevac"/>
-		<result property="userBirth" column="e_birth"/>
-		<result property="userNumber" column="e_num"/>
-		<result property="userPicture" column="e_picfile"/>
-		<result property="userPosition" column="e_position"/>
-		<result property="departmentNumber" column="d_num"/>
+	<id property="e_id" column="e_id"/>
+		<result property="e_id" column="e_id"/>
+		<result property="e_name" column="e_name"/>
+		<result property="e_pw" column="e_pw"/>
+		<result property="e_pnum" column="e_pnum"/>
+		<result property="e_hireddate" column="e_hireddate"/>
+		<result property="e_resigndate" column="e_resigndate"/>
+		<result property="e_totalvac" column="e_totalvac"/>
+		<result property="e_usevac" column="e_usevac"/>
+		<result property="e_birth" column="e_birth"/>
+		<result property="e_num" column="e_num"/>
+		<result property="e_picfile" column="e_picfile"/>
+		<result property="e_position" column="e_position"/>
+		<result property="d_num" column="d_num"/>
+		<result property= "enabled" column="enabled"/>	
 		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
 	
 	<resultMap type="org.tetris.domain.AuthVO" id="authMap">
-	<result property="userId" column="e_id"/>
-	<result property="auth" column="a_auth"/>
+	<result property="e_id" column="e_id"/>
+	<result property="a_auth" column="a_auth"/>
 	
 	</resultMap>
 	
 	<select id="read" resultMap="userMap">
 	SELECT
-		e.e_id, e_name,e_pw, e_pnum,e_hireddate,e_resigndate,
+		e.e_id, e_name, e_pw, e_pnum, e_hireddate, e_resigndate,
 	e_totalvac,e_usevac,e_birth,e_num,e_picfile, e_position,e.d_num,e.enabled,auth.a_auth FROM
 	employee e LEFT OUTER JOIN authmapping auth on e.e_id = auth.e_id
 	WHERE e.e_id = #{e_id}
 	</select>
 	
 	<insert id="insertAuthmapping">
-	INSERT INTO authmapping(
+	INSERT INTO authmapping
+	(
 	e_id,
 	a_auth)
 	VALUES(
-	#{userId},
-	#{auth}
+	#{e_id},
+	#{a_auth}
 	)
 	</insert>
 
@@ -66,24 +68,26 @@
 	)
 	VALUES
 	(
-	#{userId},
-	#{userName},
-	#{userPass},
-	#{userPhoneNumber},
-	#{userHireddate},
-	#{userResigndate,jdbcType=DATE},
-	#{userTotalvaction},
-	#{userUsevacation},
-	#{userBirth},
-	#{userNumber},
-	#{userPicture, jdbcType=VARCHAR},
-	#{userPosition},
-	#{departmentNumber},
+	#{e_id},
+	#{e_name},
+	#{e_pw},
+	#{e_pnum},
+	#{e_hireddate},
+	#{e_resigndate, jdbcType=DATE},
+	#{e_totalvac},
+	#{e_usevac},
+	#{e_birth},
+	e_num.nextval,
+	#{e_picfile, jdbcType=VARCHAR},
+	#{e_position},
+	#{d_num},
 	'1'	
 	
 		
 	)
+	
 
+	
 	<!--  INSERT ALL 
 	 INTO 
 	 employee
@@ -110,4 +114,75 @@
  	'ROLE_USER'
  	) -->
 	</insert>
+	<select id="getList" resultType="org.tetris.domain.UserVO"  resultMap="userMap">
+	
+	SELECT 
+
+	e_id,
+	e_name ,
+	e_hireddate ,
+	e_num 
+	FROM EMPLOYEE
+	where e_num > 1
+	order by e_num
+	</select>
+	
+	<!-- <select id="detailUser" parameterType="int" resultType="org.tetris.domain.UserVO">
+	SELECT
+	
+	e_id AS userId,
+	e_name AS userName,
+	e_pnum AS userPhoneNumber,
+	e_hireddate AS userHireddate,
+	e_totalvac AS userTotalvaction,
+	e_useVac AS userUsevaction,
+	e_birth AS userBirth,
+	e_num AS userNumber,
+	e_position AS userPosition,
+	d_num AS departmentNumber
+	FROM employee where e_num = #{userNumber} AND e_num>0
+	</select> -->
+	<select id="detailUser" resultType="org.tetris.domain.UserVO">
+	SELECT
+	
+	e_id ,
+	e_name ,
+	e_pw ,
+	e_pnum ,
+	e_hireddate,
+	e_totalvac ,
+	e_useVac,
+	e_birth ,
+	e_num ,
+	e_position ,
+	d_num
+	FROM employee where e_id = #{e_id} 
+	</select>
+	 <select id="detailAuth" resultType="org.tetris.domain.AuthVO">
+	SELECT
+	a.e_id, 
+	a_auth 
+	FROM
+	authmapping a LEFT OUTER JOIN employee e ON a.e_id = e.e_id WHERE e.e_id = #{e_id}
+	
+	
+	
+	
+	</select> 
+	
+	<select id="idCheck" resultType="int">
+	SELECT COUNT(*) FROM employee WHERE e_id = #{e_id}
+	</select>
+	
+	<update id="updateUser">
+	UPDATE employee SET 
+	e_id = #{e_id},
+	e_name = #{e_name},
+	e_pw = #{e_pw},
+	e_pnum = #{e_pnum},
+	e_birth = #{e_birth},
+	e_position= #{e_position},
+	d_num = #{d_num}	
+	where e_id = #{e_id}
+	</update>
 </mapper>

@@ -2,6 +2,7 @@ package org.tetris.service;
 
 import java.util.List;
 
+import org.tetris.domain.Criteria;
 import org.tetris.domain.SuggestionsVO;
 
 public interface SuggestionsService {
@@ -15,4 +16,7 @@ public interface SuggestionsService {
 	public boolean remove(Long s_num);
 	
 	public List<SuggestionsVO> getList();
+	
+	public List<SuggestionsVO> getList(Criteria cri);
+	
 }

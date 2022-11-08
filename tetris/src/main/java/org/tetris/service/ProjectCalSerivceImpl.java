@@ -17,12 +17,12 @@ public class ProjectCalSerivceImpl implements ProjectCalService {
 	private ProjectCalendarMapper mapper;
 	
 	@Override
-	public List<ProjectCalVO> getCalendar(Long pj_num) {
-		return mapper.getCalendar(pj_num);
+	public List<ProjectCalVO> getListCalendar(Long pj_num) {
+		return mapper.readCalendar(pj_num);
 	}
 
 	@Override
-	public void insertCalendar(ProjectCalVO calendar) {
+	public void registerCalendar(ProjectCalVO calendar) {
 		mapper.insertCalendar(calendar);
 	}
 

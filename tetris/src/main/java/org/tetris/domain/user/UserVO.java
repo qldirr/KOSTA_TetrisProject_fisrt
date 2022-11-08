@@ -12,6 +12,7 @@ public class UserVO {
 	private String e_id;
 	private String e_name;
 	private String d_num;
+	private String d_name;
 	private String e_position;
 
 }

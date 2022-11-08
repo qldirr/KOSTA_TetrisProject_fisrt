@@ -1,0 +1,11 @@
+@charset "UTF-8";
+.listtable{
+	position: relative;
+    left: 640px;
+    top: 100px;
+    width: 887px;
+    height: 163px;
+}
+th {
+	text-align: center;
+}

@@ -6,7 +6,7 @@ import org.tetris.domain.project.ProjectCalVO;
 
 public interface ProjectCalService {
 	
-	public List<ProjectCalVO> getCalendar(Long pj_num);
-	public void insertCalendar(ProjectCalVO calendar); 
+	public List<ProjectCalVO> getListCalendar(Long pj_num);
+	public void registerCalendar(ProjectCalVO calendar); 
 
 }

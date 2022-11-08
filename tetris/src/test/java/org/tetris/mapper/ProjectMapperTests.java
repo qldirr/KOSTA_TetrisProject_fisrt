@@ -48,16 +48,22 @@ public class ProjectMapperTests {
 		mapper.listProjectBoard(num).forEach(list -> log.info(list));
 	}
  */	
-	@Test
+	/*@Test
 	public void testListProjectInfo() {
 		Long num = 38L;
-		mapper.getProjectInfo(num).forEach(list -> log.info(list));
+		mapper.readProjectInfo(num).forEach(list -> log.info(list));
 	}
 	
 	
 	@Test
 	public void testAttachList() {
 		attachMapper.findByPbnum(48L).forEach(attach -> log.info(attach));
+	}*/
+	
+	@Test
+	public void testProjectInfo() {
+		
+	 log.info(mapper.readProjectInfo("45"));
 	}
 
 

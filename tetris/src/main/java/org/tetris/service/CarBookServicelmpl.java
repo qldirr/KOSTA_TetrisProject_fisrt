@@ -24,7 +24,7 @@ public class CarBookServicelmpl implements CarBookService {
 	@Override
 	public void registerRseCar(CarBookVO cb) {
 		log.info("register....."+cb);
-		mapper.insertResCar(null);
+		mapper.insertResCar(cb);
 
 	}
 
@@ -33,5 +33,17 @@ public class CarBookServicelmpl implements CarBookService {
 		log.info("list......");
 		return mapper.getListResCar();
 	}
+	
+	@Override
+	public CarBookVO readResCar(Long cb_num){	
+		log.info("readrescar.....");
+		return mapper.readResCar(cb_num);
+	}
+	@Override
+	public void carResApp(Long cb_num) {
+		
+	     mapper.carResApp(cb_num);
+	}
+	
 
 }

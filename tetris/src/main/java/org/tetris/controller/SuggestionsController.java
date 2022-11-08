@@ -3,10 +3,14 @@ package org.tetris.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.tetris.domain.Criteria;
+import org.tetris.domain.PageDTO;
 import org.tetris.domain.SuggestionsVO;
 import org.tetris.service.SuggestionsService;
 
@@ -21,22 +25,27 @@ public class SuggestionsController {
 
 	private SuggestionsService service;
 	
-	@GetMapping("/suggestionslist")
+	/*@GetMapping("/suggestionslist")
 	public void list(Model model) {
 		
 		log.info("list");
 		model.addAttribute("list", service.getList());
-	}
+	}*/
+	
+	@GetMapping("/suggestionslist")
+	public void list(Criteria cri, Model model) {
+		
+		log.info("list" + cri);
+		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("pageMaker", new PageDTO(cri, 123));
+	}	
 	
 	@PostMapping("/suggestionsregister")
 	public String register(SuggestionsVO suggestions, RedirectAttributes rttr) {
 		
-		log.info("register: " + suggestions);
-		
-		service.register(suggestions);
-		
-		rttr.addFlashAttribute("result", suggestions.getS_num());
-		
+		log.info("register: " + suggestions);		
+		service.register(suggestions);		
+		rttr.addFlashAttribute("result", suggestions.getS_num());	
 		return "redirect:/suggestions/suggestionslist";
 	}
 
@@ -44,7 +53,6 @@ public class SuggestionsController {
 	public void register() {
 		
 	}
-	
 	
 	/*@GetMapping("/suggestionsget")  
 	public void get(@RequestParam("s_num") Long s_num, Model model) {
@@ -54,16 +62,15 @@ public class SuggestionsController {
 	}*/
 	
 	@GetMapping({"/suggestionsget", "/suggestionsmodify"})  
-	public void get(@RequestParam("s_num") Long s_num, Model model) {
+	public void get(@RequestParam("s_num") Long s_num, @ModelAttribute("cri") //@ModelAttribute("cri") Criteria cri -> 실행x 316
+	Criteria cri, Model model) {
 		
-		//log.info("/get or modify");
+		log.info("/suggestionsget or suggestionsmodify");
 		model.addAttribute("suggestions", service.get(s_num));
+		log.info("get");
 	}	
 	
-
-	
-	
-	@PostMapping("/modify")
+	/*@PostMapping("/suggestionsmodify")
 	public String modify(RedirectAttributes rttr) {		
 		//SuggestionsVO suggestions, 
 		
@@ -75,18 +82,27 @@ public class SuggestionsController {
 			//rttr.addFlashAttribute("result", "success");
 		//}
 		return "redirect:/suggestions/suggestionslist";
-	}
+	}*/
 
-	/*@PostMapping("/modify")
-	public  String modity(SuggestionsVO suggestions, RedirectAttributes rttr) {
-		log.info("modify :" + suggestions);
+//	@PostMapping("/suggestionsmodify")  
+//	public String modify(SuggestionsVO suggestions, RedirectAttributes rttr) {  //객체가 값 전달을 못한다고 함 ...
+//		
+//		log.info("modify :" + suggestions);
+//		
+//		if(service.modify(suggestions)) {
+//			rttr.addFlashAttribute("result", "success");
+//		}
+//		return "redirect:/suggestions/suggestionslist";
+//	}
+	
+	@PostMapping("/suggestionsmodify")
+	public String modify(SuggestionsVO suggestions, RedirectAttributes rttr) {
 		
 		if(service.modify(suggestions)) {
 			rttr.addFlashAttribute("result", "success");
-		}
+		}	
 		return "redirect:/suggestions/suggestionslist";
-	}*/
-	
+	}
 	
 	
 	

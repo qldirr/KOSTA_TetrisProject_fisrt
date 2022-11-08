@@ -22,8 +22,6 @@ function showUploadFile(uploadResultArr){
 	
 	$(uploadResultArr).each(function(i, obj){
 		
-		alert(obj.pf_path);
-		
 		if(obj.image){
 			var fileCallPath = encodeURIComponent(obj.pf_path + "/s_" + obj.pf_uuid + "_" + obj.pf_name);
 			str += "<li data-path='"+obj.pf_path+"'";
@@ -43,7 +41,7 @@ function showUploadFile(uploadResultArr){
 			str += "><div>";
 			str += "<span>" + obj.pf_name + "</span>";
 			str += "<input type='button' value='삭제'></button><br>";
-			str += "<img src = '/resources/img/attach.png'></a>";
+			str += "<img src = '/resources/img/attachfile.png'></a>";
 			str += "</div>";
 			str += "</li>";
 		}
@@ -79,7 +77,6 @@ $(function() {
 			type: 'POST',
 			dataType: 'json',
 			success: function(result){
-				alert("uploaded");
 				showUploadFile(result);
 				$(".upload").html(cloneObj.html());
 			}
@@ -123,7 +120,7 @@ $(function() {
 	<h1>새 글 등록</h1>
 	<form role="form" action="/projectdetail/register" method="post">
 		<input type="hidden" id="pj_num" name="pj_num" value="${pj_num}">
-		<input type="hidden" id="pb_writer" name="pb_writer" value="gdong123">
+		<input type="hidden" id="pb_writer" name="pb_writer" value="${loginedId }">
 		<textarea name="pb_contents" rows="5" cols="75"></textarea>
 		<br> <input type="checkbox" id="notice" name="pb_status" value="Y"> 공지글지정 <br>
 		<div class='upload'>

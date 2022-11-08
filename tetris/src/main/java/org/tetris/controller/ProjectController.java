@@ -3,6 +3,8 @@ package org.tetris.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.tetris.domain.project.ProjectMemberVO;
 import org.tetris.domain.project.ProjectVO;
 import org.tetris.domain.user.UserVO;
 import org.tetris.mapper.ProjectMapper;
+import org.tetris.security.domain.CustomUser;
 import org.tetris.service.ProjectService;
 
 import lombok.AllArgsConstructor;
@@ -31,53 +34,79 @@ public class ProjectController {
 	@Autowired
 	private ProjectMapper mapper;
 
-	@GetMapping("/projectmain")
-	public void list(Model model) {
-		UserVO user = new UserVO();
-		user.setE_id("gdong123");
-		List<ProjectVO> list =  service.listProject(user);
-		model.addAttribute("list", list);
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	@GetMapping("/main")
+	public void listProject(Model model) {
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String user_name = user.getUser().getE_name();
+		String user_id = user.getUsername();
+		
+		List<ProjectVO> projectList =  service.getListProject(user_id);
+		//해당하는 사용자가 속한 프로젝트 목록
+		
+		projectList.forEach(list -> log.info(list + "................."));
+		
+		model.addAttribute("list", projectList);
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/register")
-	public void registerPage() {
+	public void registerForm(Model model) {
+		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String user_name = user.getUser().getE_name();
+		
+		model.addAttribute("loginedName", user_name);
 
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/register")
-	public String register(ProjectVO project, Model model) {
-		service.register(project);
+	public String registerProject(ProjectVO project, Model model) {
+		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String user_id = user.getUsername();
+		
+		project.setPj_manager(user_id);
+		service.registerProject(project);
 		
 		model.addAttribute("project", project);
 		return "/project/reginfo"; 
 	}
 	
-	@PostMapping("/finalregister")
-	public String finalregister(ProjectVO project) {
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	@PostMapping("/registerend")
+	public String registerProjectEnd(ProjectVO project) {
 		Long projectNum = service.getProjectNum(project);
 		project.setPj_num(projectNum);
-		service.insertProjectList(project);
+		service.registerProjectList(project);
 		
-		return "redirect: /project/projectmain";
+		return "redirect: /project/main";
 	}
 	
 
-	@GetMapping("/memberReg")
-	public void memberRegPage(Model model) {
-		model.addAttribute("dept", service.listDept());
-		model.addAttribute("memberList", service.listProjectMember());
+	@GetMapping("/member")
+	public void registerProjectMember(Model model) {
+		
+		model.addAttribute("dept", service.getListDept());
+		model.addAttribute("employees", service.getListEmployees());
 
 	}
 
 	@ResponseBody
-	@PostMapping("/memberReg")
-	public void memberReg(@RequestBody ProjectMemberVO proMember) {
+	@PostMapping("/member")
+	public void registerProjectMember(@RequestBody ProjectMemberVO proMember) {
 		
-		String pl_num = proMember.getPl_num();
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String user_id = user.getUsername();
+		
+		String pl_num = user_id;
 		String e_id = "";
+		
 		for (int i = 0; i < proMember.getPmembers().size(); i++) {
 			e_id = proMember.getPmembers().get(i);
-			service.insertProjectMember(pl_num, e_id);
+			service.registerProjectMember(pl_num, e_id);
 		}
 
 	}

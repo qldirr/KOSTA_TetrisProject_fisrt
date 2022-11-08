@@ -17,8 +17,8 @@
 </resultMap>
 
 <resultMap type="org.tetris.domain.UserVO" id="UserMap">
-	<result property="userId" column="e_id"/>
-	<result property="userName" column="e_name"/>
+	<result property="e_id" column="e_id"/>
+	<result property="e_name" column="e_name"/>
 </resultMap>
 <resultMap type="org.tetris.domain.chat.ChatContentsVO" id="chatContentsMap">
 	<result property="cc_num" column="cc_num"/>

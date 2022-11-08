@@ -10,9 +10,10 @@ public class CalendarVO {
 	private String cl_name;
 	private String cl_startdate;
 	private String cl_enddate;
-	private String cl_type;
-	private String cl_contents;
+	private String cl_starttime;
+	private String cl_endtime;
 	private String cl_color;
+	private String cl_contents;
 	private String e_id;
 	
 	
