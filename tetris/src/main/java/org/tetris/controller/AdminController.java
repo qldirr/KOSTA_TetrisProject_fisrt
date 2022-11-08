@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.tetris.domain.AuthVO;
 import org.tetris.domain.UserVO;
 import org.tetris.security.CustomNoOpPasswordEncoder;
@@ -35,7 +37,7 @@ public class AdminController {
 	}
 
 	@Secured({ "ROLE_ADMIN" })
-	@GetMapping("/register")
+	@GetMapping("/register")	
 	public void register() {
 		log.info("get register");
 	}
@@ -44,11 +46,30 @@ public class AdminController {
 	public String register(UserVO vo, AuthVO auth) {
 		String inputPass = vo.getE_pw();
 		String pass = passEncoder.encode(inputPass);
-
-		service.insertUser(vo);
-		service.insertAuthmapping(auth);
+		int result = service.idCheck(vo);
+		try {
+			if(result ==1) {
+				return "/hr/register";
+			}else if(result ==0) {
+				service.insertUser(vo);
+				service.insertAuthmapping(auth);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
 		return "redirect:/member/all";
 
+	}
+	
+	@ResponseBody
+	@PostMapping("/idCheck")
+	public int idCheck(UserVO vo) {
+		//String e_id = vo.getE_id();
+		int result = service.idCheck(vo);
+		log.info(vo+".................................");
+		log.info(result);
+		return result;
 	}
 
 	@Secured({ "ROLE_ADMIN" })
