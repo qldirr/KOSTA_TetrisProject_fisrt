@@ -29,9 +29,7 @@
 						var lateCheck = '09:00:00';
 						var checkTime = today;//출근시간확인
 
-						if (checkTime > lateCheck) {
-							$('[id^=lateChecking]').css("color", "red");
-						}
+						
 
 						//출근클릭
 						$('#startD').click(function() {
@@ -150,8 +148,7 @@
 									actionForm.submit();
 								});
 
-						$(".move")
-								.on(
+						$(".move").on(
 										"click",
 										function(e) {
 											e.preventDefault();
@@ -174,6 +171,10 @@
 							
 							searchForm.submit();
 						});
+						
+						if (checkTime > lateCheck) {
+							$('[id^=lateChecking]').css("color", "red");
+						}
 					});
 
 	function getParameterByName(name) {
@@ -243,13 +244,12 @@
 					<div id="date"></div>
 					<div style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
 								id="clock"></div>
-				    <input id="newbtn" type="button" value="새 파일" onclick="">
 				</div>
+				<!-- <div class="s-list-item ">
+					<a href=""></a>
+				</div> -->
 				<div class="s-list-item ">
-					<a href="">보조메뉴바 1</a>
-				</div>
-				<div class="s-list-item ">
-					<!-- <a href="">전사연차연황</a> -->
+					<a href="">전사연차연황</a>
 				</div>
 			</div>
 			<!-- 보조사이드바 끝-->
@@ -322,7 +322,8 @@
 											<td><fmt:formatDate value="${hr.hr_date }"
 													pattern="yyyy-MM-dd" /></td>
 											<td><c:out value="" />${hr.e_num }</td>
-											<td><a class='move' href='/attendance/personal?e_id=<c:out value="${hr.e_id}"/>'>
+											<td>
+											<a class='move' href='/attendance/personal?e_id=<c:out value="${hr.e_id}"/>'>
 													<c:out value="${hr.e_name}" />
 											</a></td>
 											<td><c:out value="" />${hr.d_name}</td>

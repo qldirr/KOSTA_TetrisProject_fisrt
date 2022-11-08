@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.Criteria;
 import org.tetris.domain.HrVO;
 import org.tetris.domain.PageDTO;
+import org.tetris.security.domain.CustomUser;
 import org.tetris.service.HrService;
 
 import lombok.AllArgsConstructor;
@@ -36,8 +38,12 @@ public class HrController {
 	
 //person.jsp 개인근태페이지 - e_id로 정보출력
 	@GetMapping("/person")
-	public void get(@RequestParam("e_id") String e_id, Model model) {
+	public void get( Model model) {
 		log.info("/person");
+		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		String e_id = user.getUsername();
 		
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getHrList(e_id));
@@ -102,7 +108,7 @@ public class HrController {
 //personAll.jsp 전사근태페이지
 	
 	  @GetMapping("/personAll") 
-	  public void getAll(Criteria cri, Model model) {
+	  public void getAll( Criteria cri, Model model) {
 	  
 		  log.info("list: " + cri);
 		  model.addAttribute("list", service.getHrWithPaging(cri));

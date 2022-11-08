@@ -138,10 +138,11 @@
 
 	<select id="getHrWithPaging" resultType="org.tetris.domain.HrVO">
 		<![CDATA[
-			select rn, hr_num, e_name, e_num, d_name, e_position, hr_date, hr_leave,
+			select rn, hr_num, e_name, e_num, d_name, e_position, hr_date, hr_leave, e_id,
 				hr_status, hr_note from
 				(select /*+INDEX_DESC(hr pk_hr_num) */ rownum as rn, h.hr_num as hr_num, 
 				e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position as e_position, 
+				e.e_id as e_id,
 				h.hr_date as hr_date, h.hr_leave as hr_leave,
 	   			 h.hr_status as hr_status, h.hr_note as hr_note
 	    		from employee e right join hr h
