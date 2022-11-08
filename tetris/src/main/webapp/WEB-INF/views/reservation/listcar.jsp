@@ -16,6 +16,7 @@
 
 </head>
 <body>
+	<div class="wrap">
 	<jsp:include page="../includes/header.jsp"></jsp:include>
 	<!-- 보조메뉴바 시작 -->
 	<div class="s-menu">
@@ -38,7 +39,8 @@
 	<!-- 보조메뉴바 끝 -->
 
 	<!-- 내용 시작 -->
-	<div class="s-container">
+	<div class="wrap-box">
+		<div class="s-container">
 		<h2 id="c-title">차량관리</h2>
 	
 
@@ -75,11 +77,13 @@
 				<a href="/reservation/registercar"> <input type="button"
 					value="차량등록" class="write_Btn" id=write_Btn />
 				</a>
-				<jsp:include page="../includes/footer.jsp"></jsp:include>
+				
 			</div>
 				
 		</div>
+	</div>
 	
-
+	</div>
+	<jsp:include page="../includes/footer.jsp"></jsp:include>
 </body>
 </html>
