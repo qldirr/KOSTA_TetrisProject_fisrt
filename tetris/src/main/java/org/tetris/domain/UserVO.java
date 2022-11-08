@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.List;
 
 import lombok.Data;
-
 @Data
 public class UserVO {
 	
@@ -25,6 +24,9 @@ public class UserVO {
 	private String d_name;
 	
 	private List<AuthVO> authList;
+
 	
 
+	
+	
 }

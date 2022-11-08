@@ -14,13 +14,17 @@ public interface RoomBookService {
 	public void registerResRoom(RoomBookVO rb);
 
 	// 회의실 예약날짜 중복 확인
-	public String checkdate(Map<String, String> paraMap);
+	//public String checkdate(Map<String, String> paraMap);
 
 	// 내 예약정보 불러오기
 	public RoomBookVO getResRoom(Long rb_num);
 	
 	//회의실별 예약정보 불러오기
 	public List<RoomBookVO> setResRoom(String mr_num);
+	
+	//회의실 중복날짜 체크
+	public int checkDate(RoomBookVO rb);
+		
 
 }
 

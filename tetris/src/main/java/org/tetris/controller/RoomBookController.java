@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.MeetingRoomVO;
 import org.tetris.domain.RoomBookVO;
+import org.tetris.security.domain.CustomUser;
 import org.tetris.service.MeetingRoomService;
 import org.tetris.service.RoomBookService;
 
@@ -39,36 +43,54 @@ public class RoomBookController {
 	@Autowired
 	private RoomBookService service;
 	
+	@Autowired
 	private MeetingRoomService roomservice;
-			
+	
+					
 	// 회의실예약 메인페이지
 	@GetMapping("/resroommain")
-	public void roomMain(Model model) {
+	public String roomMain(Model model) {
 		//회원번호
 		//회의실정보		
-		model.addAttribute("list",roomservice.getListRoom());		
+		model.addAttribute("list",roomservice.getListRoom());
+		
+		return "redirect:/meetingroom/resroomcal?mr_num=RS001";
 	}
 	
 	//예약페이지 이동
+	@Secured({"ROLE_USER"})
 	@GetMapping("/registerrseroom")
 	public void registerRseRoomPage(@RequestParam("mr_num") String mr_num, Model model) {
-		
+		CustomUser user = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String userName = user.getUser().getE_name();
+		model.addAttribute("userName",userName);
 		model.addAttribute("registerrseroom",roomservice.getRoom(mr_num));
 
 	}
 
 
 	// 회의실예약 등록하기
+	//@Transactional
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/registerrseroom")
 	public String registerRseRoom( RoomBookVO rb, Model model, RedirectAttributes rttr) {
 		log.info("registerresroom...........");
-
-		service.registerResRoom(rb);
-
+			
+		 int result = service.checkDate(rb);
+		  
+		 if(result == 0) { 
+			 service.registerResRoom(rb);	  
+		  } 
+		 else{
+		     log.info("fail........");
+		     return "/meetingroom/registerrseroom";
+		    	     
+		  }
+		 	  		
 		return "redirect:/meetingroom/resroommain";
 	}
 	
-
+	
 	// 예약된 회의실목록
 	@GetMapping("/listresroom")
 	public String listResRoom(Model model) {
@@ -143,28 +165,9 @@ public class RoomBookController {
 
 
 
-	/*
-	 * @ResponseBody
-	 * @GetMapping
-	 * public checkResRoom() { 
-	 * 
-	 * 
-	 * int result = 
-	 * 
-	 * if(result >0) { 
-	 * 
-	 * 
-	 * return "success"; 
-	 * 
-	 * } return "fail"; 
-	 * 
-	 * } 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
+	
+	  
+	 
 
 
 }

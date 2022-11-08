@@ -25,11 +25,18 @@ public class RoomBookMapperTest {
 	private RoomBookMapper mapper;
 	
 	@Test
-	public void insertResRoom() {
-	 Map<String,String> vo= new HashMap();
-	 
-
+	public void checkDatetResRoom() {
 		
+	RoomBookVO rb = new RoomBookVO();
+	
+	rb.setMr_num("RS001");
+	rb.setRb_startday("2022-11-07");
+	rb.setRb_starttime("09:00");
+	rb.setRb_endday("2022-11-07");
+	rb.setRb_endtime("20:00");
+	
+	mapper.checkDate(rb);
+
 	}
 
 }
