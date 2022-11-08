@@ -25,7 +25,7 @@
 		where r_num = #{r_num}
 	</update>
 
-   <select id="getListWithPaging"	resultType="org.tetris.domain.ReplyVO">
+  <select id="getListWithPaging"	resultType="org.tetris.domain.ReplyVO">
 		select r_num, s_num, r_reply, r_replyer, r_regdate, r_moddate
 			from reply
 			where s_num = #{s_num}
@@ -33,7 +33,6 @@
 	</select> 
 
 
-
-
-
 </mapper>
+
+
