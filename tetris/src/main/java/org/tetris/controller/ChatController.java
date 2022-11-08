@@ -98,6 +98,7 @@ public class ChatController {
 	public void registerCR(@RequestBody Map<String, Object> map, HttpSession session, Principal principal) {
 		List<EmployeeVO> chatPart = new ArrayList<>();
 		EmployeeVO loginUserVO = chatService.getEmp(principal.getName());
+		chatPart.add(loginUserVO);
 		
 		String e_id = (String)map.get("e_id");
 		EmployeeVO empVO = chatService.getEmp(e_id);

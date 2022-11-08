@@ -30,8 +30,8 @@
 <script src="/resources/tree/lib/jquery.cookie.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-	/* $(function() {
-		$("#tree").treeview({
+	$(function() {
+		/* $("#tree").treeview({
 			collapsed: true,
 			animated: "medium",
 			control:"#sidetreecontrol",

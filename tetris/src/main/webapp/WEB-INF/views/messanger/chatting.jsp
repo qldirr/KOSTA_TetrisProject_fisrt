@@ -338,20 +338,19 @@
 		});
 		
 		
-		var msg = {
+		/* var msg = {
 			"e_id" : e_id,
 			"cr_id" : roomId,
 			"cc_contents" : $("#message").val()
-			};
-		alert(JSON.stringify(msg));
+			}; */
+		/* alert(JSON.stringify(msg)); */
+		
+		
+		
 
-		/* webSocket.send($("#message").val()); */
-		webSocket.send(JSON.stringify(msg));
-		
-		
-		
-		
 		webSocket.send($("#message").val());
+		/* webSocket.send(JSON.stringify(msg)); */
+		
 		
 		var html = '<div class="me-chat">' + '<div class="me-chat-col">' + '<span class="balloon">'
         			+ $("#message").val() + '</span>' + '</div>'
@@ -360,12 +359,12 @@
 		$(".main-chat").append(html);
 	}
 	// 서버로부터 메시지를 받았을 때
-	/* function onMessage(msg) { */
-		function onMessage(msg) {
+	
+	function onMessage(msg) {
 		
 		var data = msg.data;
-		alert(msg);
-		alert(data);
+		/* alert(msg);
+		alert(data); */
 		
 		/* msgData = JSON.parse(data);
 		var html = msgData.user + ": " msgData.message;

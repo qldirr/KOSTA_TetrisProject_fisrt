@@ -70,18 +70,18 @@ public class ChatHandler extends TextWebSocketHandler {
 		
 		
 		
-		Gson gson = new Gson(); ChatContentsVO msgVO = gson.fromJson(message.getPayload(), ChatContentsVO.class);
-		TextMessage sendMsg = new TextMessage(gson.toJson(msgVO));
-		System.out.println(msgVO);
-		System.out.println(sendMsg);
+//		Gson gson = new Gson(); ChatContentsVO msgVO = gson.fromJson(message.getPayload(), ChatContentsVO.class);
+//		TextMessage sendMsg = new TextMessage(gson.toJson(msgVO));
+//		System.out.println(msgVO);
+//		System.out.println(sendMsg);
 		
 		
 		
 		
 		for(WebSocketSession chatPart : userList) {
 			if(!chatPart.getId().equals(wsession.getId())) {
-//				chatPart.sendMessage(new TextMessage(/* loginUser.getE_name() + ": " + */message.getPayload()));
-				chatPart.sendMessage(sendMsg);
+				chatPart.sendMessage(new TextMessage(/* loginUser.getE_name() + ": " + */message.getPayload()));
+//				chatPart.sendMessage(sendMsg);
 			}
 		}
 	}
