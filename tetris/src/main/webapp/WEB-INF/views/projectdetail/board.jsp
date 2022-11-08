@@ -18,10 +18,23 @@ li {
 #board {
 	border: 1px solid;
 }
+
+
+#contentsBox{
+	height: 450px;
+	overflow-y: scroll;
+}
+
+#contentsBox::-webkit-scrollbar {
+    display: none;
+}
+
 </style>
 <script src="https://kit.fontawesome.com/7264476d39.js" crossorigin="anonymous"></script>
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"
 	type="text/javascript"></script>
+<script src="/resources/vender/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
 
 <script type="text/javascript">
 	var pb_num = '';
@@ -162,38 +175,12 @@ li {
 		};
 
 	})();
+	
 
-	/* 페이지 이동 서비스를 제공하는 함수 */
-	var moveTo = (function() {
-
-		function main() {
-			self.location = "/project/main";
-		}
-
-		function register() {
-			self.location = "/projectdetail/register";
-		}
-
-		function calendar() {
-			self.location = "/projectdetail/calendar";
-		}
-
-		function task() {
-			self.location = "/projectdetail/taskboard";
-		}
-
-		return {
-			main : main,
-			register : register,
-			calendar : calendar,
-			task : task
-
-		}
-
-	})();
 
 	$(document).ready(
 			function() {
+			
 
 				var pj_num = '<c:out value="${pj_num}"/>';
 
@@ -201,27 +188,54 @@ li {
 					console.log(result);
 				});
 
-				$('#backBtn').on('click', moveTo.main);
-
-				$('#regForm').on('click', moveTo.register);
-
-				$('#showCal').on('click', moveTo.calendar);
-
-				$('#showTaskBoard').on('click', moveTo.task);
 
 				
 				$(document).on('click', 'input[name=replyRegBtn]', function() {
 					
 					pb_num = $(this).closest('.replyContents').attr('id');
-
+					pb_contents = $('#boardContents' + pb_num).text().substr(2, 12);
+					pr_writer = '${loginedId}';
+					
+					
 					var reply = {
-						"pr_writer" : 'gdong123',
+						"pr_writer" : pr_writer,
 						"pr_contents" : $('#pr_contents' + pb_num).val(),
 						"pb_num" : pb_num
 					};
 					replyService.add(reply, function(result) {
 						console.log(result);
 					})
+					
+					
+					var alarm_id = ($('#boardWriter' + pb_num)).text().trim();
+					
+					var alarm = {
+						
+						e_id : alarm_id,
+						al_type : "댓글",
+						al_contents : "작성글 \"" + pb_contents + "...\"에 댓글이 달렸습니다."
+					}
+					
+					
+					$.ajax({
+						url : '/notification/register',
+						type : 'post',
+						data : JSON.stringify(alarm),
+						contentType: 'application/json'
+					}).done(function() {
+						
+						console.log("전송 완료");
+						console.log(alarm_id);
+						if(socket){
+							var socketMsg = "reply," + alarm_id + "," + "작성글 \"" + pb_contents + "...\"에 댓글이 달렸습니다." + "," + ${pj_num};
+							
+							console.log("msg: " + socketMsg);
+							socket.send(socketMsg);
+						}
+
+						
+					}) /* end ajax */
+					
 
 				});
 
@@ -256,75 +270,94 @@ li {
 
 </head>
 <body>
-	<div id="projectMember">
-		프로젝트 참여자<br>
-		<c:forEach items="${member }" var="m">
-		[${m.d_name }] ${m.e_position } -  ${m.e_name }<br>
-		</c:forEach>
-	</div>
+		<jsp:include page="../includes/header.jsp"></jsp:include>
+			<!-- 보조메뉴바 시작 -->
+				<div class="s-menu">
+				<div class="s-menu-title">
+					<p>프로젝트 <i class="bi bi-tags"></i>
+				</div>
+				<div class="s-list-item ">
+				    <input id="newbtn" type="button" value="새 글쓰기" onclick="self.location = '/projectdetail/register';">
+				</div><br>
+				<div class="s-list-item ">
+					<a href="/projectdetail/home/${pj_num}">프로젝트 홈</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/calendar">캘린더</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/taskboard">업무보드</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/tasklist">업무리스트</a>
+				</div>
+				<br><br>
+				<div class="s-list-item ">
+					<a href="/project/main" style="color:gray"><i class="fa fa-thin fa-door-open"></i> 나가기</a>
+				</div>
 
-	<div id="projectMenu">
-		<input type="button" id="backBtn" value="이 프로젝트 나가기"> <input
-			type="button" id="showCal" value="캘린더 보기"> <input
-			type="button" id="showTaskBoard" value="업무보드 보기">
-	</div>
+			</div>
+			
+		<div class="s-container">
 
-	<input type="hidden" id="pj_num" name="pj_num" value="${pj_num}">
-	<h1>글목록</h1>
-	<input type="text" placeholder="검색 내용 입력">
-	<input type="button" id="searchKey" value="검색">
+			<input type="hidden" id="pj_num" name="pj_num" value="${pj_num}">
+			<br><br>
+			<h5>${project.pj_name }</h5>
+			<h2 id="c-title">글 목록</h2>
+			<div class="contents_wrap">
+			<form action="/projectdetail/home/ + ${ pj_num}" method="get">
+			<input type="text" name="searchkey" placeholder="검색 내용 입력">
+			<input type="submit" id="search" value="검색"><br><br>
+			</form>
 
-	<div>
-		<h3>글쓰기</h3>
 
-		<textarea id="regForm" rows="5" cols="75" readonly="readonly"
-			placeholder="글작성 폼이 열립니다."></textarea>
-
-		<hr>
-
-	</div>
-
-	<div class="board">
-		<div class="boardContents">
-			<c:forEach items="${board}" var="b">
-				<div class="media">
-					<i id="usericon" class="fa-regular fa-circle-user fa-2x"></i>
-					<div class="media-body">
-						<h5 class="mt-0">&nbsp;&nbsp;${b.pb_writer}</h5>
-						<p>&nbsp;&nbsp;${b.pb_contents }</p>
-						<div id='uploadResult${b.pb_num}' class='uploadResult'>
-							<ul>
-							</ul>
+	<div id="contentsBox">
+			<div class="board">
+				<div class="boardContents">
+					<c:forEach items="${board}" var="b">
+						<div class="media">
+							<i id="usericon" class="fa-regular fa-circle-user fa-2x"></i>
+							<div class="media-body">
+								<h5 class="mt-0" id="boardWriter${b.pb_num}">&nbsp;&nbsp;${b.pb_writer}</h5>
+								<p id="boardContents${b.pb_num}">&nbsp;&nbsp;${b.pb_contents }</p>
+								<div id='uploadResult${b.pb_num}' class='uploadResult'>
+									<ul>
+									</ul>
+								</div>
+		
+		
+							</div>
 						</div>
-
-
-					</div>
+		
+						<div id="${b.pb_num}" class="replyContents">
+							<div id="reply${b.pb_num}" class="boardReplies">
+								<ul class="replies">
+									<c:forEach items="${replies}" var="r">
+										<c:if test="${b.pb_num eq r.pb_num }">
+											<li><i id="usericon" class="fa-regular fa-circle-user fa-2x"></i> ${r.pr_writer}:
+												${r.pr_contents} 
+												<c:if test="${r.pr_writer eq loginedId }">
+													<input type="button" id="${r.pr_num}" name="replyDelBtn" value="×">
+												</c:if> ${r.pr_moddate}</li>
+										</c:if>
+									</c:forEach>
+								</ul>
+								
+									<textarea id="pr_contents${b.pb_num}" name="pr_contents" rows="2"
+										cols="55" placeholder="댓글을 입력하세요."></textarea>
+									<input type="button" id="replyReg${b.pb_num}" name="replyRegBtn" value="등록" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none;"><br>
+									<br>
+								
+							</div>
+						</div>
+						<hr>
+					</c:forEach>
 				</div>
-
-				<div id="${b.pb_num}" class="replyContents">
-					<div id="reply${b.pb_num}" class="boardReplies">
-						<ul class="replies">
-							<c:forEach items="${replies}" var="r">
-								<c:if test="${b.pb_num eq r.pb_num }">
-									<li><i id="usericon" class="fa-regular fa-circle-user fa-2x"></i>${r.pr_writer}:
-										${r.pr_contents} 
-										<c:if test="${r.pr_writer eq 'gdong123'}">
-											<input type="button" id="${r.pr_num}" name="replyDelBtn" value="×">
-										</c:if> ${r.pr_moddate}</li>
-								</c:if>
-							</c:forEach>
-						</ul>
-						
-							<textarea id="pr_contents${b.pb_num}" name="pr_contents" rows="2"
-								cols="55" placeholder="댓글을 입력하세요."></textarea>
-							<input type="button" id="replyReg${b.pb_num}" name="replyRegBtn" value="등록" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none;"><br>
-							<br>
-						
-					</div>
-				</div>
-			</c:forEach>
+			</div>
 		</div>
 	</div>
+</div>
+<jsp:include page="../includes/footer.jsp"></jsp:include>
 
 </body>
 </html>

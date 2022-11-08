@@ -7,7 +7,6 @@ public class AuthVO {
 	//private UserVO vo;
 	private String e_id;
 	private String a_auth;
-	
 
 }
 

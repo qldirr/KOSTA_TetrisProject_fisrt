@@ -14,6 +14,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -31,8 +33,10 @@ import org.tetris.domain.project.ProjectBoardVO;
 import org.tetris.domain.project.ProjectCalVO;
 import org.tetris.domain.project.ProjectTaskVO;
 import org.tetris.domain.user.UserVO;
+import org.tetris.security.domain.CustomUser;
 import org.tetris.service.ProjectBoardService;
 import org.tetris.service.ProjectCalService;
+import org.tetris.service.ProjectService;
 import org.tetris.service.ProjectTaskService;
 
 import lombok.AllArgsConstructor;
@@ -55,29 +59,47 @@ public class ProjectBoardController {
 	
 	private static Long projectNum;
 	
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/home/{pj_num}")
-	public String getMain(@PathVariable("pj_num") Long pj_num, Model model) {
+	public String getMain(@PathVariable("pj_num") Long pj_num, String searchkey, Model model) {
 		projectNum = pj_num;
 		Long pb_num = 0L;
 		
-		List<UserVO> projectMember =service.getProjectInfo(pj_num);
-		List<ProjectBoardVO> projectBoard = service.getListProjectBoard(pj_num);
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String user_name = user.getUser().getE_name();
+		String user_id = user.getUsername();
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pj_num", projectNum);
+		map.put("searchkey", searchkey);
+		
+		/* List<UserVO> projectMember =service.getProjectInfo(pj_num); */
+		List<ProjectBoardVO> projectBoard = service.getListProjectBoard(map);
 		List<BoardReplyVO> projectReplies = service.getListBoardReply(pb_num,  pj_num);
 		
-		model.addAttribute("member", projectMember);
+		model.addAttribute("loginedId", user_id);
 		model.addAttribute("board", projectBoard);
 		model.addAttribute("replies", projectReplies);
 		model.addAttribute("pj_num", projectNum);
+		model.addAttribute("project", service.getProject(projectNum));
 		
 		return "/projectdetail/board";
 	}
 	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/register")
 	public void registForm(Model model) {
+		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String user_name = user.getUser().getE_name();
+		String user_id = user.getUsername();
+		
+		model.addAttribute("loginedId", user_id);
 		model.addAttribute("pj_num", projectNum);
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/register")
 	public String register(ProjectBoardVO board) {
 		if(board.getPb_status() == null) {
@@ -87,7 +109,7 @@ public class ProjectBoardController {
 		return "redirect:/projectdetail/home/" + projectNum;
 	}
 	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@ResponseBody
 	@PostMapping("/registerReply")
 	public List<BoardReplyVO> registerReply(@RequestBody BoardReplyVO reply) {
@@ -97,6 +119,7 @@ public class ProjectBoardController {
 		return replies;
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@Transactional
 	@ResponseBody
 	@PostMapping("/removeReply")
@@ -107,11 +130,13 @@ public class ProjectBoardController {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/uploadfile")
 	public void uploadFileForm() {
 		
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping(value = "/uploadfile", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<BoardAttachVO>> uploadFile(MultipartFile[] uploadFile) {
@@ -157,6 +182,7 @@ public class ProjectBoardController {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<HashMap<Long, Object>>> getAttachList(Long pj_num) {
@@ -176,6 +202,7 @@ public class ProjectBoardController {
 		return new ResponseEntity<List<HashMap<Long, Object>>>(attachList, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
 	public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName){
@@ -212,12 +239,14 @@ public class ProjectBoardController {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/calendar")
 	public void getCalendar(Model model) {
 		model.addAttribute("pj_num", projectNum);
+		model.addAttribute("project", service.getProject(projectNum));
 	}
 	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping(value="/calendarList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<HashMap<String, Object>>> getCalendarList() {
@@ -246,12 +275,14 @@ public class ProjectBoardController {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/registerCal")
 	public void registerCalForm(Model model) {
 		model.addAttribute("pj_num", projectNum);
 		
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/registerCal")
 	public String registerCal(ProjectCalVO calendar) {
 		
@@ -260,27 +291,33 @@ public class ProjectBoardController {
 	}
 	
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/taskboard")
 	public void getTaskBoard(Model model) {
 		model.addAttribute("pj_num", projectNum);
+		model.addAttribute("project", service.getProject(projectNum));
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping(value = "/taskList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<ProjectTaskVO>> getTaskList(){
 		List<ProjectTaskVO> list = taskService.getListTask(projectNum);
-		list.forEach(each -> log.info(each));
 		return new ResponseEntity<>(list, HttpStatus.OK);
 		
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/registerTask")
 	public void registerTaskForm(Model model) {
-		List<UserVO> projectMember = service.getProjectInfo(projectNum);
+		
+		String pj_num = String.valueOf(projectNum);
+		List<UserVO> projectMember = service.getProjectInfo(pj_num);
 		model.addAttribute("member", projectMember);
 		model.addAttribute("pj_num", projectNum);
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/registerTask")
 	public String registerTask(ProjectTaskVO task){
 		log.info(task);
@@ -289,6 +326,7 @@ public class ProjectBoardController {
 		return "redirect: /projectdetail/taskboard";
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/modifyTask")
 	public String modifyTask(@RequestBody ProjectTaskVO task) {
 		
@@ -298,6 +336,7 @@ public class ProjectBoardController {
 		return "redirect: /projectdetail/taskboard";
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/removeTask")
 	public String removeTask(Long ts_num) {
 		
@@ -305,9 +344,11 @@ public class ProjectBoardController {
 		return "redirect: /projectdetail/taskboard";
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/tasklist")
 	public void getTaskList(Model model) {
 		model.addAttribute("pj_num", projectNum);
+		model.addAttribute("project", service.getProject(projectNum));
 	}
 
 }

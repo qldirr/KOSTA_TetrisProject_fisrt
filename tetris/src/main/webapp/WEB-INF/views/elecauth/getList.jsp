@@ -13,21 +13,22 @@
 	href="/resources/vender/bootstrap/css/bootstrap.min.css">
 <script type="text/javascript">
 
-	$(function(){
-		
-		$('td a').on('click', function(e){
-			e.preventDefault();
-			var el_num = $(this).attr('href');
+		$(function(){
 			
-			self.location = '/elecauth/document/' + el_num;
-
+			$('td a').on('click', function(e){
+				e.preventDefault();
+				var el_num = $(this).attr('href');
+				
+				self.location = '/elecauth/document/' + el_num;
+		
+			})
+		
 		})
-	
-	})
 
 </script>
 </head>
 <body>
+
 <jsp:include page="../includes/header.jsp"></jsp:include>
 			<!-- 보조메뉴바 시작 -->
 			
@@ -57,8 +58,7 @@
 			
 			
 		<div class="s-container"><br>
-			<h2 id="c-title">상신문서함</h2><br>
-
+			<h2 id="c-title">수신문서함</h2><br>
 
 	<table class="table table-bordered table-sm" style="width: 100%">
 		<thead>

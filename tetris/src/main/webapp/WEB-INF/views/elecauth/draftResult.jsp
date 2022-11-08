@@ -9,6 +9,27 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/vender/bootstrap/css/bootstrap.min.css" >
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
+<style type="text/css">
+
+.signDoc{
+
+	background-color: #E0E0E0; 
+	color: #161E67; 
+	border-radius: 5px; 
+	border-style: none; 
+	padding: 5px; 
+	float: right; 
+	
+}
+
+.signDoc:hover{
+
+	background-color: #161E67; 
+	color: #E0E0E0; 
+	
+}
+
+</style>
 <script type="text/javascript">
 
 var lineService = function(){
@@ -33,47 +54,48 @@ var lineService = function(){
 
 $(function(){
 	
-	$('#signDraft').hide();
-	$('#modifyDoc').hide();
-	$('#main').on('click', function(){
-		self.location = "/elecauth/main";
-	})
-	
-	var referrer = document.referrer;
-	if(referrer.endsWith('uncheckedList')){
-		$('#signDraft').show();
-	} else if(referrer.endsWith('disapprovedList')){
-		$('#modifyDoc').show();
-	}
-	
-	$('.signDoc').on('click', function(){
-		
-		var status = $(this).val();
-		status = (status == '승인')? '결재완료' : '반려';
-		
-		var e_id = "nayoung88";
-		var l_num = '${auth.el_num }';
-		
-		
-		var line = {
-				"l_num" : l_num,
-				"e_id" : e_id, 
-				"l_status" : status
-			}
-		
-		lineService.update(line);
-		
-	})
-	
-	
-	$('.modify').on('click', function(){
-		
-		var el_num = '${auth.el_num }';
+			$('#signDraft').hide();
+			$('#modifyDoc').hide();
+			$('#main').on('click', function(){
+				self.location = "/elecauth/main";
+			})
 			
-		self.location = '/elecauth/modify/' + el_num;
-	
-
-	})
+			var referrer = document.referrer;
+			
+			if(referrer.endsWith('uncheckedList')){
+				$('#signDraft').show();
+			} else if(referrer.endsWith('disapprovedList')){
+				$('#modifyDoc').show();
+			}
+			
+			
+			$('.signDoc').on('click', function(){
+				
+				var status = $(this).val();
+				status = (status == '승인')? '결재완료' : '반려';
+				
+				var e_id = '${userId}';
+				var l_num = '${auth.el_num }';
+				
+				var line = {
+						"l_num" : l_num,
+						"e_id" : e_id, 
+						"l_status" : status
+					}
+				
+				lineService.update(line);
+				
+			})
+			
+			
+			$('.modify').on('click', function(){
+				
+				var el_num = '${auth.el_num }';
+					
+				self.location = '/elecauth/modify/' + el_num;
+			
+		
+			})
 
 })
 
@@ -81,6 +103,37 @@ $(function(){
 
 </head>
 <body>
+
+<jsp:include page="../includes/header.jsp"></jsp:include>
+			<!-- 보조메뉴바 시작 -->
+			
+			<div class="s-menu">
+				<div class="s-menu-title">
+					<p>전자결재 <i class="bi bi-tags"></i>
+				</div>
+				<div class="s-list-item ">
+				    <input id="newbtn" type="button" value="새 문서 작성" onclick="self.location = '/elecauth/register';">
+				</div><br>
+				<div class="s-list-item ">
+					<a href="/elecauth/writtenList">상신문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/uncheckedList">결재대기문서</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/disapprovedList">반려문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/sendList">발신문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/getList">수신문서함</a>
+				</div>
+			</div>
+			
+			
+		<div class="s-container">
+			<h2 id="c-title">내 작성 문서</h2><br>
 
 
 <span style="font-family: &quot;맑은 고딕&quot;; font-size: 10pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><!-- default copy start --><span style="font-family: &quot;맑은 고딕&quot;; font-size: 10pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"> 
@@ -110,7 +163,7 @@ $(function(){
 			</td>
 			<td style="width: 200px; height: 22px; vertical-align: middle; border: 1px solid black; text-align: left; padding: 3px !important;">
 				<span unselectable="on" contenteditable="false" class="comp_wrap" data-cid="0" data-dsl="{{label:draftUser}}" data-wrapper="" style="" data-value="" data-autotype=""><span class="comp_item">
-					<div id="draftWriter" class="docWriter">gdong123</div>
+					<div id="draftWriter" class="docWriter">${auth.e_name}</div>
 				</span><span contenteditable="false" class="comp_active" style="display:none;"> <span class="Active_dot1"></span><span class="Active_dot2"></span> <span class="Active_dot3"></span><span class="Active_dot4"></span> </span> <span contenteditable="false" class="comp_hover" data-content-protect-cover="true" data-origin="0"> <a contenteditable="false" class="ic_prototype ic_prototype_trash" data-content-protect-cover="true" data-component-delete-button="true"></a> </span> </span> 
 			</td>
 		</tr>
@@ -150,26 +203,27 @@ $(function(){
  
 <br>
 			</td>
-			<td style="background: white; padding: 0px !important; border: currentColor; text-align: right; color: black; font-size: 12px; font-weight: normal; vertical-align: top;">
-				<div id="draftElecline">
+			<td style="background: white; padding: 0px !important; border: currentColor; text-align: center; color: black; font-size: 12px; font-weight: normal; vertical-align: top;">
+				 <div id="drafElecline" style="float: right">
 					<table border="1px solid">
 						<tr class="linePosition">
 							<c:forEach items="${line}" var="position">
-							<td>${position.e_position}</td>
+							<td style="width: 60px;">${position.e_position}</td>
 							</c:forEach>
 						</tr>
-						<tr class="lineName">
+						<tr class="lineName" style="height:50px;">
 							<c:forEach items="${line}" var="id">
 							<td> ${id.e_name}</td>
 							</c:forEach>
 						</tr>
 						<tr class="lineStatus">
 							<c:forEach items="${line}" var="status">
-							<td>${status.l_status}</td>
+							<td><strong>${status.l_status}</strong></td>
 							</c:forEach>
 						</tr>
 					</table>
-				</div><span unselectable="on" contenteditable="false" class="comp_wrap" data-wrapper="" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span contenteditable="false" class="comp_active" style="display: none; font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"> <span class="Active_dot1" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span class="Active_dot2" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span> <span class="Active_dot3" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span class="Active_dot4" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span> </span><span contenteditable="false" class="comp_hover" data-content-protect-cover="true" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"> <a contenteditable="false" class="ic_prototype ic_prototype_trash" data-content-protect-cover="true" data-component-delete-button="true"></a> </span></span><!-- 에디터 &nbsp; 버그. 개행과 공백을 최소화 시키자. --><!-- 에디터 &nbsp; 버그. 개행과 공백을 최소화 시키자. --><br>
+					</div>
+				<span unselectable="on" contenteditable="false" class="comp_wrap" data-wrapper="" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"><span contenteditable="false" class="comp_active" style="display: none; font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"> <span class="Active_dot1" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span class="Active_dot2" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span> <span class="Active_dot3" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span class="Active_dot4" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span> </span><span contenteditable="false" class="comp_hover" data-content-protect-cover="true" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"> <a contenteditable="false" class="ic_prototype ic_prototype_trash" data-content-protect-cover="true" data-component-delete-button="true"></a> </span></span><!-- 에디터 &nbsp; 버그. 개행과 공백을 최소화 시키자. --><!-- 에디터 &nbsp; 버그. 개행과 공백을 최소화 시키자. --><br>
 			</td>
 		</tr>
 	</tbody>
@@ -202,11 +256,7 @@ $(function(){
 		</tr>
 		<tr>
 			<td style="background: rgb(255, 255, 255); padding: 5px;border:1px solid black; height: 18px; text-align: left; color: rgb(0, 0, 0); font-size: 12px; font-weight: normal; vertical-align: middle;" colspan="2">
-				<span unselectable="on" contenteditable="false" class="comp_wrap" data-cid="8" data-dsl="{{editor}}" data-wrapper="" style="width: 100%; font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;" data-value="" data-autotype=""><span class="comp_editor" style="width: 100%; font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 11pt; line-height: 200px; margin-top: 0px; margin-bottom: 0px;">
-					<div>
-						 ${auth.el_contents}
-					</div>
-				</span><span contenteditable="false" class="comp_active" style="display: none; font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"> <span class="Active_dot1" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span class="Active_dot2" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span> <span class="Active_dot3" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span><span class="Active_dot4" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"></span> </span> <span contenteditable="false" class="comp_hover" data-content-protect-cover="true" data-origin="8" style="font-family: &quot;malgun gothic&quot;, dotum, arial, tahoma; font-size: 9pt; line-height: normal; margin-top: 0px; margin-bottom: 0px;"> <a contenteditable="false" class="ic_prototype ic_prototype_trash" data-content-protect-cover="true" data-component-delete-button="true"></a> </span> </span><br>
+				<textarea id="draftText" class="docText" style="width: 800px; height:500px; resize: none; border: none;">${auth.el_contents }</textarea>
 			</td>
 		</tr>
 	</tbody>
@@ -216,15 +266,13 @@ $(function(){
 
 
 <div id="signDraft">
-
-	<input type="button" class="signDoc" id="approvalDraft" value="승인">
-	<input type="button" class="signDoc" id="disapprovalDraft" value="반려">
+	<input type="button" class="signDoc" id="approvalDraft" value="승인" style="margin-right:50px;">
+	<input type="button" class="signDoc" id="disapprovalDraft" value="반려" style="margin-right:10px;"><br>
 </div>
 
 <div id="modifyDoc">
 	<input type="button" class="modify" value="문서수정">
 </div>
-
-<input type="button" id="main" value="메인으로 가기">
+</div>
 </body>
 </html>

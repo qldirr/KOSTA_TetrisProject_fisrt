@@ -13,7 +13,7 @@ import org.tetris.domain.user.UserVO;
 
 public interface ProjectService {
 	
-	public List<ProjectVO> getListProject(UserVO user);
+	public List<ProjectVO> getListProject(String e_id);
 	public void registerProject(ProjectVO project);
 	public List<UserVO> getListEmployees();
 	public List<DepartmentVO> getListDept();

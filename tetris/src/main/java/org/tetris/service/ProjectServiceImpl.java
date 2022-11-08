@@ -23,8 +23,8 @@ public class ProjectServiceImpl implements ProjectService {
 	
 
 	@Override
-	public List<ProjectVO> getListProject(UserVO user) {
-		return mapper.getListProject(user);
+	public List<ProjectVO> getListProject(String e_id) {
+		return mapper.getListProject(e_id);
 	}
 
 	@Override

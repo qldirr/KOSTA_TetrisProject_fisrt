@@ -19,4 +19,3 @@ public interface UserMapper {
 	public int idCheck(UserVO user);
 	
 }
-

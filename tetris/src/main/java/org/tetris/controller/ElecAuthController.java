@@ -3,6 +3,8 @@ package org.tetris.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -17,8 +19,10 @@ import org.tetris.domain.elecauth.ElecAuthVO;
 import org.tetris.domain.elecauth.ElecLineVO;
 import org.tetris.domain.user.UserVO;
 import org.tetris.mapper.ProjectMapper;
+import org.tetris.security.domain.CustomUser;
 import org.tetris.service.ElecAuthService;
 import org.tetris.service.ProjectService;
+import org.tetris.service.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -36,27 +40,43 @@ public class ElecAuthController {
 	@Autowired
 	private ElecAuthService elecService;
 	
+	@Autowired
+	private UserService userService;
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/main")
 	public void getMain() {
 		
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/register")
-	public void registerForm() {
-		
+	public void registerForm(Model model) {
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String user_name = user.getUser().getE_name();
+		String user_id = user.getUsername();
+		model.addAttribute("userName", user_name);
+		model.addAttribute("userId", user_id);
 	}
 	
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/selectForm")
 	public void selectForm() {
 		
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/line")
 	public void registerLine(Model model) {
+		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String user_id = user.getUsername();
+		model.addAttribute("userId", user_id);
 		model.addAttribute("dept", service.getListDept());
 		model.addAttribute("employees", service.getListEmployees());
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/line")
 	public void registerLine(@RequestBody ElecLineVO line) {
 		
@@ -75,31 +95,37 @@ public class ElecAuthController {
 		
 	}
 	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@Transactional
 	@PostMapping("/register")
 	public void register(@RequestBody ElecAuthVO auth) {
 		
 		elecService.registerElecAuth(auth);
 		elecService.modifyElecLine(auth);
-		
-		log.info(auth.getE_id());
+
 		
 	}
 	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/document/{el_num}")
 	public String showDocument(@PathVariable("el_num") Long el_num, Model model) {
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
+		String userName = user.getUser().getE_name();
+		String d_num = user.getUser().getD_num();
 		
-		el_num = (el_num == 0)? elecService.getRecentDoc("gdong123") : el_num;
-		String l_num = String.valueOf(el_num); 
-		
+		log.info(e_id);
+		el_num = (el_num == 0) ? elecService.getRecentDoc(e_id) : el_num;
+		log.info(el_num);
+		String l_num = String.valueOf(el_num);
+
 		ElecAuthVO auth = elecService.getElecAuth(el_num);
 		List<ElecLineVO> line = elecService.getListElecLine(l_num);
-		
-		
+
 		model.addAttribute("auth", auth);
 		model.addAttribute("line", line);
+		model.addAttribute("userId", e_id);
+		model.addAttribute("userName", userName);
 		
 		String draft = "/elecauth/draftResult";
 		String vacation = "/elecauth/vacationResult";
@@ -127,21 +153,31 @@ public class ElecAuthController {
 		
 	}
 	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/writtenList")
 	public void getWrittenList(Model model) {
 		
-		List<ElecAuthVO> list = elecService.getListElecAuth("gdong123");
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
+		List<ElecAuthVO> list = elecService.getListElecAuth(e_id);
 		model.addAttribute("authlist", list);
 	}
 	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/uncheckedList")
 	public void getUncheckedList(Model model) {
-		List<ElecAuthVO> list = elecService.getListUncheckedList("nayoung88");
+		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
+		
+		
+		log.info(e_id + "...............................");
+		
+		List<ElecAuthVO> list = elecService.getListUncheckedList(e_id);
 		model.addAttribute("authlist", list);
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@Transactional
 	@PostMapping("/check")
 	public String modifyCheckStatus(@RequestBody ElecLineVO line, Model model) {
@@ -160,14 +196,18 @@ public class ElecAuthController {
 		return "redirect:/elecauth/main";
 	}
 	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/disapprovedList")
 	public void getDisapprovedList(Model model) {
-		List<ElecAuthVO> list = elecService.getListDisapproved("gdong123");
+		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
+		
+		List<ElecAuthVO> list = elecService.getListDisapproved(e_id);
 		model.addAttribute("authlist", list);
 	}
 	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/modify/{el_num}")
 	public String modifyElecAuth(@PathVariable("el_num") Long el_num, Model model) {
 		
@@ -202,6 +242,7 @@ public class ElecAuthController {
 		
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@Transactional
 	@PostMapping("modify")
 	public String modifyElecAuth(@RequestBody ElecAuthVO auth) {
@@ -219,6 +260,34 @@ public class ElecAuthController {
 		
 		return "redirect:/elecauth/main";
 	}
+
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	@GetMapping("/sendList")
+	public void sendList(Model model) {
+		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
+		List<ElecAuthVO> list = elecService.sendList(e_id);
+		model.addAttribute("authlist", list);
+	}	
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	@GetMapping("/getList")
+	public void getList(Model model) {
+		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
+		List<ElecAuthVO> list = elecService.getList(e_id);
+		model.addAttribute("authlist", list);
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+	@ResponseBody
+	@GetMapping("/count")
+	public int countUncheckedList() {
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
+		return elecService.countListUncheckedList(e_id);
+	}
 
 }

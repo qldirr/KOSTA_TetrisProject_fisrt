@@ -121,7 +121,7 @@ public class RoomBookController {
 	@GetMapping(value="/resroomcal", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void getResCal(@RequestParam("mr_num") String mr_num, Model model) {		
 		model.addAttribute("mr_num",roomservice.getRoom(mr_num));
-		log.info("omg.......");
+		log.info(mr_num);
 		
 					
 	}

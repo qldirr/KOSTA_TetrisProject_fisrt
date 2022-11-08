@@ -189,6 +189,25 @@ html, body {
 	color: black;
 }
 
+#btn-alarm {
+	position:relative;
+}
 
+#btn-alarm::after {
+	content : attr(data-content);
+	position: absolute;
+	top: 15px;
+	left: 25px;
+	height: 20px;
+	width: 20px;
+	background-color: red;
+	border-radius: 50%;
+	color: white;
+}
 
-
+#alarms {
+	
+	position: absolute;
+	top: 80px;
+	left: -300px;
+}

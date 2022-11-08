@@ -108,8 +108,7 @@
 
 	$(function() {
 		
-		//tmp = $( "#e_id", opener.document ).val();
-		tmp = 'gdong123';
+		tmp = '${userId}';
 		
 		$("#tree").treeview({
 			collapsed : true,

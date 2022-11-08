@@ -6,59 +6,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet" href="/resources/css/jquery-ui.css" />
-<script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
-<script src="/resources/lib/jquery-ui.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/resources/vender/bootstrap/css/bootstrap.min.css">
-
-
+<link rel="stylesheet" href="/resources/css/jquery-ui.css" />
+<script src="https://kit.fontawesome.com/7264476d39.js" crossorigin="anonymous"></script>
+<script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
+<script src="/resources/lib/jquery-ui.js" type="text/javascript" defer></script>
 <script type="text/javascript">
-
 
 	var order = [];
 	var today = new Date();
 	var enddate;
 	var remain;
 
-	var moveTo = (function() {
-
-		function main() {
-			self.location = "/project/main";
-		}
-
-		function registerTask() {
-			self.location = "/projectdetail/registerTask";
-		}
-
-		function calendar() {
-			self.location = "/projectdetail/calendar";
-		}
-
-		function task() {
-			self.location = "/projectdetail/taskboard";
-		}
-
-		function home() {
-
-			var pj_num = ${pj_num};
-			self.location = "/projectdetail/home/" + pj_num;
-		}
-		
-		function tasklist(){
-			self.location = "/projectdetail/tasklist";
-		}
-
-		return {
-			main : main,
-			registerTask : registerTask,
-			calendar : calendar,
-			task : task,
-			home : home,
-			tasklist : tasklist
-
-		}
-
-	})();
 	
 	var taskService = (function(){
 		
@@ -186,7 +145,7 @@
 		var ts_status = "";
 	
 		
-		$('td').sortable({
+		$('table td').sortable({
 			 connectWith: 'td',
 			 item : '> .card',
 			 start : function(event, ui){
@@ -239,15 +198,6 @@
 	            
 		}).disableSelection();
 
-		$('#regTask').on('click', moveTo.registerTask);
-
-		$('#backBtn').on('click', moveTo.main);
-
-		$('#showTaskBoard').on('click', moveTo.task);
-
-		$('#showMain').on('click', moveTo.home);
-		
-		$('#showTaskList').on('click', moveTo.tasklist);
 		
 		/* 삭제버튼을 누르면 del 함수 호출 */
 		$(document).on('click', '.delete', function(){
@@ -262,21 +212,43 @@
 </script>
 </head>
 <body>
+			<jsp:include page="../includes/header.jsp"></jsp:include>
+			<!-- 보조메뉴바 시작 -->
+			
+			<div class="s-menu">
+				<div class="s-menu-title">
+					<p>프로젝트 <i class="bi bi-tags"></i>
+				</div>
+				<div class="s-list-item ">
+				    <input id="newbtn" type="button" value="새 업무 등록하기" onclick="self.location = '/projectdetail/registerTask';">
+				</div><br>
+				<div class="s-list-item ">
+					<a href="/projectdetail/home/${pj_num}">프로젝트 홈</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/calendar">캘린더</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/taskboard">업무보드</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/tasklist">업무리스트</a>
+				</div>
+				<br><br>
+				<div class="s-list-item ">
+					<a href="/project/main" style="color:gray"><i class="fa fa-thin fa-door-open"></i> 나가기</a>
+				</div>
 
-	<h1>프로젝트 ${pj_num } 스크럼 보드</h1>
+			</div>
+			
+			
+		<div class="s-container">
+			<br><br>
+			<h5>${project.pj_name }</h5>
+			<h2 id="c-title">업무 보드</h2>
 
-	<div id="projectMenu">
-		<input type="button" id="regTask" value="업무 등록하기"> 
-		<input type="button" id="backBtn" value="이 프로젝트 나가기"> 
-		<input type="button" id="showMain" value="프로젝트 홈으로 가기"> 
-		<input type="button" id="showTaskBoard" value="업무보드 보기">
-		<input type="button" id="showTaskList" value="업무리스트 보기">
-	</div>
-
-	<br>
-	<br>
-
-	<table class="table" style="width: 50%">
+<div class="contents_wrap">
+	<table class="table" style="width: 100%">
 		<thead class="table table-bordered">
 			<tr>
 				<th scope="col" style="width: 33.3%">TO DO</th>
@@ -295,10 +267,11 @@
 			</tr>
 		</tbody>
 	</table>
-
-
+</div>
+</div>
 
 </body>
+<jsp:include page="../includes/footer.jsp"></jsp:include>
 
 </html>
 
