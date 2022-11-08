@@ -66,7 +66,7 @@ import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
-@RequestMapping("/messanger/**")
+@RequestMapping("/messanger/*")
 @Log4j
 @AllArgsConstructor
 public class ChatController {
