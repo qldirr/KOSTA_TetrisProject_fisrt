@@ -20,13 +20,13 @@ body {
 .todo-title {
 	padding: 2rem;
 	text-align: center;
-	color: rosybrown;
+	color: #161E67;
 	font-size: 5rem;
 }
 
 .todo-box {
-	background-color: white;
-	border: 1px solid #ddd;
+	background-color: #FFF2CA;
+	border: 1px solid #161E67;
 }
 
 .todo-input-box {
@@ -169,5 +169,5 @@ button {
 p.info {
 	margin-top: 1.5rem;
 	text-align: center;
-	color: 	#800080;
+	color: 	#161E67;
 }

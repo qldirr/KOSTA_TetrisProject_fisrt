@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tetris.domain.CalendarVO;
+import org.tetris.security.domain.CustomUser;
 import org.tetris.service.CalendarService;
 
 
@@ -44,8 +46,8 @@ public class CalendarController {
 	@GetMapping(value="/listCal", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<HashMap<String, Object>>> getCalendarList() {
-
-		String e_id = "gdong123";
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername(); 
 		List<CalendarVO> list = service.getList(e_id);
 
 		log.info(list);
@@ -74,8 +76,8 @@ public class CalendarController {
 
 	@GetMapping("/register")
 	public void registerCalForm(Model model) {
-		String e_id = "gdong123";
-		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername(); 		
 		model.addAttribute("e_id",e_id);
 
 	}
@@ -119,4 +121,5 @@ public class CalendarController {
 		return "redirect: /calendar/list";
 	}
 
+	
 }
