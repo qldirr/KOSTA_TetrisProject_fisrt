@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ include file="../includes/header.jsp"%>
 
-<!DOCTYPE html>
-<html>
+
+<!doctype html>
+<html lang="en">
 <head>
+<!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,7 +19,6 @@
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
 <script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/resources/js/index.js"></script>
-<script src="https://kit.fontawesome.com/3c50ab6b24.js" crossorigin="anonymous"></script>
 <!-- Bootstrap CSS -->
 <link href="/resources/vender/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -105,7 +107,7 @@
 						alert('안녕히다녀오세요');
 						var e_id = getParam('e_id');
 						console.log(e_id);
-						
+
 						$.ajax({
 							url : 'outAction.do',
 							type : 'POST',
@@ -169,29 +171,40 @@
 	}
 </script>
 </head>
+
 <body onload="printClock()">
+	<div style="width: 100%; height: 1000;">
 
-	<!-- jsp 인클루드 사용-->
-	<jsp:include page="../includes/header.jsp"></jsp:include>
+		<!-- content -->
+		<div class="container-fluid">
+			<div class="col-xl-10 col-lg-9 ">
 
-	
-			<!-- 보조사이드바 -->
-			<div class="s-menu">
-				<div class="s-menu-title text-center">
-					<p>근태관리
-					<i class="bi bi-clock"></i>
-					<h5>반갑습니다 ${hrVO.e_name }님</h5>
-				</div>
-				<div class="s-list-item text-center">
-				    <div>
+				<div class="row">
+
+					<!-- 좌측바부분 -->
+					<div>
+						<div>
+							<div>
+								<h3>개인근태조회페이지</h3>
+								<h5>어서오세요 ${hrVO.e_name }님</h5>
+								<input type="text" id="datePicker">
+								<ul class="list-unstyled">
+									<li>근태입력</li>
+									<li><a href="/attendance/personal?e_id=${hrVO.e_id }">개인근태기록조회</a></li>
+									<li><a href="/attendance/vacation?e_id=${hrVO.e_id }" target="_blank">개인연차사용현황</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<!-- 현재시간/출석시간/퇴근시간 -->
+						<div>
 							<!--  -->
 							<div id="date"></div>
 							<div
 								style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
 								id="clock"></div>
-				    		<!-- <input id="newbtn" type="button" value="새 파일" onclick=""> -->
 							<!-- 출근시간 -->
-							<dl class="my-3 ">
+							<dl>
 								<dt>출근시간</dt>
 								<dd id="startTime">
 									<fmt:formatDate value="${hrVO.hr_date }"
@@ -199,7 +212,7 @@
 								</dd>
 							</dl>
 							<!-- 퇴근시간 -->
-							<dl class="mb-3">
+							<dl>
 								<dt>퇴근시간</dt>
 								<dd id="endTime">
 									<fmt:formatDate value="${hrVO.hr_leave }"
@@ -208,38 +221,96 @@
 							</dl>
 							<!-- 누적근무시간 -->
 							<dl>
-								<!-- <dt>누적근무시간</dt> -->
+								<dt>누적근무시간</dt>
 								<dd id=""></dd>
 							</dl>
 							<!-- 출퇴근버튼 -->
-							<div class="my-5">
-								<i id="startD" class="fa-solid fa-circle-play fa-3x"></i>
-								<i id="endD" class="fa-solid fa-circle-stop fa-3x"></i>
-								<i id="outD" class="fa-solid fa-circle-pause fa-3x"></i>
+							<div>
+								<button id="startD">출근하기</button>
+								<button id="endD">퇴근하기</button>
+								<button id="outD">외근</button>
 							</div>
 						</div>
-				</div>
-				<div class="s-list-item ">
-					<a href='/attendance/personal?e_id=<c:out value="${hrVO.e_id}"/>' target="_blank">개인근태기록조회</a>
-				</div>
-			</div>
-			<!-- 보조사이드바 끝-->
+					</div>
+					<!-- 좌측바부분의 끝 -->
 
-			<!-- 내용 시작 -->
-			<div class="s-container mt-3">
-				<h2 id="c-title" class="mt-3">소속부서: ${hrVO.d_name }</h2>
-				<div class="my-4">
+					<!-- 상단부분 -->
+					<div></div>
+
+					<br> <br>
+					<!-- 정보출력부분 -->
+					<div>
+						<h5 class="my-2">소속부서: ${hrVO.d_name }</h5>
+
+						<!-- 근태누계 -->
+						<div class="panel panel-default my-5">
+							<div class="panel-heading"><h2>근태누계</h2></div>
+							<div class="panel-body">
+								<table class="table table-hover">
+									<thead>
+										<tr class="text-center">
+											<th>사원번호</th>
+											<th>이름</th>
+											<th>부서</th>
+											<th>정상출근</th>
+											<th>지각</th>
+											<th>결근</th>
+											<th>휴가</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="text-center">
+											<td>${hrVO.e_num }</td>
+											<td>${hrVO.e_name }</td>
+											<td>${hrVO.d_name }</td>
+											<td>${hrVO2.working_day }</td>
+											<td>${hrVO2.late_day }</td>
+											<td>${hrVO2.skip_day }</td>
+											<td>${hrVA.e_totalvac-hrVA.e_usevac}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- 누계정보끝 -->
+
+						<!-- 연차누계 -->
+						<div class="panel panel-default my-5">
+							<div class="panel-heading">연차현황</div>
+							<div class="panel-body">
+								<table class="table table-hover">
+									<thead>
+										<tr class="text-center">
+											<th>Total</th>
+											<th>사용일수</th>
+											<th>잔여일수</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="text-center">
+											<td>${hrVA.e_totalvac }</td>
+											<td>${hrVA.e_usevac }</td>
+											<td>${hrVA.e_totalvac-hrVA.e_usevac}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- 누계정보끝 -->
+						
+						<!-- 테이블 -->
+						<div>
 							<!-- 
 								<div>선택날짜</div>
 							 -->
-							<table class="table table-striped w-auto"
+							<table class="table table-striped mt-8"
 								style="text-align: center; border: 1px solid #dddddd">
 								<thead>
-									<tr class="something">
-										<th class="col-md-2" style="background-color: #eeeeee; text-align: center;">일자</th>
-										<th class="col-md-" style="background-color: #eeeeee; text-align: center;">사원번호</th>
-										<th class="col-md-2" style="background-color: #eeeeee; text-align: center;">이름</th>
-										<th class="col-md-2" style="background-color: #eeeeee; text-align: center;">부서</th>
+									<tr>
+										<th style="background-color: #eeeeee; text-align: center;">일자</th>
+										<th style="background-color: #eeeeee; text-align: center;">사원번호</th>
+										<th style="background-color: #eeeeee; text-align: center;">이름</th>
+										<th style="background-color: #eeeeee; text-align: center;">부서</th>
 										<th style="background-color: #eeeeee; text-align: center;">출근시간</th>
 										<th style="background-color: #eeeeee; text-align: center;">퇴근시간</th>
 										<th style="background-color: #eeeeee; text-align: center;">근무상태</th>
@@ -266,23 +337,49 @@
 									</c:forEach>
 								</tbody>
 							</table>
-						</div><!-- 테이블 끝 -->
-			</div>
 
-			<!-- 내용 끝 -->
-			<input type="hidden" id="timecheck"
+
+						</div>
+						<!-- 테이블 끝 -->
+
+						<!-- <div>미출근자/휴가자
+							<h7>미출근자/휴가자</h7>
+							<table>
+								<thead>
+									<tr>
+										<td>미출근자</td>
+										<td>휴가자</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table> 
+						</div><!-- 오늘 미출근자/휴가자끝 -->
+					</div>
+					<input type="hidden" id="timecheck"
 						value="<fmt:formatDate
 												value="${hrVO.hr_date }" pattern="HH:mm:ss" />">
 					<!-- 정보출력부분의 끝 -->
-					<script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+	<!-- Optional JavaScript; choose one of the two! -->
+
+	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+	<script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
 	<script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="/resources/js/index.js"></script>
-		<!-- 전체 wrapper 끝 -->
-		<jsp:include page="../includes/footer.jsp"></jsp:include>
-	
+
+	<%@ include file="../includes/footer.jsp"%>
 </body>
 
 </html>
-
-
-

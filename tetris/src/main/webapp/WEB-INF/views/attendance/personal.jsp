@@ -1,16 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../includes/header.jsp"%>
 
-
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
+<meta charset="UTF-8">
+<title>TETRIS Groupware</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet"
@@ -19,14 +17,13 @@
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
 <script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/resources/js/index.js"></script>
+<script src="https://kit.fontawesome.com/3c50ab6b24.js" crossorigin="anonymous"></script>
 <!-- Bootstrap CSS -->
 <link href="/resources/vender/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 <link href="/resources/css/index.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-
-<title>TETRIS Groupware</title>
 <script>
 	$(document).ready(
 			function() {
@@ -171,40 +168,29 @@
 	}
 </script>
 </head>
-
 <body onload="printClock()">
-	<div style="width: 100%; height: 1000;">
 
-		<!-- content -->
-		<div class="container-fluid">
-			<div class="col-xl-10 col-lg-9 ">
+	<!-- jsp 인클루드 사용-->
+	<jsp:include page="../includes/header.jsp"></jsp:include>
 
-				<div class="row">
-
-					<!-- 좌측바부분 -->
-					<div>
-						<div>
-							<div>
-								<h3>개인근태조회페이지</h3>
-								<h5>어서오세요 ${hrVO.e_name }님</h5>
-								<input type="text" id="datePicker">
-								<ul class="list-unstyled">
-									<li>근태입력</li>
-									<li><a href="/attendance/personal?e_id=${hrVO.e_id }">개인근태기록조회</a></li>
-									<li><a href="/attendance/vacation?e_id=${hrVO.e_id }" target="_blank">개인연차사용현황</a></li>
-								</ul>
-							</div>
-						</div>
-
-						<!-- 현재시간/출석시간/퇴근시간 -->
-						<div>
+	
+			<!-- 보조사이드바 -->
+			<div class="s-menu">
+				<div class="s-menu-title text-center">
+					<p>근태관리
+					<i class="bi bi-clock"></i>
+					<h5>반갑습니다 ${hrVO.e_name }님</h5>
+				</div>
+				<div class="s-list-item text-center">
+				    <div>
 							<!--  -->
 							<div id="date"></div>
 							<div
 								style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
 								id="clock"></div>
+				    		<!-- <input id="newbtn" type="button" value="새 파일" onclick=""> -->
 							<!-- 출근시간 -->
-							<dl>
+							<dl class="my-3 ">
 								<dt>출근시간</dt>
 								<dd id="startTime">
 									<fmt:formatDate value="${hrVO.hr_date }"
@@ -212,7 +198,7 @@
 								</dd>
 							</dl>
 							<!-- 퇴근시간 -->
-							<dl>
+							<dl class="mb-3">
 								<dt>퇴근시간</dt>
 								<dd id="endTime">
 									<fmt:formatDate value="${hrVO.hr_leave }"
@@ -221,28 +207,27 @@
 							</dl>
 							<!-- 누적근무시간 -->
 							<dl>
-								<dt>누적근무시간</dt>
+								<!-- <dt>누적근무시간</dt> -->
 								<dd id=""></dd>
 							</dl>
 							<!-- 출퇴근버튼 -->
-							<div>
-								<button id="startD">출근하기</button>
-								<button id="endD">퇴근하기</button>
-								<button id="outD">외근</button>
+							<div class="my-5">
+								<i id="startD" class="fa-solid fa-circle-play fa-3x"></i>
+								<i id="endD" class="fa-solid fa-circle-stop fa-3x"></i>
+								<i id="outD" class="fa-solid fa-circle-pause fa-3x"></i>
 							</div>
 						</div>
-					</div>
-					<!-- 좌측바부분의 끝 -->
+				</div>
+				<%-- <div class="s-list-item ">
+					<a href='/attendance/personal?e_id=<c:out value="${hrVO.e_id}"/>' target="_blank">개인근태기록조회</a>
+				</div> --%>
+			</div>
+			<!-- 보조사이드바 끝-->
 
-					<!-- 상단부분 -->
-					<div></div>
-
-					<br> <br>
-					<!-- 정보출력부분 -->
-					<div>
-						<h5 class="my-2">소속부서: ${hrVO.d_name }</h5>
-
-						<!-- 근태누계 -->
+			<!-- 내용 시작 -->
+			<div class="s-container">
+				<h2 id="c-title">소속부서: ${hrVO.d_name }제목</h2>
+				<!-- 근태누계 -->
 						<div class="panel panel-default my-5">
 							<div class="panel-heading"><h2>근태누계</h2></div>
 							<div class="panel-body">
@@ -273,7 +258,6 @@
 							</div>
 						</div>
 						<!-- 누계정보끝 -->
-
 						<!-- 연차누계 -->
 						<div class="panel panel-default my-5">
 							<div class="panel-heading">연차현황</div>
@@ -341,45 +325,20 @@
 
 						</div>
 						<!-- 테이블 끝 -->
+						
+			</div>
 
-						<!-- <div>미출근자/휴가자
-							<h7>미출근자/휴가자</h7>
-							<table>
-								<thead>
-									<tr>
-										<td>미출근자</td>
-										<td>휴가자</td>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td></td>
-										<td></td>
-									</tr>
-								</tbody>
-							</table> 
-						</div><!-- 오늘 미출근자/휴가자끝 -->
-					</div>
-					<input type="hidden" id="timecheck"
+			<!-- 내용 끝 -->
+<input type="hidden" id="timecheck"
 						value="<fmt:formatDate
 												value="${hrVO.hr_date }" pattern="HH:mm:ss" />">
 					<!-- 정보출력부분의 끝 -->
-
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-
-	<!-- Optional JavaScript; choose one of the two! -->
-
-	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-	<script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
-	<script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="/resources/js/index.js"></script>
-
-	<%@ include file="../includes/footer.jsp"%>
+		<!-- 전체 wrapper 끝 -->
+		<jsp:include page="../includes/footer.jsp"></jsp:include>
+	
 </body>
 
 </html>
+
+
+
