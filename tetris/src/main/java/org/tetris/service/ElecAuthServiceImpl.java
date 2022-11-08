@@ -100,5 +100,22 @@ public class ElecAuthServiceImpl implements ElecAuthService {
 		mapper.deleteElecAuth(el_num);
 	}
 
+	@Override
+	public List<ElecAuthVO> sendList(String e_id) {
+		return mapper.sendList(e_id);
+
+	}
+
+	@Override
+	public List<ElecAuthVO> getList(String e_id) {
+		return mapper.getList(e_id);
+	}
+
+	@Override
+	public int countListUncheckedList(String e_id) {
+		return mapper.countListUncheckedList(e_id);
+	}
+
+	
 
 }

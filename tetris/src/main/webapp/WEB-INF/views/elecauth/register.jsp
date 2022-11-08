@@ -9,7 +9,21 @@
 <link rel="stylesheet" href="/resources/vender/bootstrap/css/bootstrap.min.css" >
 <link rel="stylesheet" href="/resources/css/bootstrap-datepicker3.css" />
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
-<script src="/resources/lib/bootstrap-datepicker.js" type="text/javascript"></script>
+<script src="/resources/lib/bootstrap-datepicker.js" type="text/javascript" defer></script>
+
+<style type="text/css">
+
+
+/* .docForm{
+	height: 600px;
+	overflow-y: scroll;
+}
+
+.docForm::-webkit-scrollbar {
+    display: none; */
+}
+
+</style>
 <script type="text/javascript">
 
 
@@ -95,11 +109,13 @@ $(function(){
 	
 	$('#draft').hide();
 	$('#vacation').hide();
+	$('.elecLine').hide();
 
 	$('.docType').on('change', function(){
 		
 		var docType = $(this).val();
 		showForm(checkForm(docType));
+		$('.elecLine').show();
 		
 	})
 	
@@ -128,7 +144,7 @@ $(function(){
 			el_name = $('#draftTitle').val();
 			el_contents = $('#draftText').val();
 			el_regdate = $('#draftRegDate').text();
-			e_id = $('#draftWriter').text();
+			e_id = '${userId}';
 			
 			docType = "일반기안";
 			var document = {
@@ -151,7 +167,7 @@ $(function(){
 			el_regdate = $('#vacationRegDate').text();
 			el_startdate = $('#vacationStart').val();
 			el_enddate = $('#vacationEnd').val();
-			e_id = $('#vacationWriter').text();
+			e_id = '${userId}';
 			
 			docType = "연차신청";
 			var document = {
@@ -177,83 +193,54 @@ $(function(){
 </script>
 </head>
 <body>
+	<jsp:include page="../includes/header.jsp"></jsp:include>
+			<!-- 보조메뉴바 시작 -->
+			
+			<div class="s-menu">
+				<div class="s-menu-title">
+					<p>전자결재 <i class="bi bi-tags"></i>
+				</div>
+				<div class="s-list-item ">
+				    <input id="newbtn" type="button" value="새 문서 작성" onclick="self.location = '/elecauth/register';">
+				</div><br>
+				<div class="s-list-item ">
+					<a href="/elecauth/writtenList">상신문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/uncheckedList">결재대기문서</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/disapprovedList">반려문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/sendList">발신문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/getList">수신문서함</a>
+				</div>
+			</div>
+			
+			
+		<div class="s-container"><br>
+			<h2 id="c-title">새 문서 작성하기</h2><br>
 
-<h1>새 문서 작성하기</h1>
-
-<select id="docType" class="docType" >
-	<option value="none"> 문서 선택</option>
-	<option value="일반기안"> 일반기안 </option>
-	<option value="연차신청"> 연차신청 </option>
-	<option value="지출결의"> 지출결의 </option>
-	<option value="구매신청"> 구매신청 </option>
-	<option value="출장보고"> 출장보고 </option>
-</select>
+				<select id="docType" class="docType" >
+					<option value="none"> 문서 선택</option>
+					<option value="일반기안"> 일반기안 </option>
+					<option value="연차신청"> 연차신청 </option>
+					<option value="지출결의"> 지출결의 </option>
+					<option value="구매신청"> 구매신청 </option>
+					<option value="출장보고"> 출장보고 </option>
+				</select><br>
 
 <div id="docContents">
 
 <div id="draft" class="docForm">
 <%@ include file="draftForm.jsp" %> 
-
-<div class="send">
-	<input type="button" class="regLineBtn" value="결재선 지정">
-	<table>
-		<tr>
-			<td>1</td>
-			<td>2</td>
-			<td>3</td>
-			<td>4</td>
-		</tr>
-		<tr>
-			<td>
-				<input type="text" class="first" readonly="readonly">
-			</td>
-			<td>
-				<input type="text" class="second" readonly="readonly">
-			</td>
-			<td>
-				<input type="text" class="third" readonly="readonly">
-			</td>
-			<td>
-				<input type="text" class="fourth" readonly="readonly">
-			</td>
-		</tr>
-	</table>
-	<input type="button" class="sendBtn" value="상신">
-</div>
-
 </div>
 
 <div id="vacation" class="docForm">
 <%@ include file="vacationForm.jsp" %>
-
-<div class="send">
-	<input type="button" class="regLineBtn" value="결재선 지정">
-	<table>
-		<tr>
-			<td>1</td>
-			<td>2</td>
-			<td>3</td>
-			<td>4</td>
-		</tr>
-		<tr>
-			<td>
-				<input type="text" class="first" readonly="readonly">
-			</td>
-			<td>
-				<input type="text" class="second" readonly="readonly">
-			</td>
-			<td>
-				<input type="text" class="third" readonly="readonly">
-			</td>
-			<td>
-				<input type="text" class="fourth" readonly="readonly">
-			</td>
-		</tr>
-	</table>
-	<input type="button" class="sendBtn" value="상신">
-</div>
- 
-</div>
 </div>
 <%-- <div id="draft">
 <%@ include file="draftForm.jsp" %> 
@@ -264,12 +251,18 @@ $(function(){
 <div id="draft">
 <%@ include file="draftForm.jsp" %> 
 </div> --%>
+</div>
 
-
-<div></div>
-
-
-
+<div class="elecLine" style="color: #161E67;">
+<input type="button" class="regLineBtn" value="결재선 지정" style="background-color: #F5F5F5; color: #161E67; border-radius: 5px; border-style: none; padding: 5px;">
+	&nbsp;❶&nbsp;<input type="text" class="first" readonly="readonly" style="width:150px"> 
+	&nbsp;❷&nbsp;<input type="text" class="second" readonly="readonly" style="width:150px"> 
+	&nbsp;❸&nbsp;<input type="text" class="third" readonly="readonly" style="width:150px"> 
+	&nbsp;❹&nbsp;<input type="text" class="fourth" readonly="readonly" style="width:150px"> 
+<br><br>
+	<input type="button" class="sendBtn" value="상신" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none; padding: 5px; float: right; margin-right:50px;">
+</div>
+</div>
 
 </body>
 </html>

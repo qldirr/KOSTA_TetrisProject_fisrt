@@ -1,5 +1,6 @@
 package org.tetris.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.tetris.domain.project.BoardAttachVO;
@@ -10,8 +11,9 @@ import org.tetris.domain.user.UserVO;
 
 public interface ProjectBoardService {
 
-	public List<UserVO> getProjectInfo(Long pl_num);
-	public List<ProjectBoardVO> getListProjectBoard(Long pj_num);
+	public List<UserVO> getProjectInfo(String pl_num);
+	public ProjectVO getProject(Long pj_num);
+	public List<ProjectBoardVO> getListProjectBoard(HashMap<String, Object> map);
 	public void registerProjectBoard(ProjectBoardVO board);
 	public void registerReply(BoardReplyVO reply);
 	public List<BoardReplyVO> getListBoardReply(Long pb_num, Long pj_num);

@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="/resources/fullcalendar/main.css" />
+<script src="https://kit.fontawesome.com/7264476d39.js" crossorigin="anonymous"></script>
 <script src="/resources/fullcalendar/main.js" type="text/javascript"></script>
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"
 	type="text/javascript"></script>
@@ -33,7 +34,7 @@
 				var calendar = new FullCalendar.Calendar(calendarEl, {
 
 					initialView : 'dayGridMonth',
-					contentHeight : 600,//캘린더 크기 설정
+					contentHeight : 500,//캘린더 크기 설정
 					editable : true,//수정 여부
 					events : calArr
 				});
@@ -44,70 +45,49 @@
 			
 		
 	});
-	
-	
-	var moveTo = (function(){
-		
-		function main(){
-			self.location = "/project/main";
-		}
-		
-		function registerCal(){
-			self.location = "/projectdetail/registerCal";
-		}
-		
-		function calendar(){
-			self.location = "/projectdetail/calendar";
-		}
-		
-		function task(){
-			self.location = "/projectdetail/taskboard";
-		}
-		
-		function home(){
-			
-			var pj_num = ${pj_num};
-			self.location = "/projectdetail/home/" + pj_num;
-		}
-		
-		
-		return {
-			main : main,
-			registerCal : registerCal,
-			calendar : calendar,
-			task : task,
-			home : home
-			
-		}
-		
-	})();
-	
 
-	$(function() {
-		
-		$('#regCalBtn').on('click', moveTo.registerCal);
-		
-		$('#backBtn').on('click', moveTo.main);
-		
-		$('#showTaskBoard').on('click', moveTo.task);
-		
-		$('#showMain').on('click', moveTo.home);
-
-	})
 	
 	
 </script>
 
 </head>
 <body>
+	<jsp:include page="../includes/header.jsp"></jsp:include>
+			<!-- 보조메뉴바 시작 -->
+				<div class="s-menu">
+				<div class="s-menu-title">
+					<p>프로젝트 <i class="bi bi-tags"></i>
+				</div>
+				<div class="s-list-item ">
+				    <input id="newbtn" type="button" value="새 일정 등록하기" onclick="self.location = '/projectdetail/registerCal';">
+				</div><br>
+				<div class="s-list-item ">
+					<a href="/projectdetail/home/${pj_num}">프로젝트 홈</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/calendar">캘린더</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/taskboard">업무보드</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/tasklist">업무리스트</a>
+				</div>
+				<br><br>
+				<div class="s-list-item ">
+					<a href="/project/main" style="color:gray"><i class="fa fa-thin fa-door-open"></i> 나가기</a>
+				</div>
 
-	<h1>프로젝트 ${pj_num } 캘린더</h1>
-<div id="projectMenu">
-	<input type="button" id="regCalBtn" value="새 일정 등록하기">
-	<input type="button" id="backBtn" value="이 프로젝트 나가기">
-	<input type="button" id="showMain" value="프로젝트 홈으로 가기">
-	<input type="button" id="showTaskBoard" value="업무보드 보기">
-</div>
+			</div>
+<div class="s-container">
+			<br><br>
+			<h5>${project.pj_name }</h5>
+			<h2 id="c-title">캘린더</h2>
+			<div class="contents_wrap">
+
 	<div id='calendar'></div>
+	</div>
+	</div>
+<jsp:include page="../includes/footer.jsp"></jsp:include>
 </body>
 </html>

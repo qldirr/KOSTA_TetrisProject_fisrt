@@ -11,7 +11,7 @@ public interface ProjectMapper {
 
 	public void insertProject(ProjectVO project);
 	public void insertProjectMember(@Param("pl_num") String pl_num, @Param("e_id") String e_id);
-	public List<ProjectVO> getListProject(UserVO user);
+	public List<ProjectVO> getListProject(@Param("e_id") String e_id);
 	public List<DepartmentVO> getListDept();
 	public List<UserVO> getListEmployees();
 	public void insertProjectList(ProjectVO project);

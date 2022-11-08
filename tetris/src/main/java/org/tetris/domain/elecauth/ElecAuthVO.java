@@ -20,6 +20,7 @@ public class ElecAuthVO {
 	private String el_startdate;
 	private String el_enddate;
 	private String e_id;
+	private String e_name;
 	private String dm_num;
 
 }

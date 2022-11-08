@@ -29,12 +29,12 @@
 	</select>
 	
 	<select id="getListElecAuth" parameterType="String" resultType="org.tetris.domain.elecauth.ElecAuthVO">
-		select * from elecauth where e_id = #{e_id} order by el_regdate desc
+		select * from elecauth_v where e_id = #{e_id} and el_status in ('결재전', '결재진행중') order by el_num desc
 	</select>
 	
 	
 	<select id="readElecAuth" resultType="org.tetris.domain.elecauth.ElecAuthVO">
-		select * from elecauth where el_num = #{el_num}
+		select * from  elecauth_v where el_num = #{el_num}
 	</select>
 	
 	<select id="readRecentDoc" resultType="long">
@@ -44,7 +44,15 @@
 	</select>
 	
 	<select id="getListUncheckedList" resultType="org.tetris.domain.elecauth.ElecAuthVO">
-		select * from elecauth where el_num in (
+		select * from  elecauth_v where el_num in (
+			select l_num from 
+				(select l_num, l_status, lag(l_status, 1) over (partition by l_num order by l_seq asc) beforestatus, l_checkdate, l_seq, e_id from elecline)
+		where (beforestatus = '결재완료' or beforestatus is null) and l_status = '결재전' and e_id = #{e_id})
+	</select>
+	
+	
+	<select id="countListUncheckedList" resultType="int">
+		select count(*) from  elecauth_v where el_num in (
 			select l_num from 
 				(select l_num, l_status, lag(l_status, 1) over (partition by l_num order by l_seq asc) beforestatus, l_checkdate, l_seq, e_id from elecline)
 		where (beforestatus = '결재완료' or beforestatus is null) and l_status = '결재전' and e_id = #{e_id})
@@ -82,7 +90,40 @@
 	<delete id="deleteElecAuth">
 		delete from elecauth where el_num = #{el_num}
 	</delete>
-	
-	
+
+
+	<!-- 발신함 : 발신한 모든 파일  -->	
+	<select id="sendList" parameterType="String" resultType="org.tetris.domain.elecauth.ElecAuthVO">
+		select * from elecauth_v where e_id = #{e_id} order by el_regdate desc
+	</select>	
+
+	<!-- 수신함 : 결재 완료 상태인 수신 문서  
+	<select id="getList" parameterType="String" resultType="org.tetris.domain.elecauth.ElecAuthVO">
+		select el.el_num, el.el_name, el.el_contents, el.e_id, el.el_status, el.el_regdate, el.el_enddate
+   			from elecauth el join elecline l on el.l_num = l.l_num
+   				where el_status=('결재완료') 
+   			and l.e_id = #{e_id}
+	</select>	-->
+
+	<!-- 수신함 : 결재 완료 상태인 수신 문서  -->
+	<select id="getList" parameterType="String" resultType="org.tetris.domain.elecauth.ElecAuthVO">
+		select *
+   			from elecauth_v el join elecline l on el.l_num = l.l_num 
+   			where el_status=('결재완료') 
+   			and l.e_id = #{e_id} order by el_regdate desc
+	</select>	
+
+
+
+
 
 </mapper>
+
+
+
+
+
+
+
+
+

@@ -23,5 +23,7 @@ public interface ElecAuthMapper {
 	public void resetElecLine(String l_num);
 	public Long countElecAuthStatus(String l_num);
 	public void deleteElecAuth(Long el_num);
-	
+	public List<ElecAuthVO> sendList(String e_id);
+	public List<ElecAuthVO>getList(String e_id);
+	public int countListUncheckedList(String e_id);
 }

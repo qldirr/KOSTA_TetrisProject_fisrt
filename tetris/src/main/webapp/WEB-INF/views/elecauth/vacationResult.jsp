@@ -10,6 +10,27 @@
 
 <link rel="stylesheet" href="/resources/vender/bootstrap/css/bootstrap.min.css" >
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
+<style type="text/css">
+
+.signDoc{
+
+	background-color: #E0E0E0; 
+	color: #161E67; 
+	border-radius: 5px; 
+	border-style: none; 
+	padding: 5px; 
+	float: right; 
+	
+}
+
+.signDoc:hover{
+
+	background-color: #161E67; 
+	color: #E0E0E0; 
+	
+}
+
+</style>
 <script type="text/javascript">
 
 
@@ -44,15 +65,15 @@ $(function(){
 		$('#signVacation').show();
 	}
 	
+	
 	$('.signDoc').on('click', function(){
 		
 		var status = $(this).val();
 		status = (status == '승인')? '결재완료' : '반려';
 		
-		var e_id = "gdong123";
+		var e_id = '${userId}';
 		var l_num = '${auth.el_num }';
 		
-		alert(l_num)
 		
 		var line = {
 				"l_num" : l_num,
@@ -72,6 +93,37 @@ $(function(){
 
 </head>
 <body>
+
+<jsp:include page="../includes/header.jsp"></jsp:include>
+			<!-- 보조메뉴바 시작 -->
+			
+			<div class="s-menu">
+				<div class="s-menu-title">
+					<p>전자결재 <i class="bi bi-tags"></i>
+				</div>
+				<div class="s-list-item ">
+				    <input id="newbtn" type="button" value="새 문서 작성" onclick="self.location = '/elecauth/register';">
+				</div><br>
+				<div class="s-list-item ">
+					<a href="/elecauth/writtenList">상신문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/uncheckedList">결재대기문서</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/disapprovedList">반려문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/sendList">발신문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/getList">수신문서함</a>
+				</div>
+			</div>
+			
+			
+		<div class="s-container">
+			<h2 id="c-title">내 작성 문서</h2><br>
 
 <table class="__se_tbl" style="width: 800px; border-collapse: collapse !important; color: black; background: white; border: 0px solid black; font-size: 12px; font-family: malgun gothic,dotum,arial,tahoma;"><!-- Header --> 
  
@@ -93,7 +145,7 @@ $(function(){
 			</td>
 			<td style="width: 200px; height: 22px; vertical-align: middle; border: 1px solid black; text-align: left; padding: 3px !important;">
 				<span unselectable="on" contenteditable="false" class="comp_wrap" data-cid="0" data-dsl="{{label:draftUser}}" data-wrapper="" style="" data-value="" data-autotype=""><span class="comp_item">
-					<div id="vacationWriter" class="docWriter">gdong123</div>
+					<div id="vacationWriter" class="docWriter">${auth.e_name}</div>
 				</span><span contenteditable="false" class="comp_active" style="display:none;"> <span class="Active_dot1"></span><span class="Active_dot2"></span> <span class="Active_dot3"></span><span class="Active_dot4"></span> </span> <span contenteditable="false" class="comp_hover" data-content-protect-cover="true" data-origin="0"> <a contenteditable="false" class="ic_prototype ic_prototype_trash" data-content-protect-cover="true" data-component-delete-button="true"></a> </span> </span> 
 			</td>
 		</tr>
@@ -131,28 +183,28 @@ $(function(){
 </table>
 
 </td>
-			<td style="width: 500px; text-align: right; padding: 0px!important; border: 0!important; vertical-align: top !important" class="dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
+			<td style="width: 500px; text-align: center; padding: 0px!important; border: 0!important; vertical-align: top !important" class="dext_table_border_t dext_table_border_r dext_table_border_b dext_table_border_l">
 				<!-- 결재선 기본값으로 신청 1명, 승인 7명으로 설정--> 
     <span unselectable="on" contenteditable="false" class="comp_wrap" data-wrapper=""><span class="sign_type1_inline" data-group-seq="0" data-group-name="신청" data-group-max-count="1" data-group-type="type1" data-is-reception=""><span class="sign_tit_wrap"><span class="sign_tit">
-     <div id="vacationElecline">
+     <div id="vacationElecline" style="float: right">
 					<table border="1px solid">
 						<tr class="linePosition">
 							<c:forEach items="${line}" var="position">
-							<td>${position.e_position}</td>
+							<td style="width: 60px;">${position.e_position}</td>
 							</c:forEach>
 						</tr>
-						<tr class="lineName">
+						<tr class="lineName" style="height:50px;">
 							<c:forEach items="${line}" var="id">
 							<td> ${id.e_name}</td>
 							</c:forEach>
 						</tr>
 						<tr class="lineStatus">
 							<c:forEach items="${line}" var="status">
-							<td>${status.l_status}</td>
+							<td><strong>${status.l_status}</strong></td>
 							</c:forEach>
 						</tr>
 					</table>
-				</div>
+		</div>
     </span></span><span class="sign_member_wrap"><span class="sign_member"><span class="sign_rank_wrap"><span class="sign_rank">&nbsp;</span></span><span class="sign_wrap">&nbsp;</span><span class="sign_date_wrap"><span class="sign_date">&nbsp;</span></span></span></span></span><span contenteditable="false" class="comp_active" style="display:none;"> <span class="Active_dot1"></span><span class="Active_dot2"></span> <span class="Active_dot3"></span><span class="Active_dot4"></span> </span><span contenteditable="false" class="comp_hover" data-content-protect-cover="true"> <a contenteditable="false" class="ic_prototype ic_prototype_trash" data-content-protect-cover="true" data-component-delete-button="true"></a> </span></span>
 			</td>
 		</tr>
@@ -201,14 +253,14 @@ $(function(){
 		</tr>
 	</tbody>
 </table>
+
 <br>
 
 <div id="signVacation">
-	<input type="button" class="signDoc" id="approvalVac" value="승인">
-	<input type="button" class="signDoc" id="disapprovalVac" value="반려">
+	<input type="button" class="signDoc" id="approvalDraft" value="승인" style="margin-right:50px;">
+	<input type="button" class="signDoc" id="disapprovalDraft" value="반려" style="margin-right:10px;"><br>
 </div>
 
-<input type="button" id="main" value="메인으로 가기">
-
+</div>
 </body>
 </html>

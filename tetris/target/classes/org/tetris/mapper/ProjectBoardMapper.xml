@@ -4,23 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tetris.mapper.ProjectBoardMapper">
 
-	<select id="readProjectInfo" parameterType="long" resultType="org.tetris.domain.user.UserVO">
+	<select id="readProjectInfo" parameterType="String" resultType="org.tetris.domain.user.UserVO">
 		select ev.e_id, ev.e_name, ev.e_position, ev.d_name
 			from projectlist pl join v_employee ev
 			on pl.e_id = ev.e_id
 		where pl_num = #{pj_num}
 	</select>
 	
-	<select id="getListProjectBoard" parameterType="long" resultType="org.tetris.domain.project.ProjectBoardVO">
-		select * from pboard where pj_num = #{pj_num} order by pb_num desc
+	<select id="readProject" resultType="org.tetris.domain.project.ProjectVO">
+		select * from project where pj_num = #{pj_num}
 	</select>
 	
-<!-- 	
-	<select id="getListProjectBoard" parameterType="org.tetris.domain.project.ProjectVO" resultType="org.tetris.domain.project.ProjectBoardVO">
+	<select id="getListProjectBoard" parameterType="hashmap" resultType="org.tetris.domain.project.ProjectBoardVO">
 		select * from pboard
 		<where>
-			<if test='searchKey != null and searchKey neq ""'>
-				( pb_contents like '%'||#{searchKey}||'%' )
+			<if test='searchkey != null and searchkey neq ""'>
+				( pb_contents like '%'||#{searchkey}||'%' )
 			</if>
 			<trim prefix="and">
 				pj_num = #{pj_num} 
@@ -28,7 +27,8 @@
 		</where>
 		order by pb_num desc
 	</select>
-	 -->
+	
+	
 	<insert id="insertProjectBoard" parameterType="org.tetris.domain.project.ProjectBoardVO">
 	
 		<selectKey keyProperty="pb_num" order="BEFORE" resultType="long">

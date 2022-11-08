@@ -8,6 +8,7 @@
 
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/resources/vender/bootstrap/css/bootstrap.min.css">
+<script src="https://kit.fontawesome.com/7264476d39.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
 
 var taskService = (function(){
@@ -87,10 +88,43 @@ $(function(){
 
 </head>
 <body>
+		<jsp:include page="../includes/header.jsp"></jsp:include>
+			<!-- 보조메뉴바 시작 -->
+			
+			<div class="s-menu">
+				<div class="s-menu-title">
+					<p>프로젝트 <i class="bi bi-tags"></i>
+				</div>
+				<div class="s-list-item ">
+				    <input id="newbtn" type="button" value="새 업무 등록하기" onclick="self.location = '/projectdetail/registerTask';">
+				</div><br>
+				<div class="s-list-item ">
+					<a href="/projectdetail/home/${pj_num}">프로젝트 홈</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/calendar">캘린더</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/taskboard">업무보드</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/tasklist">업무리스트</a>
+				</div>
+				<br><br>
+				<div class="s-list-item ">
+					<a href="/project/main" style="color:gray"><i class="fa fa-thin fa-door-open"></i> 나가기</a>
+				</div>
 
-<h1>${pj_num } 업무리스트</h1>
+			</div>
+			
+			
+		<div class="s-container">
+			<br><br>
+			<h5>${project.pj_name }</h5>
+			<h2 id="c-title">업무 리스트</h2>
+			<div class="contents_wrap">
 
-<table class="table table-bordered table-sm" style="width: 70%">
+<table class="table table-bordered table-sm" style="width: 100%">
   <thead>
     <tr>
       <th scope="col" style="width: 20%">업무명</th>
@@ -104,7 +138,12 @@ $(function(){
   </thead>
   <tbody class="list">
   </tbody>
+  
 </table>
 
+
+  </div>
+  </div>
+<jsp:include page="../includes/footer.jsp"></jsp:include>
 </body>
 </html>

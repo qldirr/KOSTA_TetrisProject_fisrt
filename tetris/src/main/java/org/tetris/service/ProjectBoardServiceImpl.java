@@ -1,5 +1,6 @@
 package org.tetris.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,19 @@ public class ProjectBoardServiceImpl implements ProjectBoardService {
 	private BoardAttachMapper attachMapper;
 	
 	@Override
-	public List<UserVO> getProjectInfo(Long pl_num) {
+	public List<UserVO> getProjectInfo(String pl_num) {
 		return mapper.readProjectInfo(pl_num);
 	}
 
+
 	@Override
-	public List<ProjectBoardVO> getListProjectBoard(Long pj_num) {
-		return mapper.getListProjectBoard(pj_num);
+	public ProjectVO getProject(Long pj_num) {
+		return mapper.readProject(pj_num);
+	}
+	
+	@Override
+	public List<ProjectBoardVO> getListProjectBoard(HashMap<String, Object> map) {
+		return mapper.getListProjectBoard(map);
 	}
 	
 	
@@ -74,5 +81,10 @@ public class ProjectBoardServiceImpl implements ProjectBoardService {
 	public List<BoardAttachVO> getAttachList(Long pj_num) {
 		return attachMapper.findByPbnum(pj_num);
 	}
+
+
+
+
+
 	
 }
