@@ -71,10 +71,11 @@ public class RoomBookController {
 
 	// 회의실예약 등록하기
 	//@Transactional
-	@Secured({"ROLE_ADMIN"})
+	
 	@PostMapping("/registerrseroom")
 	public String registerRseRoom( RoomBookVO rb, Model model, RedirectAttributes rttr) {
 		log.info("registerresroom...........");
+		
 			
 		 int result = service.checkDate(rb);
 		  
@@ -83,7 +84,7 @@ public class RoomBookController {
 		  } 
 		 else{
 		     log.info("fail........");
-		     return "/meetingroom/registerrseroom";
+		     return "redirect:/meetingroom/registerrseroom";
 		    	     
 		  }
 		 	  		
@@ -134,7 +135,7 @@ public class RoomBookController {
 	public ResponseEntity<List<HashMap<String, Object>>> getListResRoom(Model model) {
 		
 		log.info("omg.......222");
-
+        
 	
 		List<RoomBookVO> list = service.setResRoom("RS001");
 																																		

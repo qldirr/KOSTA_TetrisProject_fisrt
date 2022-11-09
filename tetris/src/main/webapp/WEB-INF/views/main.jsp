@@ -119,7 +119,11 @@
 					</div>
 					<!-- 채팅링크박스 -->
 					<div class="chat Box">
-						<span class="m-title">채팅바로가기</span>
+						<div class="i-title" style="margin: 20px 0px 0px 0px;">
+							<i id="chat-i" class="fa-sharp fa-solid fa-comments fa-lg">
+								Messenger</i>
+
+						</div>
 					</div>
 				</div>
 				<!--main-left 끝  -->
@@ -142,7 +146,7 @@
 						<span class="m-title">공지사항</span>
 					</div>
 					<div class="free Box">
-						<div style="float: left; margin: 10px 0px 0px 60px;">
+						<div style="float: left; margin: -10px 0px 0px 60px;">
 							<div class="current_temp" style="font-size: 50pt"></div>
 							<div class="weather_description" style="font-size: 20pt"></div>
 							<div class="city" style="font-size: 13pt"></div>
@@ -154,8 +158,8 @@
 							<div class="wind"></div>
 							<div class="cloud"></div>
 						</div>
-						<div style="float: left; height: 50px; width: 50px; margin: 10px 0px 0px 10px; " >
-							<div class="weather_icon"></div>
+						<div style="float: left; height: 50px; width: 50px; margin: 10px 10px 30px 10px;">
+							<div class="weather_icon"></div> 
 						</div>
 						<br>
 					</div>
