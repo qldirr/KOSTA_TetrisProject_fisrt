@@ -36,6 +36,7 @@
 			<!-- 보조사이드바 끝-->
 
 			<!-- 내용 시작 -->
+			<div class="wrap-box">
 			<div class="s-container">
 				<h2 id="c-title">공지사항</h2>
 	<div class="container-fluid ">
@@ -183,11 +184,12 @@
 				</div>
 			</div>
 			</div>
-
+			</div>
+			</div>
 			<!-- 내용 끝 -->
 
 		<!-- 전체 wrapper 끝 -->
-		<!--<jsp:include page="../includes/footer.jsp"></jsp:include> -->
+		<jsp:include page="../includes/footer.jsp"></jsp:include> 
 	
 </body>
 

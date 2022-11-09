@@ -9,45 +9,49 @@
 <link rel="stylesheet" href="/resources/vender/bootstrap/css/bootstrap.min.css">
 <script type="text/javascript">
 
-$(function(){
-
-	$('#regElecAuth').on('click', function(){
-		self.location = "/elecauth/register";
-	})
-	
-	$('#writtenList').on('click', function(){
-		self.location = "/elecauth/writtenList";		
-	})
-	
-	$('#uncheckedList').on('click', function(){
-		self.location = "/elecauth/uncheckedList";		
-	})
-	
-	$('#disapprovedList').on('click', function(){
-		self.location = "/elecauth/disapprovedList";	
-	})
-	
-	$('#sendList').on('click', function(){
-		self.location = "/elecauth/sendList";	
-	})	
-	
-	$('#getList').on('click', function(){
-		self.location = "/elecauth/getList";	
-	})	
-
-})
 
 </script>
 </head>
 <body>
-
-<input type="button" id="regElecAuth" value="새 문서 작성하기">
-<input type="button" id="writtenList" value="상신완료문서">
-<input type="button" id="uncheckedList" value="결재대기문서">
-<input type="button" id="disapprovedList" value="반려문서함">
-<input type="button" id="sendList" value="발신문서함">
-<input type="button" id="getList" value="수신문서함">
-
-
+			<jsp:include page="../includes/header.jsp"></jsp:include>
+			<!-- 보조메뉴바 시작 -->
+			
+			<div class="s-menu">
+				<div class="s-menu-title">
+					<p>전자결재 <i class="bi bi-tags"></i>
+				</div>
+				<div class="s-list-item ">
+				    <input id="newbtn" type="button" value="새 문서 작성" onclick="self.location = '/elecauth/register';">
+				</div><br>
+				<div class="s-list-item ">
+					<a href="/elecauth/writtenList">상신문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/uncheckedList">결재대기문서</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/disapprovedList">반려문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/sendList">발신문서함</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/elecauth/getList">수신문서함</a>
+				</div>
+			</div>
+			
+			<div class="wrap-box">					
+		<div class="s-container">
+			<br><br>
+			<h2 id="c-title">전자결재</h2>
+			
+			<div class="contents_wrap">
+				<h5>결재대기문서</h5>
+				<h5>결재완료문서</h5>
+			</div>
+		</div>
+</div>
+</div>
+		<jsp:include page="../includes/footer.jsp"></jsp:include>
 </body>
 </html>
