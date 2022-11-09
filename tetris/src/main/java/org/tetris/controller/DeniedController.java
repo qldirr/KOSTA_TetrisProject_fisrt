@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.tetris.service.ChatService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -27,7 +27,7 @@ public void loginInput(String error, String logout, Model model) {
 	log.info("logout: " + logout);
 	
 	if(error!=null) {
-		model.addAttribute("error", "Login Error Check Your Account");
+		model.addAttribute("error", "입력하신 정보가 잘못되었습니다.");
 	}
 	
 	if(logout!=null) {
