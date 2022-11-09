@@ -2,6 +2,43 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<<<<<<< HEAD
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>회원목록</h1>
+<div class="listBody">
+	<table class="listTable" border ="1" width = "700px">
+		<thread>
+			<tr>
+				<th>사원번호</th>
+				<th>아이디</th>
+				<th>이름</th>
+				<th>입사일</th>
+			</tr>
+		</thread>
+	<c:forEach items="${list}" var="u" >
+		<tr>
+			<%-- <td><a href="/hr/detail?userNumber=${u.userNumber}">${u.userNumber}</a></td> --%>
+			<td style="text-align: center">${u.e_num}</td>
+			<td style="text-align: center"><a href="/hr/detail?e_id=${u.e_id}">${u.e_id}</a></td>	
+			<td style="text-align: center">${u.e_name}</td>
+			<td style="text-align: center">${u.e_hireddate}</td>
+			<!-- <td style="text-align: center"><a href="/hr/delete">삭제하기</a></td>	 -->	
+			<!-- <input type="submit" > -->		
+		</tr>
+	</c:forEach>
+	
+	</table>
+
+
+</div>
+=======
     <%@ include file="../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -19,9 +56,36 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>회원목록</h1>
+<!-- 보조사이드바 -->
+			<div class="s-menu">	
+				<div class="s-menu-title">
+					<p>인사정보관리</p>
+					<i class="fa-solid fa-pen-to-square fa-lg"></i>
+				</div>
+				
+				<div class="s-list-item ">
+					   <input id="newbtn" type="button" style="font-weight: bold; font-size: 17px" value="사원목록" onclick="location.href='/hr/list'">
+					</div> 
+					<div class="s-list-item ">
+					     <br><input id="newbtn" type="button" value="사원등록" onclick="location.href='/hr/register'">
+					</div> 
+					
+				<!-- <div class="s-list-item ">
+					<a href="">회원 목록</a>
+				</div> -->
+			<!-- 	<div class="s-list-item ">
+					<a href="">회원 등록</a>
+				</div> -->
+			</div>
+			<!-- 보조사이드바 끝-->
+<div class="htwo">
+<h2>사원목록</h2>
+<br>
+</div>			
+
+
 <div class="listBody">
-	<table class="listtable" border ="1" width = "700px" style= "text-align:center">
+	<table class="table table-striped table-bordered table-hover" border ="1" width = "700px" style= "text-align:center">
 		<thread>
 			<tr>
 				<th>사원번호</th>
@@ -50,7 +114,8 @@
 
 
 </div>
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+<%-- 	<jsp:include page="../includes/footer.jsp"></jsp:include> --%>
 
+>>>>>>> branch 'main' of https://github.com/joon411/TetrisFinal.git
 </body>
 </html>

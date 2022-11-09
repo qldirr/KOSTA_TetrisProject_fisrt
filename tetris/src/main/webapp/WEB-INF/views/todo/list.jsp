@@ -24,28 +24,27 @@
 
 <link rel="stylesheet" href="/resources/css/main.css">
 <!-- my CSS -->
-<link rel="stylesheet" href="/resources/css/mycss/reset.css">
+
 <link rel="stylesheet" href="/resources/css/mycss/style.css">
 <style type="text/css">
-p.info{
+p.info {
 	color: #161E67;
 }
 
-.todo-title{
+.todo-title {
 	color: #161E67;
 }
 
-.todo-box{
-	
+.todo-box {
 	border: 2px solid #161E67;
 }
 
-.todo-item{
+.todo-item {
 	border: 1px #161E67;
-	 border-collapse : collapse
+	border-collapse: collapse
 }
 
-.checkbox{
+.checkbox {
 	border: 1px solid #161E67;
 }
 </style>
@@ -55,16 +54,17 @@ p.info{
 <body>
 
 	<!-- jsp 인클루드 사용-->
+
 	<jsp:include page="../includes/header.jsp"></jsp:include>
 
 
 	<!-- 보조사이드바 -->
 	<div class="s-menu">
 		<div class="s-menu-title">
-			<p>ToDoList<i class="bi bi-calendar-check"></i>
-			
+			<p>
+				ToDoList<i class="bi bi-calendar-check"></i>
 		</div>
-		
+
 		<div class="s-list-item ">
 			<a href="/calendar/list">일정 관리</a>
 		</div>
@@ -75,44 +75,44 @@ p.info{
 	<!-- 보조사이드바 끝-->
 
 	<!-- 내용 시작 -->
+
 	<div class="s-container">
-		
 
-		
-						<!-- content -->
-						<div class="todo-wrapper">
-							<div class="todo-title">Todo List</div>
-							<div class="todo-box">
 
-								<div class="todo-input-box">
-									<button class="complete-all-btn">✔</button>
-									<input type="text" class="todo-input"
-										placeholder="해야 할 일을 입력해주세요.">
-								</div>
 
-								<ul class="todo-list">
+		<!-- content -->
+		<div class="todo-wrapper">
+			<div class="todo-title">Todo List</div>
+			<div class="todo-box">
 
-								</ul>
-								<div class="todo-bottom">
-									<div class="left-items">0 items left</div>
-									<div class="button-group">
-										<button class="show-all-btn selected" data-type="all">All</button>
-										<button class="show-active-btn" data-type="active">Active</button>
-										<button class="show-completed-btn" data-type="completed">Completed</button>
-									</div>
-									<button class="clear-completed-btn">Clear Completed</button>
-								</div>
-							</div>
-							<p class="info">더블클릭 시 수정 가능</p>
+				<div class="todo-input-box">
+					<button class="complete-all-btn">✔</button>
+					<input type="text" class="todo-input" placeholder="해야 할 일을 입력해주세요.">
+				</div>
 
-						</div>
+				<ul class="todo-list">
+
+				</ul>
+				<div class="todo-bottom">
+					<div class="left-items">0 items left</div>
+					<div class="button-group">
+						<button class="show-all-btn selected" data-type="all">All</button>
+						<button class="show-active-btn" data-type="active">Active</button>
+						<button class="show-completed-btn" data-type="completed">Completed</button>
 					</div>
-		
+					<button class="clear-completed-btn">Clear Completed</button>
+				</div>
+			</div>
+			<p class="info">더블클릭 시 수정 가능</p>
+
+		</div>
+	</div>
+
 
 	<!-- 내용 끝 -->
 
 	<!-- 전체 wrapper 끝 -->
-	<jsp:include page="../includes/footer.jsp"></jsp:include>
+
 
 
 	<script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>

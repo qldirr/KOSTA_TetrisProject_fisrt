@@ -5,7 +5,7 @@
 <footer id="footer">	
 	<div class="s-container">
 		<div id="msgStack"></div>
-		   <p>&copy;2022TETRIS.<a href="http://localhost:8081/">http://http://localhost:8081/</a></p>
+		<p>&copy;2022TETRIS.<a href="http://localhost:8081/">http://http://localhost:8081/</a></p>
 		  
 	</div>
 

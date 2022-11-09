@@ -27,7 +27,7 @@
 					<a href="/notice/list">공지사항</a>
 				</div>
 				<div class="s-list-item ">
-					<a href="/suggestions/suggestionslist">익명 건의사항</a>/a>
+					<a href="/suggestions/suggestionslist">익명 건의사항</a>
 				</div>
 				<div class="s-list-item ">
 					<a href="/tmenu/list">식단표</a>
@@ -36,6 +36,7 @@
 			<!-- 보조사이드바 끝-->
 
 			<!-- 내용 시작 -->
+			<div class="wrap-box">
 			<div class="s-container">
 				<h2 id="c-title">공지사항 수정</h2>
  <div class="container-fluid ">
@@ -116,12 +117,14 @@
 
 </div>
 </div>
+</div>
+</div>
 			</div>
 
 			<!-- 내용 끝 -->
 
 		<!-- 전체 wrapper 끝 -->
-		<!--<jsp:include page="../includes/footer.jsp"></jsp:include> -->
+		<jsp:include page="../includes/footer.jsp"></jsp:include>
 	
 </body>
 

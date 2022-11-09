@@ -14,11 +14,11 @@ a:visited, a:link{
 }
 
 /* 상단 설정바 조절 */
-.setting_bar{
+/* .setting_bar{
     text-align: right;
 }
 .setting_bar > *{
-    margin: 0.25rem; /* 브라우저 폰트크기 16px 기준 : 4px */
-    font-size: 0.75rem; /* 브라우저 폰트크기 16px 기준 : 10px */
+    margin: 0.25rem; 브라우저 폰트크기 16px 기준 : 4px
+    font-size: 0.75rem; 브라우저 폰트크기 16px 기준 : 10px
     color: gray;
-}
+} */

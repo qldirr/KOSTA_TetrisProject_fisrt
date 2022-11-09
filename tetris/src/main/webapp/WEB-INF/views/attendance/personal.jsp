@@ -227,7 +227,7 @@
          <!-- 내용 시작 -->
          <div class="wrap-box">
          <div class="s-container">
-            <h2 id="c-title">소속부서: ${hrVO.d_name }제목</h2>
+            <h2 id="c-title">소속부서: ${hrVO.d_name }</h2>
             <!-- 근태누계 -->
                   <div class="panel panel-default my-5">
                      <div class="panel-heading"><h2>근태누계</h2></div>

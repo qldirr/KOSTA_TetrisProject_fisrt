@@ -82,7 +82,10 @@ public class ProjectBoardServiceImpl implements ProjectBoardService {
 		return attachMapper.findByPbnum(pj_num);
 	}
 
-
+	@Override
+	public int countTaskFinished(Long pj_num) {
+		return mapper.countTaskFinished(pj_num);
+	}
 
 
 

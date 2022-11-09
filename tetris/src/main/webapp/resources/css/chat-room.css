@@ -29,14 +29,14 @@ body{
 }
 
 /* 설정바 스타일 지정 */
-.setting_bar{
+/* .setting_bar{
     grid-area: setting;
     line-height: 2.5rem;
     vertical-align: middle;
     margin-right: 0.625rem;
     position: sticky;
     top: 0;
-}
+} */
 
 /* 알림, 메뉴 기능 스타일 지정 */
 .main-menu{

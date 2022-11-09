@@ -25,7 +25,7 @@ public void loginInput(String error, String logout, Model model) {
 	log.info("logout: " + logout);
 	
 	if(error!=null) {
-		model.addAttribute("error", "Login Error Check Your Account");
+		model.addAttribute("error", "�Է��Ͻ� ������ �߸��Ǿ����ϴ�.");
 	}
 	
 	if(logout!=null) {

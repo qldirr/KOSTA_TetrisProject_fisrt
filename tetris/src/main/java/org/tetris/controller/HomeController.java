@@ -1,6 +1,7 @@
 package org.tetris.controller;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -63,18 +64,32 @@ public class HomeController {
 	public String home(Locale locale, Model model ) {
 		//org.tetris.domain.UserVO user = userService.detailUser(e_id);
 		//String userId = user.getE_id();
-		//CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	    //String e_id = user.getUsername();
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    String e_id = user.getUsername();
+	    String userName = user.getUser().getE_name();
 		
-		 //HrVO vo= hrService.getHr(e_id);
-		 List<ElecAuthVO> list = elecService.getListUncheckedList("gdong123");
-		 List<ProjectVO> projectList = projectService.getListProject("gdong123"); //해당하는 사용자가 속한
-		 List<UserVO> member = boardService.getProjectInfo("81");
+		 HrVO vo= hrService.getHr(e_id);
+		 List<ElecAuthVO> list = elecService.getListUncheckedList(e_id);
+		 List<ProjectVO> projectList = projectService.getListProject(e_id); //해당하는 사용자가 속한
+		 
+		 List<Integer> task = new ArrayList<Integer>();
+			
+			for(int i=0; i<projectList.size(); i++) {
+				
+				projectList.get(i).setPj_finishedTask(boardService.countTaskFinished(projectList.get(i).getPj_num()));
+				
+			
+			}
+		 
+		 
 		 List<SuggestionsVO> suglist = sugService.getList();
+		 int disapproved = elecService.countListDisapproved(e_id);
+		 int unchecked = elecService.countListUncheckedList(e_id);
+		 int proceeding = elecService.countListProceeding(e_id);
 		 
-		// model.addAttribute("hrVO", hrService.getHr(e_id));
 		 
-		 Long pj_num= 70L;
+		model.addAttribute("hrVO", hrService.getHr(e_id));
+		 
 		 
 		 //int taskFinished = boardService.countTaskFinished(pj_num);
 		 
@@ -84,6 +99,10 @@ public class HomeController {
 		// model.addAttribute("task", taskFinished);
 				
 		 model.addAttribute("authlist", list);
+		 model.addAttribute("userName", userName);
+		 model.addAttribute("dis", disapproved);
+		 model.addAttribute("uncheck", unchecked);
+		 model.addAttribute("proceed", proceeding);
 		
 		return "main";
 	}

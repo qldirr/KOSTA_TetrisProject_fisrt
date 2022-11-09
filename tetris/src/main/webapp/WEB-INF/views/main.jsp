@@ -249,7 +249,7 @@
 					<div class="myProfile Box">
 						<span class="m-title">MyProfile </span> <a href=""> <img
 							alt="사진" src="../resources/img/res/hi.png"></a>
-						<div style="font-size: 18px;">고북이</div>
+						<div style="font-size: 18px;">${userName }</div>
 						
 						<div>
 					<!--  -->
@@ -280,7 +280,7 @@
 						<dd id=""></dd>
 					</dl>
 					<!-- 출퇴근버튼 -->
-					<div class="my-5">
+					<div class="my">
 						<i id="startD" style="color: #151d66 ; background:white" class="fa-solid fa-circle-play fa-3x"></i> <i
 									id="endD" style="color: #151d66 ; background:white" class="fa-solid fa-circle-stop fa-3x"></i> <i
 									id="outD" style="color: #151d66 ; background:white" class="fa-solid fa-circle-pause fa-3x"></i>
@@ -290,66 +290,85 @@
 
 			
 					<!-- 채팅링크박스 -->
+					<a id="chat-a" href="http://localhost:8081/messanger/main" onclick="window.open(this.href, 'Tetris Messanger', 'width=450, height=600, left=2000, top=500, location=no, status=no, scrollbars=yes'); return false;">
 					<div class="chat Box">
 						<div class="i-title" style="margin: 20px 0px 0px 0px;">
-							<a id="chat-a" href="http://localhost:8081/messanger/main"
-								target="_blank"> <i id="chat-i"
-								class="fa-sharp fa-solid fa-comments fa-lg"> Messenger</i></a>
-
+							<i id="chat-i" class="fa-sharp fa-solid fa-comments fa-lg">
+								Messenger</i>
 						</div>
 					</div>
+					</a>
 				</div>
 
 
 				<!-- main center 시작 -->
 				<div class="main-center">
 					<div class="project Box">
-						<span class="m-title">프로젝트</span>
-						<c:forEach items="${list }" var="myProject" >
-
+						<a href="/project/main"><span class="m-title">프로젝트</span></a>
+						<c:forEach items="${list }" var="myProject">
 							<c:if test="${myProject.pj_type eq '협업'}">
-
 								<div class="bs-callout bs-callout-info">
-									<span class="badge badge-secondary">${myProject.pj_type }</span>
-							</c:if>
+								<span class="badge badge-secondary">${myProject.pj_type }</span>
+								<strong> ${myProject.pj_name } </strong>  ${myProject.pj_contents }  <a href="/projectdetail/home/${myProject.pj_num}"> <i class="fa-solid fa-arrow-right-to-bracket" style="color: #161E67"></i></a> 
+									
+						<div class="progress">
+  							<div class="progress-bar" role="progressbar" style="width: ${myProject.pj_finishedTask}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${myProject.pj_finishedTask} %</div>
+						</div>
+								</div>
+							</c:if>	
+									
 							<c:if test="${myProject.pj_type eq '단일'}">
+					
 								<div class="bs-callout bs-callout-warning">
-									<span class="badge badge-warning">${myProject.pj_type }</span>
-							</c:if>
+								<span class="badge badge-warning">${myProject.pj_type }</span>
+								<strong> ${myProject.pj_name } </strong>  ${myProject.pj_contents }  <a href="/projectdetail/home/${myProject.pj_num}"> <i class="fa-solid fa-arrow-right-to-bracket" style="color: #161E67"></i></a>
+								
+									
+						<div class="progress">
+  							<div class="progress-bar" role="progressbar" style="width: ${myProject.pj_finishedTask}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${myProject.pj_finishedTask} %</div>
+						</div>
+								
+								</div>
+							</c:if>		
 							<c:if test="${myProject.pj_type eq '전사'}">
+					
 								<div class="bs-callout bs-callout-danger">
-									<span class="badge badge-info">${myProject.pj_type }</span>
-							</c:if>
-							<strong> ${myProject.pj_name } </strong> ${myProject.pj_contents } - 프로젝트 매니저: ${myProject.pj_manager }<br>
-							<div class="progress">
-								<div class="progress-bar bg-warning" role="progressbar"
-									style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-									aria-valuemax="100">${task }%</div>
-							</div>
-
+								<span class="badge badge-info">${myProject.pj_type }</span>
+								<strong> ${myProject.pj_name } </strong>  ${myProject.pj_contents }  <a href="/projectdetail/home/${myProject.pj_num}"> <i class="fa-solid fa-arrow-right-to-bracket" style="color: #161E67"></i></a> 
+									
+						<div class="progress">
+  							<div class="progress-bar" role="progressbar" style="width: ${myProject.pj_finishedTask}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${myProject.pj_finishedTask} %</div>
+						</div>
+								</div>
+							</c:if>	
+						<!-- 프로젝트 참여자: 
+						<c:forEach items="${myProject.pj_members }" var="member"><span class="badge badge-pill badge-light">${member.d_name }</span>${member.e_name } (${member.e_id }) </c:forEach><br>
+							
+							
+						<div class="progress">
+  							<div class="progress-bar" role="progressbar" style="width: ${myProject.pj_finishedTask}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${myProject.pj_finishedTask} %</div>
+						</div>-->
 						</c:forEach>
-
-					</div>
+					
 
 				</div>
 
-			</div>
 
 			<div class="elecAuth Box">
-				<span class="m-title">전자결재</span>
-				<div class="card-columns">
+				<a href="/elecauth/main"><span class="m-title">전자결재</span></a>
+				<div class="card-columns" style="text-align:center">
 					<div id="cardone" class="card bg-light">
 						<div class="card-header ">반려</div>
 						<div class="card-body " style="height: 100px">
-							<h5 class="card-title">Success card title</h5>
+							<h5 class="card-title"><a href="elecauth/disapprovedList">${dis }<span style="font-size: 15px;">건</span></a></h5>
 							<p class="card-text"></p>
 						</div>
 					</div>
 						<div id="cardone" class="card text-white bg-dark">
 						<!--  style="width: 50%; height: 30%; padding: 0px">-->
-						<div class="card-header">결제진행</div>
+						<div class="card-header">결재진행</div>
 						<div class="card-body" style="height: 100px">
-							<h5 class="card-title">Success card title</h5>
+							<h5 class="card-title"><a href="elecauth/writtenList">${proceed }<span style="font-size: 15px;">건</span></a></h5>
 							<p class="card-text"></p>
 						</div>
 					</div>
@@ -357,7 +376,7 @@
 						<!--  style="width: 50%; height: 30%; padding: 0px">-->
 						<div class="card-header ">결재대기</div>
 						<div class="card-body " style="height: 100px">
-							<h5 class="card-title">Success card title</h5>
+							<h5 class="card-title"><a href="elecauth/uncheckedList">${uncheck }<span style="font-size: 15px;">건</span></a></h5>
 							<p class="card-text"></p>
 						</div>
 					</div>
@@ -380,7 +399,7 @@
 		<!-- main-right 시작 -->
 		<div class="main-right">
 			<div class="suggest Box">
-				<span class="m-title">공지사항</span>
+				<a href="/notice/list"><span class="m-title">공지사항</span></a>
 
 				<table class="table table-hover"
 					style="width: 90%; margin-left: auto; margin-right: auto;"
@@ -410,7 +429,7 @@
 					<div class="weather_description" style="font-size: 20pt"></div>
 					<div class="city" style="font-size: 13pt"></div>
 				</div>
-				<div style="float: right; margin: 0px 10px 30px -10px;">
+				<div style="float: right; margin: 0px -5px 30px -10px;">
 					<div class="temp_min"></div>
 					<div class="temp_max"></div>
 					<div class="humidity"></div>
@@ -418,7 +437,7 @@
 					<div class="cloud"></div>
 				</div>
 				<div
-					style="float: left; height: 50px; width: 50px; margin: 10px 10px 30px 10px;">
+					style="float: left; height: 50px; width: 50px; margin: 10px 10px 30px 0px;">
 					<div class="weather_icon"></div>
 				</div>
 				<br>

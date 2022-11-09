@@ -127,6 +127,14 @@ html, body {
 	width: 1000px;
 }
 
+
+#msgStack{
+	
+	position: absolute;
+	right: -30px;
+	bottom: 100px;
+}
+
 #c-title {
 	margin-top: 20px;
 	margin-bottom: 5px;
@@ -176,6 +184,30 @@ html, body {
 	float: left;
 }
 
+
+#btn-alarm {
+	position:relative;
+}
+
+#btn-alarm::after {
+	content : attr(data-content);
+	position: absolute;
+	top: 15px;
+	left: 25px;
+	height: 20px;
+	width: 20px;
+	background-color: red;
+	border-radius: 50%;
+	color: white;
+}
+
+#alarms {
+	
+	position: absolute;
+	top: 80px;
+	left: -250px;
+}
+
 .user { /* 사용자 */
 	margin-left: 10px;
 	line-height: 48px;
@@ -218,5 +250,5 @@ html, body {
 	position: relative;
 	bottom: 15px;
 	font-weight: bold;
-}
 
+}
