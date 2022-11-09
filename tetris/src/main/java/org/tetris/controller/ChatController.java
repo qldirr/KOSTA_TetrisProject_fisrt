@@ -134,21 +134,51 @@ public class ChatController {
 			}
 		}
 		
-		
-		
-		String cr_id = UUID.randomUUID().toString();
-		ChatRoomVO chatRoomVO = new ChatRoomVO();
-		chatRoomVO.setCr_id(cr_id);
-		chatRoomVO.setCr_title(cr_title);
-		chatService.registerCRoom(chatRoomVO);
-		
-		ChatParticipantVO chatPartVO = new ChatParticipantVO();
-		for(int i=0;i<chatPart.size();i++) {
-			chatPartVO.setCr_id(cr_id);
-			chatPartVO.setE_id(chatPart.get(i).getE_id());
-			chatService.registerCPart(chatPartVO);
+		int idx = -1;
+		List<ChatRoomVO> listCRoom = chatService.getListCRoom(principal.getName());
+		for(int i=0;i<listCRoom.size();i++) {
+			if(listCRoom.get(i).getCr_title().equals(cr_title)) {
+				idx = i;
+				break;
+			}
 		}
-		session.setAttribute("cr_id", cr_id);
+		if(idx == -1) {
+			String cr_id = UUID.randomUUID().toString();
+			ChatRoomVO chatRoomVO = new ChatRoomVO();
+			chatRoomVO.setCr_id(cr_id);
+			chatRoomVO.setCr_title(cr_title);
+			chatService.registerCRoom(chatRoomVO);
+			
+			ChatParticipantVO chatPartVO = new ChatParticipantVO();
+			for(int i=0;i<chatPart.size();i++) {
+				chatPartVO.setCr_id(cr_id);
+				chatPartVO.setE_id(chatPart.get(i).getE_id());
+				chatService.registerCPart(chatPartVO);
+			}
+			session.setAttribute("cr_id", cr_id);
+		}else {
+			String cr_id = listCRoom.get(idx).getCr_id();
+			session.setAttribute("cr_id", cr_id);
+		}
+		
+		
+		
+		
+		
+		
+//		String cr_id = UUID.randomUUID().toString();
+//		ChatRoomVO chatRoomVO = new ChatRoomVO();
+//		chatRoomVO.setCr_id(cr_id);
+//		chatRoomVO.setCr_title(cr_title);
+//		chatService.registerCRoom(chatRoomVO);
+//		
+//		ChatParticipantVO chatPartVO = new ChatParticipantVO();
+//		for(int i=0;i<chatPart.size();i++) {
+//			chatPartVO.setCr_id(cr_id);
+//			chatPartVO.setE_id(chatPart.get(i).getE_id());
+//			chatService.registerCPart(chatPartVO);
+//		}
+//		session.setAttribute("cr_id", cr_id);
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
@@ -157,6 +187,19 @@ public class ChatController {
 	public void chatting(@RequestBody Map<String, Object> map, HttpSession session, Model model) throws IOException {
 		String cr_id = (String)map.get("cr_id");
 		session.setAttribute("cr_id", cr_id);
+		
+		
+		
+		
+//		ChatRoomVO chatRoomVo = chatService.getCRoom(cr_id);
+//		session.setAttribute("chatRoomVo", chatRoomVo);
+		
+		
+		
+		
+		
+		
+		
 		List<ChatContentsVO> listChatContents = chatService.getListCC(cr_id);
 		session.setAttribute("listChatContents", listChatContents);
 	}

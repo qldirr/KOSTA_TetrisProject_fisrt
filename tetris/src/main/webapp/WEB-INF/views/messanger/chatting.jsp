@@ -112,6 +112,7 @@
 	<div id="chat-body">
 				<!-- 방번호, 사용자 정보 -->
 				<input type="hidden" id="roomId" value="${cr_id}">
+				<input type="hidden" id="roomTitle" value="${chatRoomVo.cr_title}">
 				<div><h4><sec:authentication property="principal" var="principal"/></h4></div>
             <!-- 설정바(최소화, 닫기 버튼 등) -->
             <!-- <div class="setting_bar">
