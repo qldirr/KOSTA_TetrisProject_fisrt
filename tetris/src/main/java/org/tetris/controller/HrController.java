@@ -38,12 +38,12 @@ public class HrController {
 	
 //person.jsp 개인근태페이지 - e_id로 정보출력
 	@GetMapping("/person")
-	public void get(@RequestParam("e_id") String e_id, Model model) {
+	public void get( Model model) {
 		log.info("/person");
 		
-		//CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		//String e_id = user.getUsername();
+		String e_id = user.getUsername();
 		
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getHrList(e_id));
