@@ -116,6 +116,16 @@ public class ElecAuthServiceImpl implements ElecAuthService {
 		return mapper.countListUncheckedList(e_id);
 	}
 
+	@Override
+	public int countListProceeding(String e_id) {
+		return mapper.countListProceeding(e_id);
+	}
+
+	@Override
+	public int countListDisapproved(String e_id) {
+		return mapper.countListDisapproved(e_id);
+	}
+
 	
 
 }
