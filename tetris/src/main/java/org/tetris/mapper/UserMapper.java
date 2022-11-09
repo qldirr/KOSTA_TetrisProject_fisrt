@@ -16,4 +16,6 @@ public interface UserMapper {
 	public UserVO detailUser(String e_id);
 	public AuthVO detailAuth(String e_id);
 	public void updateUser(UserVO user);
+	public int idCheck(UserVO user);
+	
 }

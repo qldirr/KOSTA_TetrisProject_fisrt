@@ -5,10 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class DepartmentVO {
-
+	
 	private String d_num;
 	private String d_name;
 	private String d_head;

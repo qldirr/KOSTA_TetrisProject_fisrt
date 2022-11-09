@@ -112,6 +112,7 @@ public class CalendarController {
 		return "redirect: /calendar/get";
 	}*/
 	
+
 	@PostMapping("/remove")
 	public String removeCal(CalendarVO calendar) {
 		if (service.remove(calendar)) {

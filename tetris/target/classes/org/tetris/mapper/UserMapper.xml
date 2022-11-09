@@ -170,6 +170,10 @@
 	
 	</select> 
 	
+	<select id="idCheck" resultType="int">
+	SELECT COUNT(*) FROM employee WHERE e_id = #{e_id}
+	</select>
+	
 	<update id="updateUser">
 	UPDATE employee SET 
 	e_id = #{e_id},
