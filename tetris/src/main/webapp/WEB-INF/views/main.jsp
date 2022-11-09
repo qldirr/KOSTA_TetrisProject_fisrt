@@ -305,7 +305,7 @@
 				<div class="main-center">
 					<div class="project Box">
 						<span class="m-title">프로젝트</span>
-						<c:forEach items="${list }" var="myProject">
+						<c:forEach items="${list }" var="myProject" >
 
 							<c:if test="${myProject.pj_type eq '협업'}">
 
@@ -337,35 +337,35 @@
 
 			<div class="elecAuth Box">
 				<span class="m-title">전자결재</span>
-				<div id="cardrow">
-					<div id="cardone" class="card border-success mb-3"
-						style="width: 30%; height: 10%; padding: 0px">
-						<div class="card-header bg-transparent border-success">Header</div>
-						<div class="card-body text-success" style="height:50px">
-							<h5 class="card-title">Success card title</h5>
-							<p class="card-text"></p>
-						</div>						
-					</div>
-					<div id="cardtwo"class="card border-success mb-3"
-						style="width: 30%; height: 10%; padding: 0px">
-						<div class="card-header bg-transparent border-success">Header</div>
-						<div class="card-body text-success" style="height:50px">
-							<h5 class="card-title">Success card title</h5>
-							<p class="card-text"></p>
-						</div>					
-					</div>
-					<div id="cardthree" class="card border-success mb-3"
-						style="width: 30%; height: 10%; padding: 0px">
-						<div class="card-header bg-transparent border-success">Header</div>
-						<div class="card-body text-success" style="height:50px">
+				<div class="card-columns">
+					<div id="cardone" class="card bg-light">
+						<div class="card-header ">Header</div>
+						<div class="card-body " style="height: 100px">
 							<h5 class="card-title">Success card title</h5>
 							<p class="card-text"></p>
 						</div>
-						
+					</div>
+						<div id="cardone" class="card text-white bg-dark">
+						<!--  style="width: 50%; height: 30%; padding: 0px">-->
+						<div class="card-header">Header</div>
+						<div class="card-body" style="height: 100px">
+							<h5 class="card-title">Success card title</h5>
+							<p class="card-text"></p>
+						</div>
+					</div>
+						<div id="cardone" class="card text-white bg-info">
+						<!--  style="width: 50%; height: 30%; padding: 0px">-->
+						<div class="card-header ">Header</div>
+						<div class="card-body " style="height: 100px">
+							<h5 class="card-title">Success card title</h5>
+							<p class="card-text"></p>
+						</div>
 					</div>
 					
-					
-					
+				
+
+
+
 
 
 
@@ -400,8 +400,6 @@
 						</tr>
 					</c:forEach>
 				</table>
-
-
 
 
 
