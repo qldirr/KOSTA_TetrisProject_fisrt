@@ -52,6 +52,7 @@
 
 </head>
 <body>
+<div class="wrap">
 	<jsp:include page="../includes/header.jsp"></jsp:include>
 			<!-- 보조메뉴바 시작 -->
 				<div class="s-menu">
@@ -79,6 +80,7 @@
 				</div>
 
 			</div>
+<div class="wrap-box">
 <div class="s-container">
 			<br><br>
 			<h5>${project.pj_name }</h5>
@@ -86,6 +88,8 @@
 			<div class="contents_wrap">
 
 	<div id='calendar'></div>
+	</div>
+	</div>
 	</div>
 	</div>
 <jsp:include page="../includes/footer.jsp"></jsp:include>

@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +33,7 @@
 	var memberListId = [];
 	var memberList = [];
 	var tmp = "";
-
+	
 	/* 프로젝트 멤버 등록 페이지 버튼 이벤트 함수 */
 	var button = (function(){
 		
@@ -72,6 +74,10 @@
 		}
 		
 		function insertMember(){
+			
+			var managerId = '<sec:authentication property="principal.username"/>';
+
+			memberListId.push(managerId);
 			
 			/* 추가된 사원의 아이디와 임시 프로젝트 참여 리스트 값을 전달 */
 			$.ajax({

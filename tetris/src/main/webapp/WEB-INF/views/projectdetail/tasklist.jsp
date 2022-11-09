@@ -9,6 +9,22 @@
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
 <link rel="stylesheet" href="/resources/vender/bootstrap/css/bootstrap.min.css">
 <script src="https://kit.fontawesome.com/7264476d39.js" crossorigin="anonymous"></script>
+
+<style type="text/css">
+
+tr {
+
+text-align: center;
+
+}
+
+td {
+
+text-align: center;
+
+}
+
+</style>
 <script type="text/javascript">
 
 var taskService = (function(){
@@ -88,6 +104,8 @@ $(function(){
 
 </head>
 <body>
+
+<div class="wrap">
 		<jsp:include page="../includes/header.jsp"></jsp:include>
 			<!-- 보조메뉴바 시작 -->
 			
@@ -117,14 +135,14 @@ $(function(){
 
 			</div>
 			
-			
+		<div class="wrap-box">			
 		<div class="s-container">
 			<br><br>
 			<h5>${project.pj_name }</h5>
-			<h2 id="c-title">업무 리스트</h2>
+			<h2 id="c-title">업무 리스트</h2><br>
 			<div class="contents_wrap">
 
-<table class="table table-bordered table-sm" style="width: 100%">
+<table class="table table-bordered table-sm" style="width: 110%">
   <thead>
     <tr>
       <th scope="col" style="width: 20%">업무명</th>
@@ -142,6 +160,8 @@ $(function(){
 </table>
 
 
+  </div>
+  </div>
   </div>
   </div>
 <jsp:include page="../includes/footer.jsp"></jsp:include>

@@ -11,6 +11,36 @@
 <script src="https://kit.fontawesome.com/7264476d39.js" crossorigin="anonymous"></script>
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
 <script src="/resources/lib/jquery-ui.js" type="text/javascript" defer></script>
+<style type="text/css">
+
+td {
+
+	text-align : center;
+
+}
+
+.card{
+
+	margin: auto;
+}
+
+
+.deadline {
+	color: red;
+	background-color: #f5f5f5;
+	font-weight: bold;
+}
+
+#contentsBox{
+	height: 450px;
+	overflow-y: scroll;
+}
+
+#contentsBox::-webkit-scrollbar {
+    display: none;
+}
+
+</style>
 <script type="text/javascript">
 
 	var order = [];
@@ -47,14 +77,14 @@
 						
 						$('.todo').empty();
 						
-						todo += '<div id='+ value.ts_num +' class="card bg-light mb-3" style="max-width: 18rem;">';
-						todo += '<div class="card-header">' + value.ts_name +'<label class=\"delete\">'+ "[x]" +'</label></div>';
+						todo += '<div id='+ value.ts_num +' class="card text-white bg-dark mb-3" style="max-width: 18rem;">';
+						todo += '<div class="card-header">' + value.ts_name +'<label class=\"delete\" style="float: right;">'+ "x" +'</label></div>';
 						todo += '<div class="card-body">';
 						todo += '<h5 class="card-title">' + value.ts_contents + '</h5>';
 						todo += '<p class="card-text">' + value.ts_manager + '</p>';
 						
 						if(remain > -4 & remain <= 0){
-							todo += '<p><마감 '+ Math.abs(Math.floor(remain)) + '일 전></p></div></div>';
+							todo += '<p class="deadline">마감 '+ Math.abs(Math.floor(remain)) + '일 전</p></div></div>';
 						} else {
 							todo += '</div></div>';
 						}
@@ -66,14 +96,14 @@
 						$('.doing').empty();
 						
 						
-						doing += '<div id='+ value.ts_num +' class="card bg-light mb-3" style="max-width: 18rem;">';
-						doing += '<div class="card-header">' + value.ts_name +'<label class=\"delete\">'+ "[x]" +'</label></div>';
+						doing += '<div id='+ value.ts_num +' class="card text-white bg-secondary mb-3" style="max-width: 18rem;">';
+						doing += '<div class="card-header">' + value.ts_name +'<label class=\"delete\" style="float: right;">'+ "x" +'</label></div>';
 						doing += '<div class="card-body">';
 						doing += '<h5 class="card-title">' + value.ts_contents + '</h5>';
 						doing += '<p class="card-text">' + value.ts_manager + '</p>';
 						
 						if(remain > -4 & remain <= 0){
-							doing += '<p><마감 '+ Math.abs(Math.floor(remain)) + '일 전></p></div></div>';
+							doing += '<p class="deadline">마감 '+ Math.abs(Math.floor(remain)) + '일 전</p></div></div>';
 						} else {
 							doing += '</div></div>';
 						}
@@ -85,8 +115,8 @@
 						
 						$('.done').empty();
 						
-						done += '<div id='+ value.ts_num +' class="card bg-light mb-3" style="max-width: 18rem;">';
-						done += '<div class="card-header">' + value.ts_name +'<label class=\"delete\">'+ "[x]" +'</label></div>';
+						done += '<div id='+ value.ts_num +' class="card text-white bg-info mb-3" style="max-width: 18rem;">';
+						done += '<div class="card-header">' + value.ts_name +'<label class=\"delete\" style="float: right;">'+ "x" +'</label></div>';
 						done += '<div class="card-body">';
 						done += '<h5 class="card-title">' + value.ts_contents + '</h5>';
 						done += '<p class="card-text">' + value.ts_manager + '</p></div></div>';
@@ -212,6 +242,7 @@
 </script>
 </head>
 <body>
+<div class="wrap">
 			<jsp:include page="../includes/header.jsp"></jsp:include>
 			<!-- 보조메뉴바 시작 -->
 			
@@ -241,14 +272,14 @@
 
 			</div>
 			
-			
+	<div class="wrap-box">	
 		<div class="s-container">
 			<br><br>
 			<h5>${project.pj_name }</h5>
 			<h2 id="c-title">업무 보드</h2>
 
 <div class="contents_wrap">
-	<table class="table" style="width: 100%">
+	<table class="table" style="width: 110%">
 		<thead class="table table-bordered">
 			<tr>
 				<th scope="col" style="width: 33.3%">TO DO</th>
@@ -270,6 +301,8 @@
 </div>
 </div>
 
+</div>
+</div>
 </body>
 <jsp:include page="../includes/footer.jsp"></jsp:include>
 
