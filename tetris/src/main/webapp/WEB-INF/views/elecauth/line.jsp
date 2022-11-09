@@ -9,12 +9,51 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-#listTable {
-	width: 150px;
+
+.listTable {
+	width: 200px;
+	font-size: 18px;
+	font-weight: bold;
+	background-color: #161E67; 
+	color: #FFF2CA;
+	text-align: center;
 }
 
 .members {
 	height: 30px;
+}
+
+#Row {
+	width: 80px;
+	font-size: 18px;
+	font-weight: bold;
+	background-color: #FFF2CA; 
+	color: #161E67;
+	text-align: center;
+}
+
+
+table {
+	font-size: 15px;
+	margin-left: 16px;
+	margin-top: 5px;
+}
+
+td {
+	border: 1px solid #c0c0c0;
+}
+
+#buttonPart{
+	border: none;
+}
+
+a {
+	text-decoration: none;
+	color: #161E67;
+}
+
+.number{
+	text-align: center;
 }
 
 </style>
@@ -111,7 +150,7 @@
 		tmp = '${userId}';
 		
 		$("#tree").treeview({
-			collapsed : true,
+			collapsed : false,
 			animated : "medium",
 			control : "#sidetreecontrol",
 			persist : "location"
@@ -130,12 +169,12 @@
 </script>
 </head>
 <body>
-	<table border=1px>
+	<table>
 		<tr>
-			<td>사원목록</td>
-			<td rowspan="12"><input type="button" id="memberRegBtn" value="＞"></td>
-			<td>결재순번</td>
-			<td id="listTable">결재자명</td>
+			<td class="listTable">사원목록</td>
+			<td id="buttonPart" rowspan="12"><input type="button" id="memberRegBtn" value="＞" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none; padding: 5px;"></td>
+			<td id="Row"> 결재순번 </td>
+			<td class="listTable">결재자</td>
 		</tr>
 		<tr>
 			<td rowspan="11">
@@ -166,23 +205,24 @@
 			</td>
 			</tr>
 		<tr>
-			<td>1</td>
+			<td class="number">1</td>
 			<td class="members" id="member1"></td>
 		</tr>
 		<tr>
-			<td>2</td>
+			<td class="number">2</td>
 			<td class="members" id="member2"></td>
 		</tr>
 		<tr>
-			<td>3</td>
+			<td class="number">3</td>
 			<td class="members" id="member3"></td>
 		</tr>
 		<tr>
-			<td>4</td>
+			<td class="number">4</td>
 			<td class="members" id="member4"></td>
 		</tr>
 	</table>
-	<input type="button" id="cancelBtn" value="초기화">
-	<input type="button" id="lineInsertBtn" value="등록">
+	<br>
+	<input type="button" id="cancelBtn" value="초기화" style="background-color: #f5f5f5; color: #161E67; border-radius: 5px; border-style: none; padding: 5px; margin-left: 5px;">
+	<input type="button" id="lineInsertBtn" value="등록" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none; padding: 5px; float:right; margin-right: 5px;">
 </body>
 </html>

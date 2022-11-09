@@ -11,13 +11,38 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-#listTable {
-	width: 150px;
+.listTable {
+	width: 200px;
+	font-size: 18px;
+	font-weight: bold;
+	background-color: #161E67; 
+	color: #FFF2CA;
+	text-align: center;
 }
 
 .members {
 	height: 30px;
 }
+
+
+table {
+	font-size: 15px;
+	margin-left: 5px;
+}
+
+td {
+	border: 1px solid #c0c0c0;
+}
+
+#buttonPart{
+	border: none;
+}
+
+a {
+	text-decoration: none;
+	color: #161E67;
+}
+
 
 </style>
 <link rel="stylesheet" href="/resources/css/jquery.treeview.css" />
@@ -112,7 +137,7 @@
 		tmp = $( "#pj_manager", opener.document ).val();
 		
 		$("#tree").treeview({
-			collapsed : true,
+			collapsed : false,
 			animated : "medium",
 			control : "#sidetreecontrol",
 			persist : "location"
@@ -131,11 +156,12 @@
 </script>
 </head>
 <body>
-	<table border=1px>
+ <h2 id="c-title">프로젝트 멤버 추가</h2>
+	<table>
 		<tr>
-			<td>사원목록</td>
-			<td rowspan="12"><input type="button" id="memberRegBtn" value="＞"></td>
-			<td id="listTable">참여자</td>
+			<td class="listTable">사원목록</td>
+			<td id="buttonPart" rowspan="12"><input type="button" id="memberRegBtn" value="＞" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none; padding: 5px;"></td>
+			<td class="listTable">참여자</td>
 		</tr>
 		<tr>
 			<td rowspan="11">
@@ -195,7 +221,8 @@
 			<td class="members" id="member10"></td>
 		</tr>
 	</table>
-	<input type="button" id="cancelBtn" value="초기화">
-	<input type="button" id="memberInsertBtn" value="등록">
+	<br>
+	<input type="button" id="cancelBtn" value="초기화" style="background-color: #f5f5f5; color: #161E67; border-radius: 5px; border-style: none; padding: 5px; margin-left: 5px;">
+	<input type="button" id="memberInsertBtn" value="등록" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none; padding: 5px; float:right; margin-right: 5px;">
 </body>
 </html>

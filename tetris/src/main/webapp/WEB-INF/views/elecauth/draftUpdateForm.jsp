@@ -9,6 +9,13 @@
 <title>문서 수정</title>
 <link rel="stylesheet" href="/resources/vender/bootstrap/css/bootstrap.min.css" >
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
+<style type="text/css">
+
+table{
+	margin-left: 100px;
+}
+
+</style>
 <script type="text/javascript">
 
 var rewriteService = function(){
@@ -221,7 +228,7 @@ $(function(){
 </span></span>
 <p style="font-family: &quot;맑은 고딕&quot;; font-size: 10pt; line-height: 20px; margin-top: 0px; margin-bottom: 0px;"><br></p>
 <div id="modify">
-	<input type="button" id="rewrite" value="재상신">
+	<input type="button" id="rewrite" value="재상신" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none; padding: 5px; float: right; margin-left: 30px;">
 </div>
 </body>
 </html>

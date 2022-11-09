@@ -286,9 +286,6 @@ $(document).ready(
 		<!-- navbar 시작 -->
 
 		<div class="nav-bar">
-			
-		
-		
 				<div class="nav-bar-right">
 					<sec:authorize access="isAuthenticated()">
 					<button id="btn-alarm">
