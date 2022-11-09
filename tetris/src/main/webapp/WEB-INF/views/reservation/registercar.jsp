@@ -69,71 +69,76 @@
 </script>
 </head>
 <body>
+	<div class="wrap">
+		<jsp:include page="../includes/header.jsp"></jsp:include>
+		<!-- 보조메뉴바 시작 -->
+		<div class="s-menu">
+			<div class="s-menu-title">
+				<p>
+					예약 <i class="bi bi-tags"></i>
+					<!-- 메인 메뉴바랑 동일한 i테그 넣음 -->
+			</div>
+			<div class="s-list-item ">
+				<a href="/meetingroom/listroom">회의실관리</a>
+			</div>
+			<div class="s-list-item ">
+				<a href="/reservation/listcar">차량관리</a>
+			</div>
+			<div class="s-list-item ">
+				<a href="/reservation/listrescar">차량예약 관리</a>
+			</div>
 
-	<jsp:include page="../includes/header.jsp"></jsp:include>
-	<!-- 보조메뉴바 시작 -->
-	<div class="s-menu">
-		<div class="s-menu-title">
-			<p>
-				예약 <i class="bi bi-tags"></i>
-				<!-- 메인 메뉴바랑 동일한 i테그 넣음 -->
 		</div>
-		<div class="s-list-item ">
-			<a href="/meetingroom/listroom">회의실관리</a>
-		</div>
-		<div class="s-list-item ">
-			<a href="/reservation/listcar">차량관리</a>
-		</div>
-		<div class="s-list-item ">
-			<a href="/reservation/listrescar">차량예약 관리</a>
-		</div>
+		<!-- 보조메뉴바 끝 -->
 
-	</div>
-	<!-- 보조메뉴바 끝 -->
+		<!-- 내용 시작 -->
 
-	<!-- 내용 시작 -->
-	<div class="s-container">
-		<h2 id="c-title">차량 등록</h2>
+		<div class="wrap-box">
+			<div class="s-container">
+				<h2 id="c-title">차량 등록</h2>
 
-		<div class="contents_wrap">
-			<div class="contents">
-				<form action="/reservation/registercar" method="post"
-					id="registercareform">
-					<input type="hidden" name="mode" id="mode" value="write" />
+				<div class="contents_wrap">
+					<div class="contents">
+						<form action="/reservation/registercar" method="post"
+							id="registercareform">
+							<input type="hidden" name="mode" id="mode" value="write" />
 
 
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="e_id">차량 번호</label> <input type="text" name="ca_num"
-								class="form-control" id="ca_num">
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="e_id">차량 번호</label> <input type="text"
+										name="ca_num" class="form-control" id="ca_num">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="ca_model">차량 모델 명</label> <input type="text"
+										name="ca_model" class="form-control" id="ca_model">
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="ca_type">차종</label> <input type="text"
+										name="ca_type" class="form-control" id="ca_type">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="ca_age">연식</label> <input type="text" name="ca_age"
+										class="form-control" id="ca_age">
+								</div>
+							</div>
+
+
+						</form>
+						<div class="btn">
+							<input type="button" class="list_Btn" id="listBtn" value="목록"
+								onclick="location.href = '/reservation/listcar'" /> <input
+								type="button" class="write_Btn" value="등록" id="enroll" />
 						</div>
-						<div class="form-group col-md-6">
-							<label for="ca_model">차량 모델 명</label> <input type="text"
-								name="ca_model" class="form-control" id="ca_model">
-						</div>
+
 					</div>
-
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="ca_type">차종</label> <input type="text" name="ca_type"
-								class="form-control" id="ca_type">
-						</div>
-						<div class="form-group col-md-6">
-							<label for="ca_age">연식</label> <input type="text" name="ca_age"
-								class="form-control" id="ca_age">
-						</div>
-					</div>
-
-
-				</form>
-				<div class="btn">
-					<input type="button" class="list_Btn" id="listBtn" value="목록"
-						onclick="location.href = '/reservation/listcar'" /> <input
-						type="button" class="write_Btn" value="등록" id="enroll" />
 				</div>
-
 			</div>
 		</div>
 	</div>
 </body>
+<jsp:include page="../includes/footer.jsp"></jsp:include>
 </html>

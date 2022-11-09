@@ -11,12 +11,13 @@
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
-	/*$(function() {
+
+	$(function() {
 
 	 var btn = $('#detail_Btn');
 
 	 $(detail_Btn).click(function() {
-	 $("").val(${readroom.mr_num});
+	 $(mr_num).val(${readroom.mr_num});
 	
 
 	 });*/
@@ -24,6 +25,7 @@
 
 </head>
 <body>
+<div class="wrap">
 	<jsp:include page="../includes/header.jsp"></jsp:include>
 	<!-- 보조메뉴바 시작 -->
 	<div class="s-menu">
@@ -46,6 +48,7 @@
 	<!-- 보조메뉴바 끝 -->
 
 	<!-- 내용 시작 -->
+	<div class="wrap-box">
 	<div class="s-container">
 		<h2 id="c-title">회의실 관리</h2>
 
@@ -88,9 +91,14 @@
 				</a> <a href="/meetingroom/listresroom"> <input type="button"
 					class="list_Btn" value="회의실예약목록" id="reslistBtn" />
 				</a>
-				<jsp:include page="../includes/footer.jsp"></jsp:include>
+				</div>
+				
 			</div>
 		</div>
+		</div>
+		
+		<jsp:include page="../includes/footer.jsp"></jsp:include>
+		
 
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -109,18 +117,18 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="mr_num">회의실번호</label> <input type="text" name="mr_num"
-							class="form-control" id="mr_num" value="${roomlist.mr_num }"
+							class="form-control" id="mr_num" value="RS002"
 							readonly=readonly>
 					</div>
 					<div class="form-group">
 						<label for="ca_model">회의실이름</label> <input type="text"
-							name="mr_name" class="form-control" value="${roomlist.mr_name }"
+							name="mr_name" class="form-control" value="콤보"
 							id="mr_name" readonly=readonly>
 					</div>
 					<div class="form-group">
 
 						<label for="mr_total">수용인원</label> <input type="text"
-							name="mr_total" class="form-control" value="${roomlist.mr_toal }"
+							name="mr_total" class="form-control" value="20명"
 							id="mr_total" readonly=readonly>
 					</div>
 				</div>

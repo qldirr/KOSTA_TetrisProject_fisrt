@@ -17,7 +17,6 @@
 <link href="/resources/vender/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
 <link href="/resources/css/main.css" rel="stylesheet" type="text/css">
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
 <script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -248,7 +247,7 @@ $(document).ready(
 			</div>
 
 			<div class="sidebar-item">
-				<a class="a" href="#"><i class="bi bi-clock"></i> 근태관리</a>
+				<a class="a" href="/attendance/person"><i class="bi bi-clock"></i> 근태관리</a>
 			</div>
 			
 			<div class="sidebar-item">
@@ -302,6 +301,7 @@ $(document).ready(
                  				 <div id="alarmList" class="list-group">
                   			</div>
                </div>
+
 					</button>
 					<button id="btn-info">
 						<img src="../resources/img/res/hi.png" alt="사진"> 
@@ -330,3 +330,4 @@ $(document).ready(
 </body>
 
 </html>
+

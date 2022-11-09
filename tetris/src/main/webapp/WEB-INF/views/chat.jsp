@@ -10,6 +10,7 @@
 <script src="https://kit.fontawesome.com/3c50ab6b24.js" ></script>
 <script type="text/javascript">
 
+//날씨 api - fontawesome 아이콘
 $(function(){
 	
 	
@@ -26,7 +27,7 @@ $(function(){
 		};
 
 		// 날씨 api - 서울
-		var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+'seoul'+"&appid"+"56bff2528df80541a31119dee50abe0b";
+		var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+'seoul'+"&appid="+"56bff2528df80541a31119dee50abe0b";
 
 		$.ajax({
 		    url: apiURI,
@@ -34,6 +35,7 @@ $(function(){
 		    type: "GET",
 		    async: "false",
 		    success: function(resp) {
+		    	console.log("ddd");
 
 		        var $Icon = (resp.weather[0].icon).substr(0,2);
 		        var $weather_description = resp.weather[0].main;
@@ -60,7 +62,7 @@ $(function(){
 
 	
 })
-//날씨 api - fontawesome 아이콘
+
 
 
 </script>
@@ -70,7 +72,8 @@ $(function(){
 
 <body>
 
-<div style="background-color : rgb(101, 178, 255); padding : 40px;color : #fff; height : 220px">
+
+<div style="background-color : #151d66; padding : 40px;color : #fff; height : 220px">
     <div style="float : left;">
         <div class="weather_icon"></div>
     </div><br>

@@ -38,10 +38,13 @@ public class HrController {
 	
 //person.jsp ���α��������� - e_id�� �������
 	@GetMapping("/person")
-	public void get(Model model) {
+	public void get( Model model) {
 		log.info("/person");
+		
 		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		String e_id = user.getUsername();
+		
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getHrList(e_id));
 		
@@ -50,53 +53,65 @@ public class HrController {
 	
 	//����ϱ�
 	@PostMapping("/insertAction.do")
-	@ResponseBody
-	public String insertAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
-		
-		
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-		log.info("insertAction.do");
-		log.info("e_id: " + hr.getE_id());
-		hr.setHr_Time(formatter.format(date));
-		log.info(hr.getHr_Time());
-		service.startDate(hr.getE_id());
-		rttr.addFlashAttribute("e_id", hr.getE_id());
-		
-		//rttr.addFlashAttribute("result", hr.getE_id());
-		return "redirect:/attendance/person";
-	}
-	
+	   @ResponseBody
+	   public String insertAction(Model model, RedirectAttributes rttr) {
+	      Date date = new Date();
+	      SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+	      log.info("insertAction.do");
+	      CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	      String e_id = user.getUsername();
+	      HrVO hr = new HrVO();
+	      
+	      hr.setE_id(e_id);
+	      log.info("e_id: " + hr.getE_id());
+	      hr.setHr_Time(formatter.format(date));
+	      log.info(hr.getHr_Time());
+	      service.startDate(hr.getE_id());
+	      rttr.addFlashAttribute("e_id", hr.getE_id());
+	      
+	      //rttr.addFlashAttribute("result", hr.getE_id());
+	      return "redirect:/attendance/person";
+	   }
+
 	//�ܱ�
-	@PostMapping("/outAction.do")
-	@ResponseBody
-	public String outAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
-		log.info("outAction.do...");
-		service.outDate(hr.getE_id());
-		rttr.addFlashAttribute("e_id", hr.getE_id());
-		
-		return "redirect:/attendance/person";
-	}
+	   @PostMapping("/outAction.do")
+	   @ResponseBody
+	   public String outAction(Model model, RedirectAttributes rttr) {
+	      log.info("outAction.do...");
+	      CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	      String e_id = user.getUsername();
+	      HrVO hr = new HrVO();
+	      hr.setE_id(e_id);
+	      
+	      service.outDate(hr.getE_id());
+	      rttr.addFlashAttribute("e_id", hr.getE_id());
+	      
+	      return "redirect:/attendance/person";
+	   }
+
 
 	//����ϱ�
-	@PostMapping("/endAction.do")
-	@ResponseBody
-	public String endDate(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
-		log.info("/endAction.do");
-		log.info("e_id: " + hr.getE_id());
-		service.endDate(hr.getE_id());
-		rttr.addFlashAttribute("e_id", hr.getE_id());
+	   @PostMapping("/endAction.do")
+	   @ResponseBody
+	   public String endDate(Model model, RedirectAttributes rttr) {
+	      log.info("/endAction.do");
+	      CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	      String e_id = user.getUsername();
+	      HrVO hr = new HrVO();
+	      hr.setE_id(e_id);
+	      
+	      log.info("e_id: " + hr.getE_id());
+	      service.endDate(hr.getE_id());
+	      rttr.addFlashAttribute("e_id", hr.getE_id());
 
-		return "redirect:/attendance/get";
-	} 
+	      return "redirect:/attendance/get";
+	   } 
 	
 //personal.jsp ���α�����ȸ
 	
 	@GetMapping("/personal")
-	public void getPersonal( @ModelAttribute("cri") Criteria cri, Model model) {
+	public void getPersonal(@RequestParam("e_id") String e_id, @ModelAttribute("cri") Criteria cri, Model model) {
 		log.info("/personal");
-		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String e_id = user.getUsername();
 		log.info("e_id: " + e_id);
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getPersonal(e_id));
@@ -109,7 +124,7 @@ public class HrController {
 //personAll.jsp �������������
 	
 	  @GetMapping("/personAll") 
-	  public void getAll(Criteria cri, Model model) {
+	  public void getAll( Criteria cri, Model model) {
 	  
 		  log.info("list: " + cri);
 		  model.addAttribute("list", service.getHrWithPaging(cri));
@@ -120,10 +135,8 @@ public class HrController {
 	 
 //vacation list ���������
 	  @GetMapping("/vacation")
-	  public void getVac( Model model) {
+	  public void getVac(@RequestParam("e_id") String e_id, Model model) {
 		  log.info("getVac");
-			CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String e_id = user.getUsername();
 		  model.addAttribute("list", service.getVac(e_id));
 	  }
 	
