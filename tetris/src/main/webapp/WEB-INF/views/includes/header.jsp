@@ -37,13 +37,13 @@
 		<!-- main sidebar 시작-->
 		<div class="sidebar">
 			<div class="pb-3 bottom-border" style="text-align: center">
-				<a id="brand" href="/main"> <img id="brandlogo"
+				<a id="brand" href="/"> <img id="brandlogo"
 					src="/resources/img/TETRIS.jpg" width="180px"></a>
 
 			</div>
 
 			<div class="sidebar-item">
-				<a class="a" href="#"><i class="bi bi-clock"></i> 근태관리</a>
+				<a class="a" href="/attendance/person"><i class="bi bi-clock"></i> 근태관리</a>
 			</div>
 			<div class="sidebar-item">
 				<a class="a" href="/calendar/list"><i class="bi bi-table"></i> 일정관리</a>

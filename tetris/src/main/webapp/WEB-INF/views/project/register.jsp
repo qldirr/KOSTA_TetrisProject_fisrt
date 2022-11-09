@@ -5,24 +5,26 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/resources/vender/bootstrap/css/bootstrap.min.css" >
+<link rel="stylesheet"
+	href="/resources/vender/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/css/bootstrap-datepicker3.css" />
-<script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
-<script src="/resources/lib/bootstrap-datepicker.js" type="text/javascript" defer></script>
+<script src="/resources/vender/jquery/jquery-3.6.1.min.js"
+	type="text/javascript"></script>
+<script src="/resources/lib/bootstrap-datepicker.js"
+	type="text/javascript" defer></script>
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-				
+
 				$('#datePickerstart').datepicker({
-					format: "yyyy-mm-dd",
-					autoclose: true
+					format : "yyyy-mm-dd",
+					autoclose : true
 				});
-				
+
 				$('#datePickerend').datepicker({
-					format: "yyyy-mm-dd",
-					autoclose: true
+					format : "yyyy-mm-dd",
+					autoclose : true
 				});
-				
 
 				$("#projectMemberRegBtn").on(
 						"click",
@@ -36,48 +38,82 @@
 </script>
 </head>
 <body>
-<jsp:include page="../includes/header.jsp"></jsp:include>
-			<!-- 보조메뉴바 시작 -->
-			<div class="s-menu">
-				<div class="s-menu-title">
-					<p>프로젝트 <i class="bi bi-tags"></i>
-						<!-- 메인 메뉴바랑 동일한 i테그 넣음 -->
-				</div>
-				<div class="s-list-item ">
-					<a href="/projectdetail/home/${pj_num}">프로젝트 홈</a>
-				</div>
-				<div class="s-list-item ">
-					<a href="/projectdetail/calendar">캘린더</a>
-				</div>
-				<div class="s-list-item ">
-					<a href="/projectdetail/taskboard">업무보드</a>
-				</div>
-				<div class="s-list-item ">
-					<a href="/projectdetail/tasklist">업무리스트</a>
-				</div>
-
+	<div class="wrap">
+		<jsp:include page="../includes/header.jsp"></jsp:include>
+		<!-- 보조메뉴바 시작 -->
+		<div class="s-menu">
+			<div class="s-menu-title">
+				<p>
+					프로젝트 <i class="bi bi-clipboard-data"></i>
+					<!-- 메인 메뉴바랑 동일한 i테그 넣음 -->
 			</div>
-<div class="s-container">
-	<h1>새 프로젝트 생성</h1>
+			<div class="s-list-item ">
+				<a href="/projectdetail/home/${pj_num}">프로젝트 홈</a>
+			</div>
+			<div class="s-list-item ">
+				<a href="/projectdetail/calendar">캘린더</a>
+			</div>
+			<div class="s-list-item ">
+				<a href="/projectdetail/taskboard">업무보드</a>
+			</div>
+			<div class="s-list-item ">
+				<a href="/projectdetail/tasklist">업무리스트</a>
+			</div>
 
-	<form action="/project/register" method="post" accept-charset="UTF-8">
+		</div>
+		<div class="wrap-box">
+			<div class="s-container">
+				<h2 id="c-title">새 프로젝트 생성</h2>
 
-		프로젝트명: <input type="text" name="pj_name"><br> 
-		프로젝트유형: <select name="pj_type" id="selectType">
-			<option value="단일">단일팀프로젝트</option>
-			<option value="협업">협업프로젝트</option>
-			<option value="전사">전사프로젝트</option>
-		</select><br> 
-		프로젝트시작일: <input id="datePickerstart" type="text" name="pj_startdate"><br> 
-		프로젝트마감일: <input id="datePickerend" type="text" name="pj_enddate"><br>
-		프로젝트매니저: <input type="text" name="pj_manager" id="pj_manager" value="${loginedName }"readonly="readonly"><br> 
-		프로젝트참여자: <input type="text" name="e_id" id="pj_members">
-		<input type="button" id="projectMemberRegBtn" value="멤버 추가"><br>
-		프로젝트내용: <input type="text" name="pj_contents" id="pj_contents">
-		<input type="submit" value="새 프로젝트 생성">
-	</form>
-</div>
-<jsp:include page="../includes/footer.jsp"></jsp:include>
+				<div class="contents_wrap">
+					<div class="contents">
+
+						<form action="/project/register" method="post"
+							accept-charset="UTF-8">
+
+							<div class="form-group">
+								<label for="mr_num">프로젝트명</label> <input type="text"
+									name="pj_name" class="form-control" id="pj_name">
+							</div>
+							<div class="form-group">
+								<label for="pj_type">프로젝트유형</label> <select class="form-control"
+									name="pj_type" id="pj_type">
+									<option value="단일">단일팀프로젝트</option>
+									<option value="협업">협업프로젝트</option>
+									<option value="전사">전사프로젝트</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="pj_startdate">프로젝트시작일</label><input
+									id="datePickerstart" type="text" class="form-control"
+									name="pj_startdate">
+							</div>
+							<div class="form-group">
+								<label for="pj_enddate">프로젝트마감일 </label>
+								<input id="datePickerend" type="text" class="form-control" name="pj_enddate">
+							</div>
+							<div class="form-group">
+								<label for="pj_startdate">프로젝트매니저</label><input type="text"
+									name="pj_manager" id="pj_manager" class="form-control"
+									value="${loginedName }" readonly="readonly">
+							</div>
+							<div class="form-group">
+								<label for="pj_members">프로젝트참여자</label><input type="text"
+									name="e_id" id="pj_members" class="form-control"> <input
+									type="button" id="projectMemberRegBtn" value="멤버 추가">
+							</div>
+							<div class="form-group">
+								<label for="pj_startdate">프로젝트내용</label><input type="text"
+									name="pj_contents" id="pj_contents" class="form-control">
+							</div>
+							<input type="submit" value="새 프로젝트 생성">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<jsp:include page="../includes/footer.jsp"></jsp:include>
 </body>
 
 </html>

@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @AllArgsConstructor
 
-public class MianController {
+public class MainController {
 	
 	@Autowired
 	UserService userservice;

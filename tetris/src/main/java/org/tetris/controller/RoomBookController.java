@@ -84,11 +84,12 @@ public class RoomBookController {
 		  } 
 		 else{
 		     log.info("fail........");
-		     return "redirect:/meetingroom/registerrseroom";
+		     rttr.addFlashAttribute("registerrseroom",rb);
+		     return "redirect:/meetingroom/registerrseroom?mr_num="+rb.getMr_num();
 		    	     
 		  }
 		 	  		
-		return "redirect:/meetingroom/resroommain";
+		return "redirect:/meetingroom/resroomcal?mr_num="+rb.getMr_num();
 	}
 	
 	
@@ -132,12 +133,12 @@ public class RoomBookController {
 	//예약목록 불러오기
 	@GetMapping(value="/listresroomcal", produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody 
-	public ResponseEntity<List<HashMap<String, Object>>> getListResRoom(Model model) {
+	public ResponseEntity<List<HashMap<String, Object>>> getListResRoom(@RequestParam("mr_num") String mr_num) {
 		
 		log.info("omg.......222");
         
 	
-		List<RoomBookVO> list = service.setResRoom("RS001");
+		List<RoomBookVO> list = service.setResRoom(mr_num);
 																																		
 		log.info(list);
 		

@@ -20,10 +20,11 @@
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() {
 
+		var num = '${mr_num.mr_num}';
 		var resArr = [];
 
 		$.ajax({
-			url : '/meetingroom/listresroomcal',
+			url : '/meetingroom/listresroomcal?mr_num='+ num,
 			type : 'get',
 			dataType : 'json',
 			contentType : "application/json"

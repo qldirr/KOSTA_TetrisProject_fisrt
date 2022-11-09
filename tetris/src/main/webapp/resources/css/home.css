@@ -40,7 +40,7 @@
 
 .myProfile {
 	width: 100%;
-	height: 300px;
+	height: 530px;
 	margin-bottom: 10px;
 	margin-top:20px;
 }
@@ -121,7 +121,16 @@
 	
 }
 
+.cardrow{
+	display: inline;
+	float: right;
+}
 
+#cardone{
+	display: inline;
+	
+	
+}
 	
 	
 }

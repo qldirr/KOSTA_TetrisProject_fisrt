@@ -11,11 +11,11 @@
 <bean id="customUserDetailService" class="org.tetris.service.CustomUserDetailService"/>
 <security:http>
 	
-	<!-- <security:intercept-url pattern="/user/all" access="permitAll"/>
-	<security:intercept-url pattern="/user/user" access="hasRole('ROLE_USER')"/> -->
+	<!-- <security:intercept-url pattern="/user/all" access="permitAll"/>-->
+
  <!-- 	<security:intercept-url pattern="/user/user" access="hasRole('ROLE_ADMIN')"/> -->
 <!--  	<security:intercept-url pattern="/user/admin" access="hasRole('ROLE_ADMIN')"/> -->
-
+	<!-- <security:intercept-url pattern="/" access="hasAnyRole('ROLE_USER','ROLE_ADMIN)"/> -->
 	<security:access-denied-handler ref="customAccessDenied"/>
 	<!-- <security:form-login/> -->
 	<security:form-login login-page="/member/customLogin" authentication-success-handler-ref="customLoginSuccess"/>

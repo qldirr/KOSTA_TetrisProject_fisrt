@@ -118,9 +118,7 @@
 		
 		
 		
-		
-		
-		
+
 		
 		var mode = $("#mode").val();
 		if ("write" == mode) {
