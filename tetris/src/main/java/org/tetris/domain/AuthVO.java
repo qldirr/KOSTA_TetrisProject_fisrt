@@ -1,4 +1,3 @@
-
 package org.tetris.domain;
 
 import lombok.Data;
@@ -10,3 +9,4 @@ public class AuthVO {
 	private String a_auth;
 
 }
+

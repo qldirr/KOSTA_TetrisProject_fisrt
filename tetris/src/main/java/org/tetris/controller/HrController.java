@@ -34,24 +34,20 @@ import lombok.extern.log4j.Log4j;
 public class HrController {
 	
 	private HrService service;
-	//±ÙÅÂ°ü·Ã ÄÁÆ®·Ñ·¯
+	//å ì™ì˜™å ìŠ¹ê³¤ì˜™å ì™ì˜™ å ì™ì˜™íŠ¸å ì‹¼ë¤„ì˜™
 	
-//person.jsp °³ÀÎ±ÙÅÂÆäÀÌÁö - e_id·Î Á¤º¸Ãâ·Â
 	@GetMapping("/person")
-	public void get( Model model) {
+	public void get(Model model) {
 		log.info("/person");
-		
 		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
 		String e_id = user.getUsername();
-		
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getHrList(e_id));
 		
 		log.info(service.getHr(e_id));
 	}
 	
-	//Ãâ±ÙÇÏ±â
+	//å ì™ì˜™å ì™ì˜™æ­å ï¿½
 	@PostMapping("/insertAction.do")
 	@ResponseBody
 	public String insertAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
@@ -68,7 +64,7 @@ public class HrController {
 		return "redirect:/attendance/person";
 	}
 	
-	//¿Ü±Ù
+	//å ìŒ¤ê¹ì˜™
 	@PostMapping("/outAction.do")
 	@ResponseBody
 	public String outAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
@@ -79,7 +75,7 @@ public class HrController {
 		return "redirect:/attendance/person";
 	}
 
-	//Åğ±ÙÇÏ±â
+	//å ì™ì˜™å ì™ì˜™æ­å ï¿½
 	@PostMapping("/endAction.do")
 	@ResponseBody
 	public String endDate(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
@@ -91,7 +87,7 @@ public class HrController {
 		return "redirect:/attendance/get";
 	} 
 	
-//personal.jsp °³ÀÎ±ÙÅÂÁ¶È¸
+//personal.jsp å ì™ì˜™å ì‹¸ê¹ì˜™å ì™ì˜™å ì™ì˜™íšŒ
 	
 	@GetMapping("/personal")
 	public void getPersonal(@RequestParam("e_id") String e_id, @ModelAttribute("cri") Criteria cri, Model model) {
@@ -105,7 +101,7 @@ public class HrController {
 	
 	
 	
-//personAll.jsp Àü»ç±ÙÅÂÆäÀÌÁö
+//personAll.jsp å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ï¿½
 	
 	  @GetMapping("/personAll") 
 	  public void getAll( Criteria cri, Model model) {
@@ -117,7 +113,7 @@ public class HrController {
 		  model.addAttribute("pageMaker", new PageDTO(cri, total));
 	  }
 	 
-//vacation list Ãâ·ÂÆäÀÌÁö
+//vacation list å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ï¿½
 	  @GetMapping("/vacation")
 	  public void getVac(@RequestParam("e_id") String e_id, Model model) {
 		  log.info("getVac");

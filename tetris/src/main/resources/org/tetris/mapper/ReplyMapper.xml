@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tetris.mapper.ReplyMapper">
+
+	<insert id="insert">
+
+		insert into reply (r_num, s_num, r_reply, r_replyer, r_regdate, r_moddate)
+		values (seq_reply.nextval, #{s_num}, #{r_reply}, '익명', sysdate, sysdate)
+	</insert>
+
+	<select id="read" resultType="org.tetris.domain.ReplyVO">
+		select * from reply where r_num = #{r_num}
+	</select>
+
+	<delete id="delete">
+	delete from reply where r_num = #{r_num}
+	</delete>
+
+	<update id="update">
+		update reply set 
+		r_reply = #{r_reply}, 
+		r_moddate = sysdate 
+		where r_num = #{r_num}
+	</update>
+
+  <select id="getListWithPaging"	resultType="org.tetris.domain.ReplyVO">
+		select r_num, s_num, r_reply, r_replyer, r_regdate, r_moddate
+			from reply
+			where s_num = #{s_num}
+		order by r_num desc
+	</select> 
+
+
+</mapper>
+
+
