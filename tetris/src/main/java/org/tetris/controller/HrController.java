@@ -48,45 +48,59 @@ public class HrController {
 		log.info(service.getHr(e_id));
 	}
 	
-	//����ϱ�
 	@PostMapping("/insertAction.do")
-	@ResponseBody
-	public String insertAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-		log.info("insertAction.do");
-		log.info("e_id: " + hr.getE_id());
-		hr.setHr_Time(formatter.format(date));
-		log.info(hr.getHr_Time());
-		service.startDate(hr.getE_id());
-		rttr.addFlashAttribute("e_id", hr.getE_id());
-		
-		//rttr.addFlashAttribute("result", hr.getE_id());
-		return "redirect:/attendance/person";
-	}
-	
-	//�ܱ�
-	@PostMapping("/outAction.do")
-	@ResponseBody
-	public String outAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
-		log.info("outAction.do...");
-		service.outDate(hr.getE_id());
-		rttr.addFlashAttribute("e_id", hr.getE_id());
-		
-		return "redirect:/attendance/person";
-	}
+	   @ResponseBody
+	   public String insertAction(Model model, RedirectAttributes rttr) {
+	      Date date = new Date();
+	      SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+	      log.info("insertAction.do");
+	      CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	      String e_id = user.getUsername();
+	      HrVO hr = new HrVO();
+	      
+	      hr.setE_id(e_id);
+	      log.info("e_id: " + hr.getE_id());
+	      hr.setHr_Time(formatter.format(date));
+	      log.info(hr.getHr_Time());
+	      service.startDate(hr.getE_id());
+	      rttr.addFlashAttribute("e_id", hr.getE_id());
+	      
+	      //rttr.addFlashAttribute("result", hr.getE_id());
+	      return "redirect:/attendance/person";
+	   }
+	   
+	   //占쌤깍옙
+	   @PostMapping("/outAction.do")
+	   @ResponseBody
+	   public String outAction(Model model, RedirectAttributes rttr) {
+	      log.info("outAction.do...");
+	      CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	      String e_id = user.getUsername();
+	      HrVO hr = new HrVO();
+	      hr.setE_id(e_id);
+	      
+	      service.outDate(hr.getE_id());
+	      rttr.addFlashAttribute("e_id", hr.getE_id());
+	      
+	      return "redirect:/attendance/person";
+	   }
 
-	//����ϱ�
-	@PostMapping("/endAction.do")
-	@ResponseBody
-	public String endDate(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
-		log.info("/endAction.do");
-		log.info("e_id: " + hr.getE_id());
-		service.endDate(hr.getE_id());
-		rttr.addFlashAttribute("e_id", hr.getE_id());
+	   //占쏙옙占쏙옙歐占 
+	   @PostMapping("/endAction.do")
+	   @ResponseBody
+	   public String endDate(Model model, RedirectAttributes rttr) {
+	      log.info("/endAction.do");
+	      CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	      String e_id = user.getUsername();
+	      HrVO hr = new HrVO();
+	      hr.setE_id(e_id);
+	      
+	      log.info("e_id: " + hr.getE_id());
+	      service.endDate(hr.getE_id());
+	      rttr.addFlashAttribute("e_id", hr.getE_id());
 
-		return "redirect:/attendance/get";
-	} 
+	      return "redirect:/attendance/get";
+	   } 
 	
 //personal.jsp ���α�����ȸ
 	
