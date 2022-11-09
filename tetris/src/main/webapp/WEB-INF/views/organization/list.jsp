@@ -10,14 +10,8 @@
 <meta charset="UTF-8">
 <title>메인입니다.</title>
 
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="/resources/css/mycss/jquery.treeview.css" />
 <style type="text/css">
 
-#d-table{
-	display: none;
-}
 
 .container {
 	margin-left: 0px;
@@ -48,13 +42,13 @@ ul{
 }
 
 
-#d-table {
+.d-table {
 	
 	border: 1px;
 	position: relative;
 	left: 350px;
 	bottom: 350px;
-	
+	display: block;
 }
 
 .stats-List {
@@ -88,10 +82,17 @@ ul{
 	display: block;
 }
 
+.d-table{
+	display: none;
+}
 
 
 
 </style>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="/resources/css/mycss/jquery.treeview.css" />
+
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"
 	type="text/javascript"></script>
 <script src="/resources/js/myjs/jquery.cookie.js"
@@ -142,11 +143,13 @@ ul{
 <body>
 
 	<!-- jsp 인클루드 사용-->
+	<div class="wrap">
 	<jsp:include page="../includes/header.jsp"></jsp:include>
 
 
 
 	<!-- 내용 시작 -->
+	<div class="wrap-box">
 	<div class="container">
 
 		<table id="treetable">
@@ -223,12 +226,14 @@ ul{
 
 
 	</div>
+	</div>
+	</div>
 
 	<!-- 내용 끝 -->
 
 
 	<!-- 전체 wrapper 끝 -->
-	
+	<jsp:include page="../includes/footer.jsp"></jsp:include>
 
 
 

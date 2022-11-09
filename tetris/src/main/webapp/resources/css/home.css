@@ -40,7 +40,7 @@
 
 .myProfile {
 	width: 100%;
-	height: 350px;
+	height: 300px;
 	margin-bottom: 10px;
 	margin-top:20px;
 }
@@ -74,26 +74,36 @@
 
 .chat {
 	width: 100%;
-	height: 150px;
+	height: 70px;
+    border-radius: 4px;
+    background: #78c0f7;
+	text-align: center;
+	color: white;
+}
+
+#chat-a {
+  text-align: center;
+  text-decoration: none; /* 링크의 밑줄 제거 */
+  color: inherit; /* 링크의 색상 제거 */
 }
 
 .project {
 	width: 100%;
-	height: 351px;
+	height: 300px;
 	margin-bottom: 20px;
 	
 }
 
 .elecAuth {
 	width: 100%;
-	height: 351px;
+	height: 270px;
 
 }
 
 .suggest{
 	width: 100%;
-	height: 351px;
-	margin-bottom: 20px;
+	height: 290px;
+	margin-bottom: 10px;
 	margin-top:20px;
 }
 	
@@ -101,5 +111,12 @@
 
 .free {
 	width: 100%;
-	height: 351px;
+	height: 300px;
+	background-color : #151d66;
+	color : #fff
+}
+
+.fas fa-cloud-sun fa-5x{
+	height:50px;
+	
 }

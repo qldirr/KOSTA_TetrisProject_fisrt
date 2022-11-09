@@ -9,4 +9,3 @@ public class AuthVO {
 	private String a_auth;
 
 }
-
