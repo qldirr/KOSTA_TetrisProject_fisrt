@@ -10,9 +10,15 @@
 <link rel="stylesheet"
 	href="/resources/vender/bootstrap/css/bootstrap.min.css">
 <style type="text/css">
-li {
+.uploadResult li {
 	list-style: none;
+	background-color: #f5f5f5;
 	cursor: pointer;
+}
+
+.replies li {
+
+	list-style: none;
 }
 
 #board {
@@ -239,9 +245,10 @@ li {
 
 				});
 
-				$(document).on('click', 'input[name=replyDelBtn]', function() {
-					var pr_num = $(this).attr('id');
+				$(document).on('click', 'span[name=replyDelBtn]', function() {
+					var pr_num = $(this).parent().attr('id');
 					pb_num = $(this).closest('.replyContents').attr('id');
+
 
 					var reply = {
 						"pr_num" : pr_num,
@@ -270,11 +277,12 @@ li {
 
 </head>
 <body>
+<div class="wrap">
 		<jsp:include page="../includes/header.jsp"></jsp:include>
 			<!-- 보조메뉴바 시작 -->
 				<div class="s-menu">
 				<div class="s-menu-title">
-					<p>프로젝트 <i class="bi bi-tags"></i>
+					<p>프로젝트 <i class="bi bi-clipboard-data"></i>
 				</div>
 				<div class="s-list-item ">
 				    <input id="newbtn" type="button" value="새 글쓰기" onclick="self.location = '/projectdetail/register';">
@@ -297,7 +305,7 @@ li {
 				</div>
 
 			</div>
-			
+	<div class="wrap-box">		
 		<div class="s-container">
 
 			<input type="hidden" id="pj_num" name="pj_num" value="${pj_num}">
@@ -306,8 +314,8 @@ li {
 			<h2 id="c-title">글 목록</h2>
 			<div class="contents_wrap">
 			<form action="/projectdetail/home/ + ${ pj_num}" method="get">
-			<input type="text" name="searchkey" placeholder="검색 내용 입력">
-			<input type="submit" id="search" value="검색"><br><br>
+			<input type="text" name="searchkey" placeholder="검색 내용 입력" style="border: 1px solid #c0c0c0;">
+			<input type="submit" id="search" value="검색" style="background-color: #f5f5f5; color: #161E67; border-radius: 5px; border-style: none; padding: 5px;"><br><br>
 			</form>
 
 
@@ -319,7 +327,7 @@ li {
 							<i id="usericon" class="fa-regular fa-circle-user fa-2x"></i>
 							<div class="media-body">
 								<h5 class="mt-0" id="boardWriter${b.pb_num}">&nbsp;&nbsp;${b.pb_writer}</h5>
-								<p id="boardContents${b.pb_num}">&nbsp;&nbsp;${b.pb_contents }</p>
+								<p id="boardContents${b.pb_num}">&nbsp;&nbsp;${b.pb_contents }</p><br>
 								<div id='uploadResult${b.pb_num}' class='uploadResult'>
 									<ul>
 									</ul>
@@ -337,15 +345,22 @@ li {
 											<li><i id="usericon" class="fa-regular fa-circle-user fa-2x"></i> ${r.pr_writer}:
 												${r.pr_contents} 
 												<c:if test="${r.pr_writer eq loginedId }">
-													<input type="button" id="${r.pr_num}" name="replyDelBtn" value="×">
-												</c:if> ${r.pr_moddate}</li>
+													<button type="button" class="close" id="${r.pr_num}" aria-label="Close">
+  															<span aria-hidden="true" name="replyDelBtn" >&times;</span>
+													</button>
+												</c:if> 
+												<c:set var="now" value="${r.pr_moddate}" />
+												<c:set var="sysYear">
+												<fmt:formatDate value="${now}" pattern="yy-MM-dd hh:mm" /></c:set>
+												<span style="float:right; margin-right: 3px;"><c:out value="${sysYear}" /></span>
+												</li>
 										</c:if>
 									</c:forEach>
 								</ul>
-								
-									<textarea id="pr_contents${b.pb_num}" name="pr_contents" rows="2"
-										cols="55" placeholder="댓글을 입력하세요."></textarea>
-									<input type="button" id="replyReg${b.pb_num}" name="replyRegBtn" value="등록" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none;"><br>
+									<div class="form-group">
+    									<textarea class="form-control" id="pr_contents${b.pb_num}" name="pr_contents" rows="3" placeholder="댓글을 입력하세요."></textarea>
+  									</div>
+									<input type="button" id="replyReg${b.pb_num}" name="replyRegBtn" value="등록" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none; padding: 5px; float: right; margin-right: 10px;"><br>
 									<br>
 								
 							</div>
@@ -355,6 +370,8 @@ li {
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
 	</div>
 </div>
 <jsp:include page="../includes/footer.jsp"></jsp:include>

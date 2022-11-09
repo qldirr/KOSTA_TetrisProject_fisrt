@@ -60,7 +60,7 @@
 		<div class="s-container"><br>
 			<h2 id="c-title">발신문서함</h2><br>
 
-	<table class="table table-bordered table-sm" style="width: 100%">
+	<table class="table table-bordered table-sm" style="width: 110%">
 		<thead>
 			<tr>
 				<th scope="col" style="width: 18%">문서번호</th>

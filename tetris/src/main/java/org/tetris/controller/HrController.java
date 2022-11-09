@@ -52,6 +52,8 @@ public class HrController {
 	@PostMapping("/insertAction.do")
 	@ResponseBody
 	public String insertAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
+		
+		
 		Date date = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 		log.info("insertAction.do");
@@ -91,8 +93,10 @@ public class HrController {
 //personal.jsp ���α�����ȸ
 	
 	@GetMapping("/personal")
-	public void getPersonal(@RequestParam("e_id") String e_id, @ModelAttribute("cri") Criteria cri, Model model) {
+	public void getPersonal( @ModelAttribute("cri") Criteria cri, Model model) {
 		log.info("/personal");
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
 		log.info("e_id: " + e_id);
 		model.addAttribute("hrVO", service.getHr(e_id));
 		model.addAttribute("list", service.getPersonal(e_id));
@@ -116,8 +120,10 @@ public class HrController {
 	 
 //vacation list ���������
 	  @GetMapping("/vacation")
-	  public void getVac(@RequestParam("e_id") String e_id, Model model) {
+	  public void getVac( Model model) {
 		  log.info("getVac");
+			CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String e_id = user.getUsername();
 		  model.addAttribute("list", service.getVac(e_id));
 	  }
 	

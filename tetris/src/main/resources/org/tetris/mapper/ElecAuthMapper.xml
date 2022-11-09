@@ -64,8 +64,8 @@
 	</update>
 	
 	<select id="getListDisapproved" resultType="org.tetris.domain.elecauth.ElecAuthVO">
-		select el_num, el_name, el_contents, el_regdate, el_status, dm_num, el.l_num, el.e_id, el_startdate, el_enddate
-			from elecauth el join elecline l on l.l_num = el.l_num where l.l_status='반려' and el.e_id = #{e_id}
+		select el_num, el_name, el_contents, el_regdate, el_status, dm_num, el.l_num, el.e_id, el.e_name, el_startdate, el_enddate
+			from elecauth_v el join elecline l on l.l_num = el.l_num where l.l_status='반려' and el.e_id = #{e_id}
 	</select>
 	
 	<update id="updateElecProcess" parameterType="String">

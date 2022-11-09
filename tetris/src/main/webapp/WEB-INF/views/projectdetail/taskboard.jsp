@@ -47,7 +47,7 @@
 						
 						$('.todo').empty();
 						
-						todo += '<div id='+ value.ts_num +' class="card bg-light mb-3" style="max-width: 18rem;">';
+						todo += '<div id='+ value.ts_num +' class="card text-white bg-dark mb-3" style="max-width: 18rem;">';
 						todo += '<div class="card-header">' + value.ts_name +'<label class=\"delete\">'+ "[x]" +'</label></div>';
 						todo += '<div class="card-body">';
 						todo += '<h5 class="card-title">' + value.ts_contents + '</h5>';
@@ -66,7 +66,7 @@
 						$('.doing').empty();
 						
 						
-						doing += '<div id='+ value.ts_num +' class="card bg-light mb-3" style="max-width: 18rem;">';
+						doing += '<div id='+ value.ts_num +' class="card text-white bg-secondary mb-3" style="max-width: 18rem;">';
 						doing += '<div class="card-header">' + value.ts_name +'<label class=\"delete\">'+ "[x]" +'</label></div>';
 						doing += '<div class="card-body">';
 						doing += '<h5 class="card-title">' + value.ts_contents + '</h5>';
@@ -85,7 +85,7 @@
 						
 						$('.done').empty();
 						
-						done += '<div id='+ value.ts_num +' class="card bg-light mb-3" style="max-width: 18rem;">';
+						done += '<div id='+ value.ts_num +' class="card text-white bg-info mb-3" style="max-width: 18rem;">';
 						done += '<div class="card-header">' + value.ts_name +'<label class=\"delete\">'+ "[x]" +'</label></div>';
 						done += '<div class="card-body">';
 						done += '<h5 class="card-title">' + value.ts_contents + '</h5>';

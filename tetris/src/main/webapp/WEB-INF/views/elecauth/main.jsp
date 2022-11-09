@@ -13,6 +13,7 @@
 </script>
 </head>
 <body>
+<div class="wrap">
 			<jsp:include page="../includes/header.jsp"></jsp:include>
 			<!-- 보조메뉴바 시작 -->
 			
@@ -41,6 +42,7 @@
 			</div>
 			
 			
+<div class="wrap-box">
 		<div class="s-container">
 			<br><br>
 			<h2 id="c-title">전자결재</h2>
@@ -50,6 +52,8 @@
 				<h5>결재완료문서</h5>
 			</div>
 		</div>
-
+</div>
+</div>
+<jsp:include page="../includes/footer.jsp"></jsp:include>
 </body>
 </html>

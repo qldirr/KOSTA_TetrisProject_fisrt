@@ -30,6 +30,9 @@
 
 
 var socket = null;
+var referrer = '';
+
+
 
 var alarmService = (function(){
 	
@@ -96,11 +99,10 @@ var alarmService = (function(){
 		}).done(function(data, textStatus, xhr){
 		
 			if(data != 0){
-				
-				/* end ajax 
-			var alarm = {
+			var userId = '<sec:authentication property="principal.username"/>';
+			var elecalarm = {
 						
-						e_id : "gdong123",
+						e_id : userId,
 						al_type : "결재",
 						al_contents : "결재 예정인 문서가 " + data + "건 있습니다."
 					}
@@ -109,21 +111,21 @@ var alarmService = (function(){
 					$.ajax({
 						url : '/notification/register',
 						type : 'post',
-						data : JSON.stringify(alarm),
+						data : JSON.stringify(elecalarm),
 						contentType: 'application/json'
 					}).done(function() {
 						
 						console.log("전송 완료");
 						
 						if(socket){
-							var socketMsg = "docs," + "gdong123" + "," + "결재 예정인 문서가 " + data + "건 있습니다." + "," + '/elecauth/uncheckedList';
+							var socketMsg = "docs," + userId + "," + "결재 예정인 문서가 " + data + "건 있습니다." + "," + '/elecauth/uncheckedList';
 							
 							console.log("msg: " + socketMsg);
 							socket.send(socketMsg);
 						}
 
 						
-					}) */
+					}) 
 					
 					console.log(data);
 
@@ -165,7 +167,13 @@ function connectWebSocket(){
 	function onOpen() {
 		console.log("info: connection opened");
 		alarmService.count();
+		
+
+		if(referrer.endsWith('customLogin')){
+		
 		alarmService.elecAlarm();
+		
+		}
 		
 	}
 	
@@ -201,13 +209,18 @@ function connectWebSocket(){
 $(document).ready(
 		
 	function() {
-			
+		
+		referrer = document.referrer;
+		
 		connectWebSocket(); 
+		
 		
 		$('#btn-alarm').on('click', function(){
 			
 			$('#alarmList').empty();
+				
 			alarmService.getList();
+		
 			$('#alarms').toggle();
 			
 			
@@ -278,34 +291,25 @@ $(document).ready(
 		
 				<div class="nav-bar-right">
 					<sec:authorize access="isAuthenticated()">
-					
-					
-				<button id="btn-alarm" data-toggle="collapse" data-target="#alarms" aria-expanded="false">
-				
-					<span style ="font-size: 30px;"><i class ="bi bi-bell-fill"></i></span>
-					
-					
-					<div id="alarms" class="collapse">
-						<div id="alarmList" class="list-group">
-						</div>
-					</div>
-					
-
-				</button>
-					
-					
-					<button id="btn-info">
-						<img src="../resources/img/res/hi.png" alt="사진"> <span
-							class="user"><sec:authentication
-								property="principal.user.e_name" /></span>
-							<a href="/member/customLogout">로그아웃</a>
+					<button id="btn-alarm">
+						<span style="font-size: 30px;"><i class="bi bi-bell-fill"></i></span>
+						   <div id="alarms" class="collapse">
+                 				 <div id="alarmList" class="list-group">
+                  			</div>
+               </div>
 					</button>
-						</sec:authorize>
-				
-					
+					<button id="btn-info">
+						<img src="../resources/img/res/hi.png" alt="사진"> 
+						<span class="user"><sec:authentication property="principal.user.e_name" /></span>						
+					</button>
+	
+					<a id="out_Btn" href="/member/customLogout">로그아웃</a>
+		
+						</sec:authorize>							
 					<sec:authorize access="isAnonymous()">
-				<a href="/member/customLogin">로그인</a>
-				<br>
+					
+				      <a id="log_Btn" href="/member/customLogin">로그인</a>
+				
 			</sec:authorize>
 				</div>
 				
@@ -317,7 +321,7 @@ $(document).ready(
 		<!-- navbar 끝 -->
 
 	</div>
-	
+	<!-- wrapper 끝 -->
 </body>
 
 </html>
