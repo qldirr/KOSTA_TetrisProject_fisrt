@@ -2,6 +2,7 @@ package org.tetris.service;
 
 import java.util.List;
 
+import org.tetris.domain.Criteria;
 import org.tetris.domain.elecauth.ElecAuthVO;
 import org.tetris.domain.elecauth.ElecLineVO;
 
@@ -25,4 +26,6 @@ public interface ElecAuthService {
 	public List<ElecAuthVO> sendList(String e_id);
 	public List<ElecAuthVO> getList(String e_id);
 	public int countListUncheckedList(String e_id);
+	public List<ElecAuthVO> sendList(Criteria cri);
+	public List<ElecAuthVO> getList(Criteria cri);	
 }

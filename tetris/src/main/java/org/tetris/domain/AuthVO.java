@@ -8,4 +8,6 @@ public class AuthVO {
 	private String e_id;
 	private String a_auth;
 
+
 }
+

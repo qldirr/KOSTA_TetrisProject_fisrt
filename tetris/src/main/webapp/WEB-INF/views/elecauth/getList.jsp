@@ -56,7 +56,7 @@
 				</div>
 			</div>
 			
-			
+			<div class="wrap-box">			
 		<div class="s-container"><br>
 			<h2 id="c-title">수신문서함</h2><br>
 
@@ -94,6 +94,39 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	
+	
+							<%-- <div class='pull-right'>
+						<ul class="pagination justify-content-center">
+
+							<li><c:if test="${pageMaker.prev}">
+									<li class="paginate_button previous"><a
+										href="${pageMaker.startPage -1}">Previous</a></li>
+								</c:if> <c:forEach var="num" begin="${pageMaker.startPage}"
+									end="${pageMaker.endPage}">
+									<li class="paginate_button  ${pageMaker.cri.pageNum == num ? "active":""} ">
+										<a href="${num}">${num}</a>
+									</li>
+								</c:forEach> <c:if test="${pageMaker.next}">
+									<li class="paginate_button next"><a
+										href="${pageMaker.endPage +1 }">Next</a></li>
+								</c:if></li>
+
+						</ul>
+					</div>
+					<!--  end Pagination -->
+
+					<form id='actionForm' action="/elecauth/getList"
+						method='get'>
+						<input type='hidden' name='pageNum'
+							value='${pageMaker.cri.pageNum}'/> <input type='hidden'
+							name='amount' value='${pageMaker.cri.amount}'/>
+					</form> --%>
+	
+	
 </div>
+</div>
+</div>
+		<jsp:include page="../includes/footer.jsp"></jsp:include>
 </body>
 </html>

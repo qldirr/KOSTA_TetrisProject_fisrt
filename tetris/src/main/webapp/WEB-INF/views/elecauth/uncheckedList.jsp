@@ -55,7 +55,7 @@
 				</div>
 			</div>
 			
-			
+			<div class="wrap-box">			
 		<div class="s-container"><br>
 			<h2 id="c-title">결재대기문서</h2><br>
 
@@ -96,4 +96,12 @@
 </div>
 
 </body>
+</div>
+</div>
+			</div>
+
+			<!-- 내용 끝 -->
+
+		<!-- 전체 wrapper 끝 -->
+		<jsp:include page="../includes/footer.jsp"></jsp:include>
 </html>
