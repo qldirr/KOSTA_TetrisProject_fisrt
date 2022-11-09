@@ -330,4 +330,3 @@ $(document).ready(
 </body>
 
 </html>
-

@@ -290,14 +290,14 @@
 
 			
 					<!-- 채팅링크박스 -->
+					<a id="chat-a" href="http://localhost:8081/messanger/main" onclick="window.open(this.href, 'Tetris Messanger', 'width=450, height=600, left=2000, top=500, location=no, status=no, scrollbars=yes'); return false;">
 					<div class="chat Box">
 						<div class="i-title" style="margin: 20px 0px 0px 0px;">
-							<a id="chat-a" href="http://localhost:8081/messanger/main"
-								target="_blank"> <i id="chat-i"
-								class="fa-sharp fa-solid fa-comments fa-lg"> Messenger</i></a>
-
+							<i id="chat-i" class="fa-sharp fa-solid fa-comments fa-lg">
+								Messenger</i>
 						</div>
 					</div>
+					</a>
 				</div>
 
 

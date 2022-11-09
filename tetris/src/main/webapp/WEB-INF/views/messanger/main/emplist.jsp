@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -31,12 +32,12 @@
 
 <script type="text/javascript">
 	$(function() {
-		/* $("#tree").treeview({
+		$("#tree").treeview({
 			collapsed: true,
 			animated: "medium",
 			control:"#sidetreecontrol",
 			persist: "location"
-		}); */
+		});
 		
 		$("#empname li").on('dblclick', function(){
 			var empId = $(this).attr('class');
@@ -48,14 +49,14 @@
 				data: JSON.stringify({"e_id" : empId}),
 				success : function(result) {
 					/* alert(result); */
-					location.href = "/messanger/chatting";
+					window.open('http://localhost:8081/messanger/chatting', 'Tetris Chatting', 'width=450, height=600, left=2000, top=500, location=no, status=no, scrollbars=yes');
+					/* location.href = "/messanger/chatting"; */
 				}
 			});
 		})
 	})
 	
-	function notify(){
-		if(!("Notification" in window)){
+	function notify(){if(!("Notification" in window)){
 			alert("데스크톱 알림을 지원하지 않는 브라우저입니다.");
 		}
 		Notification.requestPermission(function(result){
@@ -69,13 +70,7 @@
 </script>
 </head>
 <body>
-	<form action="/messanger/main/emplist" method='get'>
-		<input type="submit" value="조직도">
-	</form><br>
-	<form action="/messanger/main/chatroomlist" method='get'>
-		<input type="submit" value="채팅방">
-	</form><br>
-	<button onclick="notify()">Notify</button>
+	<!-- <button onclick="notify()">Notify</button> -->
 	
 	<!-- 조직도(tree) -->
 	<%-- <div id="sidetree">
@@ -101,6 +96,14 @@
 	
 	
 	<div id="content">
+			<!-- 액션폼 -->
+				<form action="/messanger/main/emplist" name="emplist" method='get'>
+					<!-- <input type="submit" value="조직도"> -->
+				</form><br>
+				<form action="/messanger/main/chatroomlist" name="chatroomlist" method='get'>
+					<!-- <input type="submit" value="채팅방"> -->
+				</form><br>
+				<div><sec:authentication property="principal" var="principal"/></div>
             <!-- 설정바(최소화, 닫기 버튼 등) -->
             <!-- <div class="setting_bar">
                 <i class="icon-window-minimize" alt="최소화버튼" title="최소화"></i>
@@ -111,28 +114,31 @@
             <header>
                 <h1>친구</h1>
                 <!-- <span alt="친구추가버튼" title="친구 추가">&#xf234</span> -->
-                <span alt="통합검색버튼" title="통합검색">&#xe801</span>
+                <span alt="통합검색버튼" title="통합검색"><i class="icon-search" title="검색"></i></span>
             </header>
             <!-- 친구창, 대화창, 설정창 등 이동 가능한 네비게이터 -->
             <nav>
                 <div class="main-menu">
-                    <a href="friend.html">
+                    <a href="javascript:document.emplist.submit();">
                         <i class="icon-adult" alt="친구메뉴" title="친구"></i>
                     </a>
-                    <a href="chatting.html">
+                    <a href="javascript:document.chatroomlist.submit();">
                         <i class="icon-chat" alt="채팅메뉴" title="채팅"></i>
                         <span class="alert-balloon" alt="알림수">3</span>
                     </a>
-                    <a href="more_menu.html">
+                    <a href="#" onclick="notify()">
+                    	<i class="icon-bell" alt="알림버튼" title="알림"></i>
+                    </a>
+                    <!-- <a href="more_menu.html">
                         <i class="icon-ellipsis" alt="더보기버튼" title="더보기"></i>
                         <span class="alert-balloon" alt="알림수">N</span>
-                    </a>
+                    </a> -->
                 </div>
                 <div class="sub-menu">
-                    <a href="temp.html" target="_blank">
+                    <!-- <a href="temp.html" target="_blank">
                         <i class="icon-smile" alt="이모티콘샵바로가기" title="이모티콘샵"></i></a>
-                    <i class="icon-bell" alt="알림버튼" title="알림"></i>
-                    <i class="icon-cog" alt="설정버튼" title="설정"></i>
+                    <a href="#" onclick="notify()"><i class="icon-bell" alt="알림버튼" title="알림"></i></a>
+                    <i class="icon-cog" alt="설정버튼" title="설정"></i> -->
                 </div>
             </nav>
             <!-- 메인: 친구창 메인 내용 -->
@@ -143,7 +149,7 @@
                         <li>
                             <img src="/resources/pic/me.png" alt="나의프로필사진">
                             <div class="profile">
-                                <p>김간장</p>
+                                <p><c:out value="${principal.user.e_name }"/></p>
                                 <p>상태메시지 영역</p>
                             </div>
                         </li>
@@ -185,6 +191,9 @@
                         	</c:forEach>
                     	</ul>
 					</c:forEach>
+					</ul>
+					</div>
+					
 					
                     <!-- <div class="profile-title">
                         <h2>친구</h2>

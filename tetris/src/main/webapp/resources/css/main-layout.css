@@ -23,18 +23,18 @@ body{
 }
 
 /* 설정바 위치 고정하기 위한 스타일 지정 */
-.setting_bar{
+/* .setting_bar{
     grid-area: setting;
     position: sticky;
     top: 0;
     background-color: white;
-    /* align-self: stretch = 그리드 안에 공간이 생겨서 백그라운드 컬러 적용 불가 */
+    align-self: stretch = 그리드 안에 공간이 생겨서 백그라운드 컬러 적용 불가
 }
 .setting_bar > *{
-    line-height: 1.875rem; /* grid row의 첫번째 크기와 동일 */
+    line-height: 1.875rem; grid row의 첫번째 크기와 동일
     vertical-align: middle;
-    /* 가운데 정렬 목적 */
-}
+    가운데 정렬 목적
+} */
 
 /* 헤더(header) 영역 레이아웃 지정 */
 header{
