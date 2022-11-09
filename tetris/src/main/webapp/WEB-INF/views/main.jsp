@@ -339,7 +339,7 @@
 				<span class="m-title">전자결재</span>
 				<div class="card-columns">
 					<div id="cardone" class="card bg-light">
-						<div class="card-header ">Header</div>
+						<div class="card-header ">반려</div>
 						<div class="card-body " style="height: 100px">
 							<h5 class="card-title">Success card title</h5>
 							<p class="card-text"></p>
@@ -347,7 +347,7 @@
 					</div>
 						<div id="cardone" class="card text-white bg-dark">
 						<!--  style="width: 50%; height: 30%; padding: 0px">-->
-						<div class="card-header">Header</div>
+						<div class="card-header">결제진행</div>
 						<div class="card-body" style="height: 100px">
 							<h5 class="card-title">Success card title</h5>
 							<p class="card-text"></p>
@@ -355,7 +355,7 @@
 					</div>
 						<div id="cardone" class="card text-white bg-info">
 						<!--  style="width: 50%; height: 30%; padding: 0px">-->
-						<div class="card-header ">Header</div>
+						<div class="card-header ">결재대기</div>
 						<div class="card-body " style="height: 100px">
 							<h5 class="card-title">Success card title</h5>
 							<p class="card-text"></p>
@@ -395,7 +395,7 @@
 						varStatus="status">
 						<tr>
 							<td><a class='move'
-								href='<c:out value="${suggestions.s_num}"/>'> <c:out
+								href='/suggestions/suggestionsget?pageNum=1&amount=10&s_num=<c:out value="${suggestions.s_num}"/>'> <c:out
 										value="${suggestions.s_title}" /></a></td>
 						</tr>
 					</c:forEach>
