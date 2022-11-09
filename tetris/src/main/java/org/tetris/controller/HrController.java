@@ -34,7 +34,7 @@ import lombok.extern.log4j.Log4j;
 public class HrController {
 	
 	private HrService service;
-	//占쏙옙占승곤옙占쏙옙 占쏙옙트占싼뤄옙
+	
 	
 	@GetMapping("/person")
 	public void get(Model model) {
@@ -64,7 +64,7 @@ public class HrController {
 //		return "redirect:/attendance/person";
 //	}
 
-	//占쏙옙占쏙옙歐占�
+
 	@PostMapping("/insertAction.do")
 	@ResponseBody
 	public String insertAction(Model model, RedirectAttributes rttr) {
@@ -86,7 +86,7 @@ public class HrController {
 		return "redirect:/attendance/person";
 	}
 	
-	//占쌤깍옙
+
 	@PostMapping("/outAction.do")
 	@ResponseBody
 	public String outAction(Model model, RedirectAttributes rttr) {
@@ -102,7 +102,7 @@ public class HrController {
 		return "redirect:/attendance/person";
 	}
 
-	//占쏙옙占쏙옙歐占�
+	
 	@PostMapping("/endAction.do")
 	@ResponseBody
 	public String endDate(Model model, RedirectAttributes rttr) {
@@ -119,7 +119,7 @@ public class HrController {
 		return "redirect:/attendance/get";
 	} 
 	
-//personal.jsp 占쏙옙占싸깍옙占쏙옙占쏙옙회
+//personal.jsp 
 	
 	@GetMapping("/personal")
 	public void getPersonal(@RequestParam("e_id") String e_id, @ModelAttribute("cri") Criteria cri, Model model) {
