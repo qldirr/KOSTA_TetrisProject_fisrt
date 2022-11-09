@@ -26,3 +26,8 @@ hs_err_pid*
 .project
 .settings/
 .springBeans
+*/target/*
+<<<<<<< HEAD
+.target/
+=======
+>>>>>>> branch 'main' of https://github.com/joon411/TetrisFinal.git

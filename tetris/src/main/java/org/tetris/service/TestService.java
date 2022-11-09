@@ -1,5 +1,9 @@
 package org.tetris.service;
 
-public class TestService {
+import org.tetris.domain.TestVO;
+
+public interface TestService {
+	
+	public void register(TestVO vo);
 
 }

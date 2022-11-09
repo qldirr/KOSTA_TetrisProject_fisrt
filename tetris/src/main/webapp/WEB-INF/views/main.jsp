@@ -74,9 +74,6 @@
 
 	})
 </script>
-
-
-
 </head>
 <body>
 	<!-- jsp 인클루드 사용-->
@@ -120,13 +117,13 @@
 					<!-- 채팅링크박스 -->
 					<div class="chat Box">
 						<div class="i-title" style="margin: 20px 0px 0px 0px;">
+						    <a id="chat-a" href="http://localhost:8081/messanger/main" target="_blank">
 							<i id="chat-i" class="fa-sharp fa-solid fa-comments fa-lg">
-								Messenger</i>
+								Messenger</i></a>
 
 						</div>
 					</div>
 				</div>
-				<!--main-left 끝  -->
 
 
 				<!-- main center 시작 -->
@@ -146,7 +143,7 @@
 						<span class="m-title">공지사항</span>
 					</div>
 					<div class="free Box">
-						<div style="float: left; margin: -10px 0px 0px 60px;">
+						<div style="float: left; margin: 0px 10px 0px 60px;;">
 							<div class="current_temp" style="font-size: 50pt"></div>
 							<div class="weather_description" style="font-size: 20pt"></div>
 							<div class="city" style="font-size: 13pt"></div>
@@ -176,6 +173,3 @@
 </body>
 
 </html>
-
-
-

@@ -166,9 +166,12 @@
 	authmapping a LEFT OUTER JOIN employee e ON a.e_id = e.e_id WHERE e.e_id = #{e_id}
 	
 	
-	
-	
+
 	</select> 
+	
+	<select id="idCheck" resultType="int">
+	SELECT COUNT(*) FROM employee WHERE e_id = #{e_id}
+	</select>
 	
 	<update id="updateUser">
 	UPDATE employee SET 

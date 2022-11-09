@@ -21,11 +21,8 @@ public class UserVO {
 	private String e_position;
 	private String d_num;
 	private boolean enabled;
+	private String d_name;
 	
 	private List<AuthVO> authList;
-	
-	
-
-	
 	
 }

@@ -12,6 +12,7 @@ import org.tetris.mapper.CarInfoMapper;
 
 import lombok.extern.log4j.Log4j;
 
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
@@ -43,10 +44,6 @@ public class CarInfoMapperTest {
 		log.info(car);
 				
 	}
-	
-	
-	
-
 
 
 

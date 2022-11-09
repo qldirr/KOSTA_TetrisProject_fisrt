@@ -52,6 +52,12 @@ public class UserServiceImpl implements UserService {
 	public void updateUser(UserVO user) {
 		mapper.updateUser(user);
 	}
-	
+
+	@Override
+	public int idCheck(UserVO user) {
+		// TODO Auto-generated method stub
+		return mapper.idCheck(user);
+	}
+
 
 }
