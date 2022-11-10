@@ -181,7 +181,7 @@
 			<div class="s-menu-title text-center">
 				<p>
 					근태관리 <i class="bi bi-clock"></i>
-				<h5>반갑습니다 ${hrVO.e_name }님</h5>
+				<h5>반갑습니다 ${hrVO.e_name}님</h5>
 			</div>
 			<div class="s-list-item text-center">
 				<div>
@@ -291,5 +291,4 @@
 </body>
 
 </html>
-
 

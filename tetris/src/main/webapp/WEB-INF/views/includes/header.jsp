@@ -248,7 +248,13 @@ $(document).ready(
 			</div>
 
 			<div class="sidebar-item">
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<a class="a" href="/attendance/personAll"><i class="bi bi-clock"></i> 근태관리</a>
+				</sec:authorize>
+				
+			<sec:authorize access="hasRole('ROLE_USER')">
 				<a class="a" href="/attendance/person"><i class="bi bi-clock"></i> 근태관리</a>
+				</sec:authorize>
 			</div>
 			
 			<div class="sidebar-item">
