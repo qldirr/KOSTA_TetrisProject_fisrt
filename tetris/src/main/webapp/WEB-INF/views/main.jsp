@@ -305,7 +305,7 @@
 				<div class="main-center">
 					<div class="project Box">
 						<a href="/project/main"><span class="m-title">프로젝트</span></a>
-						<c:forEach items="${list }" var="myProject">
+						<c:forEach items="${list }" var="myProject" begin="0" end="2" varStatus="status">
 							<c:if test="${myProject.pj_type eq '협업'}">
 								<div class="bs-callout bs-callout-info">
 								<span class="badge badge-secondary">${myProject.pj_type }</span>
