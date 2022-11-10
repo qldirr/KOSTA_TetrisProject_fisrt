@@ -28,5 +28,6 @@ public interface ElecAuthMapper {
 	public List<ElecAuthVO> sendList(String e_id);
 	public List<ElecAuthVO>getList(String e_id);
 	public int countListUncheckedList(String e_id);
-	public List<ElecAuthVO> getListWithPaging(Criteria cri);	
+	public int countListProceeding(String e_id);
+	public int countListDisapproved(String e_id);
 }

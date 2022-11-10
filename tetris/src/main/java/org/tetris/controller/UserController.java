@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tetris.domain.AuthVO;
+import org.tetris.domain.DepartmentVO;
+import org.tetris.domain.EmployeeVO;
 import org.tetris.domain.UserVO;
 import org.tetris.security.CustomNoOpPasswordEncoder;
 import org.tetris.service.UserService;

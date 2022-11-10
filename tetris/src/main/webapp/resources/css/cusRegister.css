@@ -1,33 +1,42 @@
 @charset "UTF-8";
 
-#regForm{
-	margin-left: 400px;
-	
+#regForm {
+	margin-left: 183px;
 }
-.container{
-	
-	display:flex;
+
+.container {
+	display: flex;
 	justify-content: center;
-	align-items:  center;
-
-}
-.form-control{
-	width: 300px;
+	align-items: center;
 }
 
-#idChk{
+.form-control {
+	width: 648px;
+}
+
+#content {
+
+}
+
+.htwo {
+	/* position: relative; */
+	right: 215px;
+}
+
+#idChk {
 	position: relative;
-    left: 200px;
-    top: 10px;
-    background-color: #ffffff;
-    color: black;
-    border: solid 1px;
-    width: 100px;
-    border-color: #c5c5c5;
-} 
+	left: 546px;
+	top: 10px;
+	background-color: #ffffff;
+	color: black;
+	border: solid 1px;
+	width: 100px;
+	height: 30px;
+	border-color: #c5c5c5
+}
 
-.form-group{
-	margin-top:10px;
+.form-group {
+	margin-top: 10px;
 }
 /* .form-group1{
 	width:300px;

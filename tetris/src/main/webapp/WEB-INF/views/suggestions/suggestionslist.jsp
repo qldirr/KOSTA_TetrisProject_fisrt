@@ -199,7 +199,7 @@
 			<!-- 내용 끝 -->
 
 		<!-- 전체 wrapper 끝 -->
-		<jsp:include page="../includes/footer.jsp"></jsp:include>
+		<%-- <jsp:include page="../includes/footer.jsp"></jsp:include> --%>
 	
 </body>
 

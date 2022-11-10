@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"
 	type="text/javascript"></script>
+<style type="text/css">
+li {
+	 list-style:none;
+}
+</style>
 <script type="text/javascript">
 
 var cloneObj = $(".upload").clone();
@@ -117,12 +122,49 @@ $(function() {
 </head>
 
 <body>
-	<h1>새 글 등록</h1>
-	<form role="form" action="/projectdetail/register" method="post">
+
+<div class="wrap">
+		<jsp:include page="../includes/header.jsp"></jsp:include>
+			<!-- 보조메뉴바 시작 -->
+				<div class="s-menu">
+				<div class="s-menu-title">
+					<p>프로젝트 <i class="bi bi-clipboard-data"></i>
+				</div>
+				<div class="s-list-item ">
+				    <input id="newbtn" type="button" value="새 글쓰기" onclick="self.location = '/projectdetail/register';">
+				</div><br>
+				<div class="s-list-item ">
+					<a href="/projectdetail/home/${pj_num}">프로젝트 홈</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/calendar">캘린더</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/taskboard">업무보드</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/tasklist">업무리스트</a>
+				</div>
+				<br><br>
+				<div class="s-list-item ">
+					<a href="/project/main" style="color:gray"><i class="fa fa-thin fa-door-open"></i> 나가기</a>
+				</div>
+
+			</div>
+	<div class="wrap-box">		
+		<div class="s-container">
+		<br>
+		<h2 id="c-title">새 피드 글쓰기</h2><br> 
+
+            <div class="contents_wrap">
+            
+		<form role="form" action="/projectdetail/register" method="post">
 		<input type="hidden" id="pj_num" name="pj_num" value="${pj_num}">
 		<input type="hidden" id="pb_writer" name="pb_writer" value="${loginedId }">
-		<textarea name="pb_contents" rows="5" cols="75"></textarea>
-		<br> <input type="checkbox" id="notice" name="pb_status" value="Y"> 공지글지정 <br>
+		<div class="form-group">
+    		<textarea class="form-control" name="pb_contents" rows="10"></textarea>
+  		</div>
+		<input type="hidden" id="notice" name="pb_status" value="Y">
 		<div class='upload'>
 			<input type="file" name='uploadFile' multiple>
 		</div>
@@ -131,8 +173,13 @@ $(function() {
 	
 		</ul>
 	</div>
-		<input type="submit" id="registProjectBoard" value="글 등록하기"><br>
+		<input type="submit" id="registProjectBoard" value="글 등록하기" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none; padding: 5px; float: right; margin-right: 10px;"><br>
 		<br>
 	</form>
+</div>
+</div>
+</div>
+</div>
+	<jsp:include page="../includes/footer.jsp"></jsp:include>
 </body>
 </html>

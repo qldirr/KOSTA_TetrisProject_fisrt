@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.listtable{
+.listBody{
 	position: relative;
     left: 640px;
     top: 100px;
@@ -8,4 +8,9 @@
 }
 th {
 	text-align: center;
+}
+.htwo{
+	position: relative;
+    left: 635px;
+    top: 100px;
 }

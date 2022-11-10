@@ -118,15 +118,13 @@ public class ElecAuthServiceImpl implements ElecAuthService {
 	}
 
 	@Override
-	public List<ElecAuthVO> sendList(Criteria cri) {
-		//log.info("send List with criteria" + cri);
-		return mapper.getListWithPaging(cri);
+	public int countListProceeding(String e_id) {
+		return mapper.countListProceeding(e_id);
 	}
 
 	@Override
-	public List<ElecAuthVO> getList(Criteria cri) {
-		//log.info("get List with criteria" + cri);
-		return mapper.getListWithPaging(cri);
+	public int countListDisapproved(String e_id) {
+		return mapper.countListDisapproved(e_id);
 	}
 
 	

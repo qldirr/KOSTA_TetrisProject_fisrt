@@ -98,17 +98,43 @@ public class ChatController {
 	public void registerCR(@RequestBody Map<String, Object> map, HttpSession session, Principal principal) {
 		List<EmployeeVO> chatPart = new ArrayList<>();
 		EmployeeVO loginUserVO = chatService.getEmp(principal.getName());
-		chatPart.add(loginUserVO);
+//		chatPart.add(loginUserVO);
 		
 		String e_id = (String)map.get("e_id");
 		EmployeeVO empVO = chatService.getEmp(e_id);
-		chatPart.add(empVO);
+//		chatPart.add(empVO);
+		
+		
+		
+		///////////////////////////////////////////////////////////////
+		
+		if(loginUserVO.getE_name().compareTo(empVO.getE_name()) < 0) {
+			chatPart.add(loginUserVO);
+			chatPart.add(empVO);
+		}else {
+			chatPart.add(empVO);
+			chatPart.add(loginUserVO);
+		}
+
+		
+				///////////////////////////////////////////////////////////////
+		
+		
+		
+		
 		
 		String cr_title = "";
 		for(int i=0;i<chatPart.size();i++) {
 			cr_title += chatPart.get(i).getE_name();
-			cr_title += ", ";
+			
+			if(i != chatPart.size()-1) {
+				cr_title += ", ";
+			}else {
+				break;
+			}
 		}
+		
+		
 		
 		String cr_id = UUID.randomUUID().toString();
 		ChatRoomVO chatRoomVO = new ChatRoomVO();

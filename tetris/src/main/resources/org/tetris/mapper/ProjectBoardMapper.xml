@@ -59,5 +59,12 @@
 	<delete id="deleteReply" parameterType="long">
 		delete from preply where pr_num = #{pr_num}
 	</delete>
+	
+	<select id="countTaskFinished" parameterType="long" resultType="int">
+	<![CDATA[ 
+		select (NVL((select count(*) from task where ts_status = '완료' and pj_num = #{pj_num})/DECODE((select count(*) from task where pj_num = #{pj_num}), 0, NULL, (select count(*) from task where pj_num = #{pj_num})), 0))*100 finished from dual
+	]]>
+	</select>
+	
 
 </mapper>

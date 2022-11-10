@@ -13,11 +13,13 @@
 	
 	<!-- <security:intercept-url pattern="/user/all" access="permitAll"/>
 	<security:intercept-url pattern="/user/user" access="hasRole('ROLE_USER')"/> -->
+	<!-- <security:intercept-url pattern="/" access="hasRole('ROLE_USER')"/> -->
+	<security:intercept-url pattern="/" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')"/>
  <!-- 	<security:intercept-url pattern="/user/user" access="hasRole('ROLE_ADMIN')"/> -->
 <!--  	<security:intercept-url pattern="/user/admin" access="hasRole('ROLE_ADMIN')"/> -->
 
 	<security:access-denied-handler ref="customAccessDenied"/>
-	<!-- <security:form-login/> -->
+	<!-- <security:form-login/> --> 
 	<security:form-login login-page="/member/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
 	<security:csrf disabled="true"/>
 	<security:logout logout-url="/member/customLogout" invalidate-session="true" logout-success-url="/member/customLogin" delete-cookies="remember-me,JSESSION-ID"/>

@@ -18,4 +18,5 @@ public interface ProjectBoardMapper {
 	public void insertReply(BoardReplyVO reply);
 	public List<BoardReplyVO> getListReply(@Param("pb_num") Long pb_num, @Param("pj_num") Long pj_num);
 	public void deleteReply(Long pr_num);
+	public int countTaskFinished(Long pj_num);
 }

@@ -32,11 +32,24 @@
 				contentType: 'application/json',
 				data: JSON.stringify({"cr_id" : cr_id}),
 				success : function() {
-					window.location.href = "/messanger/chatting";
+					/* window.location.href = "/messanger/chatting"; */
+					window.open('http://localhost:8081/messanger/chatting', 'Tetris Chatting', 'width=450, height=600, left=2000, top=500, location=no, status=no, scrollbars=yes');
 				}
 			});
 		})
 	})
+	
+	function notify(){if(!("Notification" in window)){
+			alert("데스크톱 알림을 지원하지 않는 브라우저입니다.");
+		}
+		Notification.requestPermission(function(result){
+			if(result == 'denied'){
+				Notification.requestPermission();
+				alert("알림을 차단하셨습니다.\n브라우저의 사이트 설정에서 변경하실 수 있습니다.");
+				return false;
+			}
+		});
+	}
 </script>
 </head>
 <body>
@@ -53,6 +66,13 @@
 	
 	
 	<div id="content">
+			<!-- 액션폼 -->
+				<form action="/messanger/main/emplist" name="emplist" method='get'>
+					<!-- <input type="submit" value="조직도"> -->
+				</form><br>
+				<form action="/messanger/main/chatroomlist" name="chatroomlist" method='get'>
+					<!-- <input type="submit" value="채팅방"> -->
+				</form><br>
             <!-- 설정바(최소화, 닫기 버튼 등) -->
             <!-- <div class="setting_bar">
                 <i class="icon-window-minimize" alt="최소화버튼" title="최소화"></i>
@@ -69,23 +89,26 @@
             <!-- 친구창, 대화창, 설정창 등 이동 가능한 네비게이터 -->
             <nav>
                 <div class="main-menu">
-                    <a href="friend.html">
+                    <a href="javascript:document.emplist.submit();">
                         <i class="icon-adult" alt="친구메뉴" title="친구"></i>
                     </a>
-                    <a href="chatting.html">
+                    <a href="javascript:document.chatroomlist.submit();">
                         <i class="icon-chat" alt="채팅메뉴" title="채팅"></i>
                         <span class="alert-balloon" alt="알림수">3</span>
                     </a>
-                    <a href="more_menu.html">
+                    <a href="#" onclick="notify()">
+                    	<i class="icon-bell" alt="알림버튼" title="알림"></i>
+                    </a>
+                    <!-- <a href="more_menu.html">
                         <i class="icon-ellipsis" alt="더보기버튼" title="더보기"></i>
                         <span class="alert-balloon" alt="알림수">N</span>
-                    </a>
+                    </a> -->
                 </div>
                 <div class="sub-menu">
                     <!-- <a href="temp.html" target="_blank">
-                        <i class="icon-smile" alt="이모티콘샵바로가기" title="이모티콘샵"></i></a> -->
-                    <i class="icon-bell" alt="알림버튼" title="알림"></i>
-                    <i class="icon-cog" alt="설정버튼" title="설정"></i>
+                        <i class="icon-smile" alt="이모티콘샵바로가기" title="이모티콘샵"></i></a>
+                    <a href="#" onclick="notify()"><i class="icon-bell" alt="알림버튼" title="알림"></i></a>
+                    <i class="icon-cog" alt="설정버튼" title="설정"></i> -->
                 </div>
             </nav>
             <!-- 메인: 채팅 리스트 화면 -->
@@ -105,7 +128,7 @@
                         	<!-- <a href="bbu-chat-room.html" target="_blank"> -->
                             	<img src="/resources/pic/default.png" class="profile-img" alt="쀼프로필사진">
                             	<div class="talk">
-                            	    <p class="friend-name">${list.cr_id }</p>
+                            	    <p class="friend-name">${list.cr_title }</p>
                                 	<p class="chat-content">대리님! 회의 끝나시면 연락 부탁드립니다!</p>
                             	</div>
                             	<div class="chat-status">

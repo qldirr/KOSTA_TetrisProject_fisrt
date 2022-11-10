@@ -10,6 +10,7 @@
 <link href="/resources/css/res.css" rel="stylesheet">
 </head>
 <body>
+<div class="wrap">
 	<jsp:include page="../includes/header.jsp"></jsp:include>
 	<!-- 보조메뉴바 시작 -->
 	<div class="s-menu">
@@ -32,6 +33,7 @@
 	<!-- 보조메뉴바 끝 -->
 
 	<!-- 내용 시작 -->
+		<div class="wrap-box">
 	<div class="s-container">
 		<h2 id="c-title">차량정보</h2>
 
@@ -77,9 +79,11 @@
 
 			</form>
 		</div>
-		<jsp:include page="../includes/footer.jsp"></jsp:include>
+		
 	</div>
-
+	</div>
+	</div>
+<jsp:include page="../includes/footer.jsp"></jsp:include>
 
 </body>
 </html>
