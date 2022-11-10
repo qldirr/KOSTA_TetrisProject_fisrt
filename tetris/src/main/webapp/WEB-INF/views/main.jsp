@@ -248,7 +248,7 @@
 					<!-- 사원정보 -->
 					<div class="myProfile Box">
 						<span class="m-title">MyProfile </span> <a href=""> <img
-							alt="사진" src="../resources/img/res/hi.png"></a>
+							alt="사진" src="../resources/img/res/${userid}.png"></a>
 						<div style="font-size: 18px;">${userName }</div>
 						
 						<div>
@@ -410,12 +410,14 @@
 						</tr>
 					</thead>
 
-					<c:forEach items="${suglist}" var="suggestions" begin="0" end="2"
+					<c:forEach items="${notlist}" var="notice" begin="0" end="2"
 						varStatus="status">
 						<tr>
 							<td><a class='move'
-								href='/suggestions/suggestionsget?pageNum=1&amount=10&s_num=<c:out value="${suggestions.s_num}"/>'> <c:out
-										value="${suggestions.s_title}" /></a></td>
+								href='/notice/get?pageNum=1&amount=10&n_num=<c:out value="${notice.n_num}"/>'> <c:out
+										value="${notice.n_title}" /></a></td>
+										
+										
 						</tr>
 					</c:forEach>
 				</table>

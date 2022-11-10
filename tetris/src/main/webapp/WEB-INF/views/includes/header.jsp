@@ -209,7 +209,7 @@ $(document).ready(
 	function() {
 		
 		referrer = document.referrer;
-		alert(referrer);
+	
 		
 		connectWebSocket(); 
 		
@@ -277,7 +277,7 @@ $(document).ready(
 				<a class="a" href="/elecauth/main"><i class="bi bi-file-text"></i> 전자결재</a>
 			</div>
 			<div class="sidebar-item">
-				<a class="a" href="/suggestions/suggestionslist"><i class="bi bi-easel"></i>
+				<a class="a" href="/notice/list"><i class="bi bi-easel"></i>
 					게시판</a>
 			</div>
 			<div class="sidebar-item">
@@ -305,7 +305,7 @@ $(document).ready(
 
 					</button>
 					<button id="btn-info">
-						<img src="../resources/img/res/hi.png" alt="사진"> 
+						<img src="../resources/img/res/<sec:authentication property="principal.username" />.png" alt="사진"> 
 						<span class="user"><sec:authentication property="principal.user.e_name" /></span>						
 					</button>
 	
