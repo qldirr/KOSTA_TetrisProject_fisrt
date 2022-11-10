@@ -247,7 +247,7 @@
 				<div class="main-left">
 					<!-- 사원정보 -->
 					<div class="myProfile Box">
-						<span class="m-title">MyProfile </span> <a href=""> <img
+						<span class="m-title">MyProfile </span> <a href="/member/=user?${e_id}"> <img
 							alt="사진" src="../resources/img/res/${userid}.png"></a>
 						<div style="font-size: 18px;">${userName }</div>
 						
