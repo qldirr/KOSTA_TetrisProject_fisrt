@@ -14,7 +14,7 @@ public interface UserService {
 	public List<UserVO> getList();
 
 	public UserVO detailUser(String e_id);
-
+ 
 	public AuthVO detailAuth(String e_id);
 
 	public void updateUser(UserVO user);

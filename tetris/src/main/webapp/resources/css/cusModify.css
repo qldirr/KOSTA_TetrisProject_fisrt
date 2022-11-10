@@ -11,6 +11,18 @@
 	align-items:  center;
 
 }
+#deleteUser_btn{
+	width: 324px;
+    position: relative;
+    left: 557px;
+    bottom: 38.5px;
+	
+}
+
+#updateUser_btn{
+	width: 320px;
+
+}
 .form-control {
 	width: 648px;
 }
