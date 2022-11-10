@@ -19,4 +19,5 @@ public interface ProjectBoardService {
 	public List<BoardReplyVO> getListBoardReply(Long pb_num, Long pj_num);
 	public void removeReply(Long pr_num);
 	public List<BoardAttachVO> getAttachList(Long pj_num);
+	public int countTaskFinished(Long pj_num);
 }
