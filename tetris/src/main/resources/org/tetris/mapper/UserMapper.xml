@@ -31,7 +31,7 @@
 	<select id="read" resultMap="userMap">
 	SELECT
 		e.e_id, e_name, e_pw, e_pnum, e_hireddate, e_resigndate,
-	e_totalvac,e_usevac,e_birth,e_num,e_picfile, e_position,e.d_num,e.enabled,auth.a_auth FROM
+	e_totalvac,e_usevac,e_birth,e_num,e_picfile, e_position,e.d_num,e.enabled, auth.a_auth FROM
 	employee e LEFT OUTER JOIN authmapping auth on e.e_id = auth.e_id
 	WHERE e.e_id = #{e_id}
 	</select>
