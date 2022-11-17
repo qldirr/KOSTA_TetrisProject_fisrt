@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tetris.mapper.ProjectBoardMapper">
 
-	<select id="readProjectInfo" parameterType="String" resultType="org.tetris.domain.user.UserVO">
+	<select id="readProjectInfo" parameterType="String" resultType="org.tetris.domain.UserVO">
 		select ev.e_id, ev.e_name, ev.e_position, ev.d_name
 			from projectlist pl join v_employee ev
 			on pl.e_id = ev.e_id

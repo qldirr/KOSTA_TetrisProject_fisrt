@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+import org.tetris.domain.UserVO;
 import org.tetris.domain.project.ProjectBoardVO;
 import org.tetris.domain.project.ProjectMemberVO;
 import org.tetris.domain.project.ProjectVO;
 import org.tetris.domain.user.DepartmentVO;
-import org.tetris.domain.user.UserVO;
 
 
 public interface ProjectService {

@@ -25,7 +25,6 @@ import org.tetris.domain.NoticeVO;
 import org.tetris.domain.SuggestionsVO;
 import org.tetris.domain.elecauth.ElecAuthVO;
 import org.tetris.domain.project.ProjectVO;
-import org.tetris.domain.user.UserVO;
 import org.tetris.security.domain.CustomUser;
 import org.tetris.service.ElecAuthService;
 import org.tetris.service.HrService;

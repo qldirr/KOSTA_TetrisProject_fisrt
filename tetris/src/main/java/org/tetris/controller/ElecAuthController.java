@@ -19,7 +19,6 @@ import org.tetris.domain.Criteria;
 import org.tetris.domain.PageDTO;
 import org.tetris.domain.elecauth.ElecAuthVO;
 import org.tetris.domain.elecauth.ElecLineVO;
-import org.tetris.domain.user.UserVO;
 import org.tetris.mapper.ProjectMapper;
 import org.tetris.security.domain.CustomUser;
 import org.tetris.service.ElecAuthService;
@@ -44,6 +43,7 @@ public class ElecAuthController {
 	
 	@Autowired
 	private UserService userService;
+	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/main")
 	public void getMain(Model model) {

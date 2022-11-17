@@ -27,12 +27,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.tetris.domain.UserVO;
 import org.tetris.domain.project.BoardAttachVO;
 import org.tetris.domain.project.BoardReplyVO;
 import org.tetris.domain.project.ProjectBoardVO;
 import org.tetris.domain.project.ProjectCalVO;
 import org.tetris.domain.project.ProjectTaskVO;
-import org.tetris.domain.user.UserVO;
 import org.tetris.security.domain.CustomUser;
 import org.tetris.service.ProjectBoardService;
 import org.tetris.service.ProjectCalService;
@@ -169,7 +169,6 @@ public class ProjectBoardController {
 				
 				attach.setPf_uuid(uuid.toString());
 				attach.setPf_path(uploadFolder);
-				
 				
 				list.add(attach);
 				
