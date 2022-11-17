@@ -3,21 +3,6 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h1>회원목록</h1>
-<div class="listBody">
-
-
-
-</div>
-
     <%@ include file="../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>

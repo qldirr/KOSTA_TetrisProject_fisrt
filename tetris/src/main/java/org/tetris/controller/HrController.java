@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.Criteria;
 import org.tetris.domain.HrVO;
-import org.tetris.domain.PageDTO;
+import org.tetris.domain.page.PageDTO;
 import org.tetris.security.domain.CustomUser;
 import org.tetris.service.HrService;
 
@@ -34,9 +34,8 @@ import lombok.extern.log4j.Log4j;
 public class HrController {
 	
 	private HrService service;
-	//���°��� ��Ʈ�ѷ�
 	
-//person.jsp ���α��������� - e_id�� �������
+	
 	@GetMapping("/person")
 	public void get( Model model) {
 		log.info("/person");
@@ -51,7 +50,24 @@ public class HrController {
 		log.info(service.getHr(e_id));
 	}
 	
-	//����ϱ�
+	//占쏙옙占쏙옙歐占�
+//	@PostMapping("/insertAction.do")
+//	@ResponseBody
+//	public String insertAction(@RequestBody HrVO hr, Model model, RedirectAttributes rttr) {
+//		Date date = new Date();
+//		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+//		log.info("insertAction.do");
+//		log.info("e_id: " + hr.getE_id());
+//		hr.setHr_Time(formatter.format(date));
+//		log.info(hr.getHr_Time());
+//		service.startDate(hr.getE_id());
+//		rttr.addFlashAttribute("e_id", hr.getE_id());
+//		
+//		//rttr.addFlashAttribute("result", hr.getE_id());
+//		return "redirect:/attendance/person";
+//	}
+
+
 	@PostMapping("/insertAction.do")
 	   @ResponseBody
 	   public String insertAction(Model model, RedirectAttributes rttr) {
@@ -89,7 +105,6 @@ public class HrController {
 	      return "redirect:/attendance/person";
 	   }
 
-
 	//����ϱ�
 	   @PostMapping("/endAction.do")
 	   @ResponseBody
@@ -107,7 +122,7 @@ public class HrController {
 	      return "redirect:/attendance/get";
 	   } 
 	
-//personal.jsp ���α�����ȸ
+//personal.jsp 
 	
 	@GetMapping("/personal")
 	public void getPersonal(@RequestParam("e_id") String e_id, @ModelAttribute("cri") Criteria cri, Model model) {
@@ -121,7 +136,7 @@ public class HrController {
 	
 	
 	
-//personAll.jsp �������������
+//personAll.jsp 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙占�
 	
 	  @GetMapping("/personAll") 
 	  public void getAll( Criteria cri, Model model) {
@@ -133,7 +148,7 @@ public class HrController {
 		  model.addAttribute("pageMaker", new PageDTO(cri, total));
 	  }
 	 
-//vacation list ���������
+//vacation list 占쏙옙占쏙옙占쏙옙占쏙옙占�
 	  @GetMapping("/vacation")
 	  public void getVac(@RequestParam("e_id") String e_id, Model model) {
 		  log.info("getVac");

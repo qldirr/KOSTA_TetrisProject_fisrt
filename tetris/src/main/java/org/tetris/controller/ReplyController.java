@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tetris.domain.Criteria;
 import org.tetris.domain.ReplyPageDTO;
-import org.tetris.domain.ReplyVO;
+import org.tetris.domain.suggestions.ReplyVO;
 import org.tetris.service.NoticeService;
 import org.tetris.service.ReplyService;
 
@@ -70,7 +70,8 @@ public class ReplyController {
 
 	}	
 	
-	@DeleteMapping("/{r_num}")
+	//삭제
+	@DeleteMapping("/{r_num}")  
 	public ResponseEntity<String> remove(@PathVariable("r_num") Long r_num){
 		log.info("remove................"+ r_num);
 		
@@ -80,7 +81,7 @@ public class ReplyController {
 	}	
 	
 	@ResponseBody
-	@GetMapping(value = "/pages/{s_num}/{page}", 
+	@GetMapping(value = "/pages/{s_num}/{page}",     //페이징 처리
 			produces = { 
 			MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE })

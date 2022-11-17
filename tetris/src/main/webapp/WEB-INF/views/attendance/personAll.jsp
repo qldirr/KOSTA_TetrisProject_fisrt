@@ -13,6 +13,7 @@
 	$(document)
 			.ready(
 					function() {
+
 						//출퇴근버튼 활성화
 						var currentDate = new Date();
 						var currentHours = addZeros(currentDate.getHours(), 2);
@@ -24,7 +25,9 @@
 								+ (currentDate.getMonth() + 1) + "-"
 								+ currentDate.getDate() + " " + currentHours
 								+ ":" + currentMinute + ":" + currentSeconds;
+
 						var today = $('#timecheck').val();
+
 						var lateCheck = '09:00:00';
 						var checkTime = today;//출근시간확인
 
@@ -45,6 +48,7 @@
 									}),
 									success : function(result) {
 										alert("출근성공");
+
 									},
 									error : function(result) {
 										alert("출근실패 (관리자에게 문의해주세요)");
@@ -52,6 +56,7 @@
 								}); //$.ajax 
 							}
 						});
+
 						//퇴근클릭
 						$("#endD").on("click", function() {
 							if (confirm('퇴근하시겠습니까?')) {
@@ -60,6 +65,7 @@
 								var e_id = getParam('e_id');
 								//e_id = e_id.slice(3, -3);
 								console.log(e_id);
+
 								$.ajax({
 									url : 'endAction.do',
 									type : 'POST',
@@ -76,11 +82,13 @@
 								}); //$.ajax 
 							}
 						});
+
 						$("#outD").on("click", function() {
 							if (confirm('외근하시겠습니까?')) {
 								alert('안녕히다녀오세요');
 								var e_id = getParam('e_id');
 								console.log(e_id);
+
 								$.ajax({
 									url : 'outAction.do',
 									type : 'POST',
@@ -91,32 +99,45 @@
 								});
 							}
 						});
+
 						$('#datePicker').datepicker({
 							format : "yyyy-mm-dd", //달력에서 클릭시 표시할 값 형식
 							autoclose : true
 						});
+
 						$('#click-btn').on('click', function() {
 							var date = $('#dateRangePicker').val();
 							alert(date);
 						});
+
 						var result = '<c:out value="${result}"/>';
+
 						checkModal(result);
+
 						history.replaceState({}, null, null);
+
 						function checkModal(result) {
+
 							if (result === '' || history.state) {
 								return;
 							}
+
 							if (parseInt(result) > 0) {
 								$(".modal-body").html(
 										"게시글 " + parseInt(result)
 												+ "번이 등록되었습니다.");
 							}
+
 							$("#myModal").modal("show");
 						}
+
 						$("#regBtn").on("click", function() {
+
 							self.location = "/attendance/getAll";
 						});
+
 						var actionForm = $("#actionForm");
+
 						$(".paginate_button a").on(
 								"click",
 								function(e) {
@@ -126,6 +147,7 @@
 											.val($(this).attr("href"));
 									actionForm.submit();
 								});
+
 						$(".move")
 								.on(
 										"click",
@@ -155,6 +177,7 @@
 							$('[id^=lateChecking]').css("color", "red");
 						}
 					});
+
 	function getParameterByName(name) {
 		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex
@@ -162,6 +185,7 @@
 		return results == null ? "" : decodeURIComponent(results[1].replace(
 				/\+/g, " "));
 	}
+
 	function getParam(sname) {
 		var params = location.search.substr(location.search.indexOf("?") + 1);
 		var sval = "";
@@ -174,6 +198,7 @@
 		}
 		return sval;
 	}
+
 	function printClock() {
 		var clock = document.getElementById("clock"); // 출력할 장소 선택
 		var currentDate = new Date(); // 현재시간
@@ -191,6 +216,7 @@
 				+ "일";
 		setTimeout("printClock()", 1000); // 1초마다 printClock() 함수 호출
 	}
+
 	function addZeros(num, digit) { // 자릿수 맞춰주기
 		var zero = '';
 		num = num.toString();
@@ -208,30 +234,29 @@
 		<!-- jsp 인클루드 사용-->
 		<jsp:include page="../includes/header.jsp"></jsp:include>
 
-
-		<!-- 보조사이드바 -->
-		<div class="s-menu">
-			<div class="s-menu-title">
-				<p>전사 근태페이지</p>
-				<i class="fa-solid fa-pen-to-square fa-lg"></i>
-			</div>
-			<div class="s-list-item text-center">
-				<div id="date"></div>
-				<div
-					style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
-					id="clock"></div>
-			</div>
-			<!-- <div class="s-list-item ">
+		<div class="wrap-box">
+			<!-- 보조사이드바 -->
+			<div class="s-menu">
+				<div class="s-menu-title">
+					<p>전사 근태페이지</p>
+					<i class="fa-solid fa-pen-to-square fa-lg"></i>
+				</div>
+				<div class="s-list-item text-center">
+					<div id="date"></div>
+					<div
+						style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
+						id="clock"></div>
+				</div>
+				<!-- <div class="s-list-item ">
 					<a href=""></a>
 				</div> -->
-			<div class="s-list-item ">
-				<a href="">전사연차연황</a>
+				<div class="s-list-item ">
+					<a href="">전사연차연황</a>
+				</div>
 			</div>
-		</div>
-		<!-- 보조사이드바 끝-->
+			<!-- 보조사이드바 끝-->
 
-		<!-- 내용 시작 -->
-		<div class="wrap-box">
+			<!-- 내용 시작 -->
 			<div class="s-container">
 
 				<h2 id="c-title">근태리스트</h2>
@@ -360,10 +385,11 @@
 			<!-- 내용 끝 -->
 		</div>
 	</div>
-
 	<!-- 전체 wrapper 끝 -->
 	<jsp:include page="../includes/footer.jsp"></jsp:include>
 
 </body>
 
 </html>
+
+

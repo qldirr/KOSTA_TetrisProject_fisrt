@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.tetris.domain.Criteria;
-import org.tetris.domain.SuggestionsVO;
+import org.tetris.domain.suggestions.SuggestionsVO;
 
 import jdk.jshell.SourceCodeAnalysis.Suggestion;
 import lombok.extern.log4j.Log4j;
@@ -56,7 +56,7 @@ public class SuggestionsServiceTests {
 	}*/
 	
 	/*@Test
-	public void testUpdate() {
+	public void testUpdate() {//데이터 수정 서비스
 		SuggestionsVO suggestions = service.get(5L);
 		
 		if(suggestions == null) {

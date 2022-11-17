@@ -1,4 +1,4 @@
-package org.tetris.domain;
+package org.tetris.domain.suggestions;
 
 import java.util.Date;
 

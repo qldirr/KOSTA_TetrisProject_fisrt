@@ -1,4 +1,4 @@
-package org.tetris.domain;
+package org.tetris.domain.tmenu;
 
 import java.util.Date;
 

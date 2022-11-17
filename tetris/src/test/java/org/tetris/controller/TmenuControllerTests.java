@@ -21,7 +21,7 @@ import lombok.extern.log4j.Log4j;
 	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
 })
 @Log4j
-public class TmenuControllerTests {
+public class TmenuControllerTests {//컨트롤러테스트(목업)
 
 	@Autowired
 	private WebApplicationContext ctx;

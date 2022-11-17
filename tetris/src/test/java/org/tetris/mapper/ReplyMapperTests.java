@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.tetris.domain.Criteria;
-import org.tetris.domain.ReplyVO;
+import org.tetris.domain.suggestions.ReplyVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -26,10 +26,10 @@ public class ReplyMapperTests {
 		log.info(mapper);
 	}*/
 	
-	private Long[] s_numArr = {210L, 203L, 202L, 201L, 200L};
+	private Long[] s_numArr = {210L, 203L, 202L, 201L, 200L}; 
 	
 	@Test
-	public void testCreate() {
+	public void testCreate() {//댓글 삽입 테스트
 		IntStream.rangeClosed(1, 10).forEach(i -> {
 			ReplyVO vo = new ReplyVO();
 			vo.setS_num(s_numArr[i%5]);

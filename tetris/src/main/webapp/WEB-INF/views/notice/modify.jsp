@@ -51,7 +51,7 @@
 		<div class="form-group">
 			<label>글번호</label> 
 			<input class="form-control" name='n_num' size=1200
-				value='<c:out value="${notice.n_num}"/>' readonly="readonly">
+				value='<c:out value="${notice.n_num}"/>' readonly="readonly">   <!--readonly를 통해 읽기만 가능하도록 처리  -->
 		</div>
 
 		<div class="form-group">
@@ -103,14 +103,14 @@
 				
 				console.log(operation);
 				
-				if(operation === 'remove'){
+				if(operation === 'remove'){ /* 삭제일 경우 */
 					formObj.attr("action", "/notice/remove");
-				}else if(operation === 'list'){
+				}else if(operation === 'list'){  /* 리스트일 경우 */
 					
 					self.location="/notice/list";
 					return;
 				}
-				formObj.submit();
+				formObj.submit(); /* 수정 된 값 제출 */
 			});
 		}); 
 		</script>	

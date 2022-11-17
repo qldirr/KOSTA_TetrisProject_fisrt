@@ -28,7 +28,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			rolenames.add(authority.getAuthority());
 			
 		});
-		
+		 
 		log.warn("ROLE NAME: " + rolenames);
 		
 		if(rolenames.contains("ROLE_ADMIN")) {

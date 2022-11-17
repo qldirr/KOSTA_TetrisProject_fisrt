@@ -43,7 +43,7 @@
       <div class="row">
          <!-- sidebar -->
        
-<div style=""width: 100%; height: 1000; ;">
+<div style="width: 100%; height: 1000;">
 
 
 	<table class="table table-striped table-bordered table-hover">	

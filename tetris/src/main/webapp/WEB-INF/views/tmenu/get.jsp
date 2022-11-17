@@ -76,7 +76,7 @@
     
 
 
-		<c:if test="${tmenu.t_num eq 1}">
+		<c:if test="${tmenu.t_num eq 1}"> <!--월별로 사진 첨부  -->
 		<p><img src="/resources/img/menu1.jpg" width="900px"></p> 
 		</c:if>
 		<c:if test="${tmenu.t_num eq 2}">

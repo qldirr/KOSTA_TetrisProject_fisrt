@@ -14,12 +14,35 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
 <script src="/resources/vender/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+$(document).ready(
+		
+		function(){
+			$("#submit").on("click", function(){
+				if($("#username").val()==""){
+					alert("아이디를 입력해주세요.");
+					$("#userId").focus();
+					return false;
+				}
+				if($("#password").val()==""){
+					alert("비밀번호를 입력해주세요.");
+					$("#userPass").focus();
+					return false;
+				}
+				else if($("#username").val()!=null&&$("#password").val()!=null){
+					$("#login").submit();
+				}
+		}
+		
+	})
+	)
 
+</script>
 </head>
  
 <body>
 <h1></h1>
-<h2><c:out value="${error}"/></h2>
+<%-- <h2><c:out value="${error}"/></h2> --%>
 <h2><c:out value="${logout}"/></h2>
 
 <div class="container">
@@ -32,15 +55,17 @@
 					
 					<!--  <h3 style="text-align: center;">로그인 화면</h3>-->
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="아이디" name="username" maxlength="20">
+						<input type="text" class="form-control" placeholder="아이디" id="username" name="username" maxlength="20">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="비밀번호" name="password" maxlength="20">
+						<input type="password" class="form-control" placeholder="비밀번호" id="password" name="password" maxlength="20">
 					</div>
+			
 					<div class="check">
 					<input type="checkbox" name="remember-me">로그인 유지
 					</div>
-					<input type="submit" class="btn btn-primary form-control" value="로그인">
+					<input type="submit" id="submit" class="btn btn-primary form-control" value="로그인">
+					<p style="color: red; font-size: 5px;"><c:out value="${error}"/></p>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				</form>
 			</div>

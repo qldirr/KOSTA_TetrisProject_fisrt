@@ -1,4 +1,6 @@
-package org.tetris.domain;
+package org.tetris.domain.page;
+
+import org.tetris.domain.Criteria;
 
 import lombok.Getter;
 import lombok.ToString;

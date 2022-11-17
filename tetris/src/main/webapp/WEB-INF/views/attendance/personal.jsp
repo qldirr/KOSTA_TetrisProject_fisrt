@@ -212,9 +212,9 @@
                      </dl>
                      <!-- 출퇴근버튼 -->
                      <div class="my-5">
-                        <i id="startD" class="fa-solid fa-circle-play fa-3x"></i>
-                        <i id="endD" class="fa-solid fa-circle-stop fa-3x"></i>
-                        <i id="outD" class="fa-solid fa-circle-pause fa-3x"></i>
+                      <i id="startD" style="color: #151d66 ; background:white" class="fa-solid fa-circle-play fa-3x"></i> <i
+									id="endD" style="color: #151d66 ; background:white" class="fa-solid fa-circle-stop fa-3x"></i> <i
+									id="outD" style="color: #151d66 ; background:white" class="fa-solid fa-circle-pause fa-3x"></i>
                      </div>
                   </div>
             </div>
@@ -227,7 +227,7 @@
          <!-- 내용 시작 -->
          <div class="wrap-box">
          <div class="s-container">
-            <h2 id="c-title">소속부서: ${hrVO.d_name }제목</h2>
+            <h2 id="c-title">소속부서: ${hrVO.d_name }</h2>
             <!-- 근태누계 -->
                   <div class="panel panel-default my-5">
                      <div class="panel-heading"><h2>근태누계</h2></div>
@@ -342,5 +342,4 @@
 </body>
 
 </html>
-
 

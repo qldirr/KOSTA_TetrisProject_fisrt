@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.tetris.domain.Criteria;
-import org.tetris.domain.SuggestionsVO;
+import org.tetris.domain.suggestions.SuggestionsVO;
 import org.tetris.mapper.SuggestionsMapper;
 
 
@@ -55,7 +55,7 @@ public class SuggestionsMapperTests {
 	}*/
 	
 	@Test
-	public void testupdate() {
+	public void testupdate() {//데이터 수정 테스트
 		SuggestionsVO suggestions = new SuggestionsVO();
 		suggestions.setS_num(1000);		
 		suggestions.setS_title("수정 입니다$$.");

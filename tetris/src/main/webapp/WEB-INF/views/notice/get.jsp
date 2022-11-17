@@ -53,7 +53,7 @@
           
           <div class="form-group">
             <label>글번호</label> <input class="form-control" name='n_num' size=1200
-            value='<c:out value="${notice.n_num}"/>' readonly="readonly">
+            value='<c:out value="${notice.n_num}"/>' readonly="readonly"> <!--readonly으로 읽기만 가능하도록  -->
           </div>
 
           <div class="form-group">
@@ -74,7 +74,7 @@
 
 
 
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<sec:authorize access="hasRole('ROLE_ADMIN')">  <!--권한에 따른 접근제한  -->
 		<button type="button" class="btn btn-info" id="button"
 		onclick="location.href='/notice/modify?n_num=<c:out value="${notice.n_num}"/>'">
 		수정</button>
@@ -90,7 +90,7 @@
     </style>
 
 <form id='operForm' action="/notice/modify" method="get">
-	<input type='hidden' id='n_num' name='n_num' value='<c:out value="${notice.n_num}"/>'>
+	<input type='hidden' id='n_num' name='n_num' value='<c:out value="${notice.n_num}"/>'> <!--hidden으로 내용 숨기기  -->
 	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 	<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 </form>

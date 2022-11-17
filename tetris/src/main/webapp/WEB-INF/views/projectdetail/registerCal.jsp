@@ -20,7 +20,7 @@
 					autoclose: true
 				});
 				
-				$('#dateEend').datepicker({
+				$('#dateEnd').datepicker({
 					format: "yyyy-mm-dd",
 					autoclose: true
 				});

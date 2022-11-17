@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tetris.domain.Criteria;
-import org.tetris.domain.ReplyVO;
+import org.tetris.domain.suggestions.ReplyVO;
 import org.tetris.mapper.NoticeMapper;
 import org.tetris.mapper.ReplyMapper;
 
@@ -33,7 +33,7 @@ public class ReplySerivceImpl implements ReplyService {
 	}
 
 	@Override
-	public int modify(ReplyVO vo) {
+	public int modify(ReplyVO vo) {//댓글 수정 
 		log.info("modify...." +  vo);
 		return mapper.update(vo);
 	}
@@ -45,7 +45,7 @@ public class ReplySerivceImpl implements ReplyService {
 	}
 
 	@Override
-	public List<ReplyVO> getList(Criteria cri, Long s_num) {
+	public List<ReplyVO> getList(Criteria cri, Long s_num) {//페이징 처리
 		log.info("get reply list of a suggestions..." +  s_num);
 		return mapper.getListWithPaging(cri, s_num);
 	}

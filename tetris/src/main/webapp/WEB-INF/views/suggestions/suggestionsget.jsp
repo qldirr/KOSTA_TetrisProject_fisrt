@@ -66,7 +66,7 @@
 
 
 		<button type="button" class="btn btn-info" id="button"
-		onclick="location.href='/suggestions/suggestionsmodify?s_num=<c:out value="${suggestions.s_num}"/>'">
+		onclick="location.href='/suggestions/suggestionsmodify?s_num=<c:out value="${suggestions.s_num}"/>'"> <!-- 온클릭 이벤트, 번호 받아서 전달 -->
 		수정</button>
 
 		<button type="button" class="btn btn-info" id="button" 
@@ -79,22 +79,22 @@
         }
     </style>
 	
-<form id='operForm' action="/suggesiotns/suggesiotnsmodify" method="get">
-	<input type='hidden' id='s_num' name='s_num' value='<c:out value="${suggesiotns.s_num}"/>'>
-	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
-	<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-</form>
+	<form id='operForm' action="/suggesiotns/suggesiotnsmodify" method="get">
+		<input type='hidden' id='s_num' name='s_num' value='<c:out value="${suggesiotns.s_num}"/>'>
+		<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+		<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+	</form>
 
 
 
 
-<div class='row'>
+<div class='row'>  <!-- 댓글기능 -->
 
 	<div class ="col-lg-12">
 		<div class="panel panel-default">
 	<div class="panel-heading">	
  		<i class="fa fa-comments fa-fw"></i><br>
- 			<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right' >댓글작성</button>
+ 			<button id='addReplyBtn' class='btn btn-primary btn-xs pull-right' >댓글작성</button>  
 	</div>
 			
 			<div class="panel-body">
@@ -125,7 +125,7 @@
                          
                            
                            
- <!-- Modal -->
+ <!-- Modal : 모달창을 통해 댓글 기능 추가--> 
  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
  aria-labelledby="myModalLabel" aria-hidden="true">
      <div class="modal-dialog">

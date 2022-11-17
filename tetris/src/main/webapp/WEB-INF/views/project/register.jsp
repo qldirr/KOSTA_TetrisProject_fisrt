@@ -32,7 +32,7 @@
                   function() {
                      var child;
                      child = window.open("/project/member", "_blank",
-                           "width=800, height=800");
+                           "width=400, height=580");
                   });
 
          });
