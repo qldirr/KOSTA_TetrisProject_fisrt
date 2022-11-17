@@ -24,7 +24,7 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$("#listChatRoom li").on('dblclick', function(){
+		/* $("#listChatRoom li").on('dblclick', function(){
 			var cr_id = $(this).attr('class');
 			$.ajax({
 				url: '/messanger/chatting',
@@ -32,12 +32,46 @@
 				contentType: 'application/json',
 				data: JSON.stringify({"cr_id" : cr_id}),
 				success : function() {
-					/* window.location.href = "/messanger/chatting"; */
 					window.open('http://localhost:8081/messanger/chatting', 'Tetris Chatting', 'width=450, height=600, left=2000, top=500, location=no, status=no, scrollbars=yes');
 				}
 			});
+		}) */
+		
+		
+		
+		$("#listChatRoom li").on('dblclick', function(){
+			var cr_id = $(this).attr('class');
+			var actionForm = $("#actionForm")
+			
+			var str = "";
+			str += '<input type="hidden" name="cr_id" value=';
+			str += cr_id;
+			str += '>';
+			actionForm.html(str);
+			
+			
+			
+			actionForm.attr("action", "/messanger/chatting").attr("method", "post")
+					.attr("target", "Tetris Chatting")
+					.attr("onsubmit", "window.open('', 'Tetris Chatting', 'width=450, height=600, left=2000, top=500, location=no, status=no, scrollbars=yes');");
+			actionForm.submit();
+			location.reload(true);
 		})
+		
+		
+		
+		
 	})
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	function notify(){if(!("Notification" in window)){
 			alert("데스크톱 알림을 지원하지 않는 브라우저입니다.");
@@ -121,6 +155,11 @@
             	
             	
             	
+            	<form action="/messanger/chatting" id="actionForm" method="post">
+            	
+            	
+            	
+            	
             	
                 <ul id="listChatRoom">
                 	<c:forEach items="${listChatRoom }" var="list">
@@ -138,6 +177,13 @@
                     	</li>
                     </c:forEach>
                 </ul>
+                
+                
+                
+                </form>
+                
+                
+                
             </main>
             <!-- aside: 광고 -->
             <!-- <aside>

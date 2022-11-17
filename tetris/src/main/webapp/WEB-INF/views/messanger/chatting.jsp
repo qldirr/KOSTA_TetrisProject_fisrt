@@ -28,83 +28,6 @@
 		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 		crossorigin="anonymous"></script>
 
-<script type="text/javascript">
-	var roomId = $("#roomId").val();
-
-	$(document).ready(function(){
-		$("#file").on("change", function fileUpload(e){
-			
-		var regex = new RegExp("(.*?)\.(exe|sh)$");
-		var maxSize = 41943040; //40MB
-
-		function checkExtension(fileName, fileSize) {
-
-			if (fileSize >= maxSize) {
-				alert("파일 사이즈 초과");
-				return false;
-			}
-
-			if (regex.test(fileName)) {
-				alert("해당 종류의 파일은 업로드할 수 없습니다.");
-				return false;
-			}
-			return true;
-		}
-		
-		var cloneObj = $(".uploadDiv").clone();
-		
-			var formData = new FormData();
-			var inputFile = $("input[name='uploadFile']");
-			var files = inputFile[0].files;
-			
-			for (var i = 0; i < files.length; i++) {
-				if (!checkExtension(files[i].name, files[i].size)) {
-					return false;
-				}
-				formData.append("uploadFile", files[i]);
-				formData.append("cr_id", roomId);
-			}
-		 
-			$.ajax({
-				url: '/messanger/uploadAjaxAction',
-				processData: false,
-				contentType: false,
-				data: formData,
-				type: 'post',
-				dataType: 'json',
-				success: function(result){
-					alert("uploaded");
-					
-					showUploadedFile(result);
-			 		$(".uploadDiv").html(cloneObj.html());
-				}
-			}); //$.ajax
-			
-		});
-		
-		var uploadResult = $("#messageArea");
-		 
-		function showUploadedFile(uploadResultArr){
-			var str = "";
-		    
-			$(uploadResultArr).each(function(i, obj){
-			if(!obj.cc_image){
-				var fileCallPath =  encodeURIComponent( obj.cc_path + "/" + obj.cc_uuid + "_" + obj.cc_contents);
-				str += "<li><a href='download?fileName=" + fileCallPath + "'>" 
-		        		+ "<img src='/resources/img/attach.png'>" + obj.cc_contents + "</a></li>"
-				}else{
-				var thumbCallPath =  encodeURIComponent( obj.cc_path + "/s_" + obj.cc_uuid + "_" + obj.cc_contents);
-				var fileCallPath =  encodeURIComponent( obj.cc_path + "/" + obj.cc_uuid + "_" + obj.cc_contents);
-					str += "<li><a href='download?fileName=" + fileCallPath + "'>" 
-						+ "<img src='display?fileName=" + thumbCallPath + "'></a></li>"
-				}
-		});
-			uploadResult.append(str);
-		}
-		 
-	});
-</script>
-
 </head>
 <body>
 	
@@ -151,7 +74,7 @@
                     </div>
                     <!-- 채팅 내용 -->
                     <div class="main-chat">
-                    	<c:forEach items="${listChatContents }" var="listCC">
+                    	<%-- <c:forEach items="${listChatContents }" var="listCC">
                     		<c:choose>
                     			<c:when test="${listCC.e_id eq principal.username }">
                     				<c:choose>
@@ -236,7 +159,7 @@
                     				</c:choose>
                     			</c:otherwise>
                     		</c:choose>
-                    	</c:forEach>
+                    	</c:forEach> --%>
                     
                     
                         <!-- <div class="friend-chat">
@@ -312,6 +235,10 @@
 		}
 	});
 	
+	$("#file").on('change', function (){
+		/* alert("upload"); */
+		sendFile();
+	});
 	
 	});
 	
@@ -321,6 +248,36 @@
 	
 	function onOpen(){
 		/* alert("접속"); */
+		$.ajax({
+			url: '/messanger/getListMsg',
+			type: 'post',
+			contentType: 'application/json; charset:UTF-8',
+			async: false,
+			data: JSON.stringify({
+				"cr_id" : roomId
+			}),
+			success : function(result){
+				var e_id = '${principal.username}';
+				var chatContents = JSON.parse(result);
+				
+				for(var i=0;i<chatContents.length;i++){
+					if(chatContents[i].e_id == e_id){
+						var html = '<div class="me-chat">' + '<div class="me-chat-col">' + '<span class="balloon">'
+	        				+ chatContents[i].cc_contents + '</span>' + '</div>'
+	        				+ '<time datetime="07:32:00+09:00">오전 7:32</time>' + '</div>';
+			
+						$(".main-chat").append(html);
+					}else{
+						var html = '<div class="friend-chat">' + '<img class="profile-img" src="/resources/pic/default.png" alt="쀼프로필사진">'
+	        				+ '<div class="friend-chat-col">' + '<span class="profile-name"></span>'
+	        				+ '<span class="balloon">' + chatContents[i].cc_contents + '</span>' + '</div>'
+	        				+ '<time datetime="07:30:00+09:00">오전 7:30</time>' + '</div>';
+	    	
+						$(".main-chat").append(html);
+					}
+				}
+			}
+		});
 	}
 
 	// 메시지 전송
@@ -329,15 +286,16 @@
 		$.ajax({
 			url: '/messanger/registerMsg',
 			type: 'post',
-			contentType: 'application/json',
+			contentType: 'application/json; charset:UTF-8',
 			async: false,
 			data: JSON.stringify({
 				"cr_id" : roomId,
 				"e_id" : e_id,
 				"cc_contents" : $("#message").val()
 			}),
-			success : function(){
-				/* alert("success"); */
+			success : function(result){
+				/* alert(result); */
+				webSocket.send(result);
 			}
 		});
 		
@@ -346,13 +304,13 @@
 			"e_id" : e_id,
 			"cr_id" : roomId,
 			"cc_contents" : $("#message").val()
-			}; */
-		/* alert(JSON.stringify(msg)); */
+			};
+		alert(JSON.stringify(msg)); */
 		
 		
 		
 
-		webSocket.send($("#message").val());
+		/* webSocket.send($("#message").val()); */
 		/* webSocket.send(JSON.stringify(msg)); */
 		
 		
@@ -370,17 +328,20 @@
 		/* alert(msg);
 		alert(data); */
 		
-		/* msgData = JSON.parse(data);
-		var html = msgData.user + ": " msgData.message;
-		alert("msgData"); */
+		msgData = JSON.parse(data);
+		/* var html = msgData.cc_contents; */
+		/* alert(msgData.e_id);
+		alert(msgData.cr_id);
+		alert(msgData.cc_contents); */
 		
 		
 		
 		
 		
-		var html = '<div class="friend-chat">' + '<img class="profile-img" src="/resource/pic/default.png" alt="쀼프로필사진">'
+		
+		var html = '<div class="friend-chat">' + '<img class="profile-img" src="/resources/pic/default.png" alt="쀼프로필사진">'
         			+ '<div class="friend-chat-col">' + '<span class="profile-name"></span>'
-        			+ '<span class="balloon">' + data + '</span>' + '</div>'
+        			+ '<span class="balloon">' + msgData.cc_contents + '</span>' + '</div>'
         			+ '<time datetime="07:30:00+09:00">오전 7:30</time>' + '</div>';
     	
 		$(".main-chat").append(html);
@@ -395,6 +356,133 @@
 	function onClose(evt) {
 		$("#messageArea").append("연결 끊김");
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		function sendFile(){
+			
+			alert("sendFile");
+		
+			var e_id = '${principal.username}';
+			console.log(e_id);
+			
+			var file = document.querySelector("#file").files[0];
+			console.log(file);
+			
+			var fileReader = new FileReader();
+			
+			
+			
+			
+			
+			fileReader.onload = function(){
+				var data = {
+					file: "true",
+					msg: file
+				}
+				webSocket.send(JSON.stringify(data));//파일 보내기전 메세지 송부(파일 전송 명시)
+				console.log(JSON.stringify(data));
+				
+				arrayBuffer = this.result;
+				console.log(arrayBuffer);
+				
+				webSocket.send(arrayBuffer);
+			};
+			fileReader.readAsArrayBuffer(file);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		/* var regex = new RegExp("(.*?)\.(exe|sh)$");
+		var maxSize = 41943040; //40MB
+
+		function checkExtension(fileName, fileSize) {
+
+			if (fileSize >= maxSize) {
+				alert("파일 사이즈 초과");
+				return false;
+			}
+
+			if (regex.test(fileName)) {
+				alert("해당 종류의 파일은 업로드할 수 없습니다.");
+				return false;
+			}
+			return true;
+		}
+		
+		var cloneObj = $(".uploadDiv").clone();
+		
+			var formData = new FormData();
+			var inputFile = $("input[name='uploadFile']");
+			var files = inputFile[0].files;
+			
+			for (var i = 0; i < files.length; i++) {
+				if (!checkExtension(files[i].name, files[i].size)) {
+					return false;
+				}
+				formData.append("uploadFile", files[i]);
+				formData.append("cr_id", roomId);
+			}
+		 
+			$.ajax({
+				url: '/messanger/uploadAjaxAction',
+				processData: false,
+				contentType: false,
+				data: formData,
+				type: 'post',
+				dataType: 'json',
+				success: function(result){
+					alert("uploaded");
+					
+					showUploadedFile(result);
+			 		$(".uploadDiv").html(cloneObj.html());
+				}
+			}); //$.ajax */
+			
+		};
+		
+		/* var uploadResult = $("#messageArea");
+		 
+		function showUploadedFile(uploadResultArr){
+			var str = "";
+		    
+			$(uploadResultArr).each(function(i, obj){
+			if(!obj.cc_image){
+				var fileCallPath =  encodeURIComponent( obj.cc_path + "/" + obj.cc_uuid + "_" + obj.cc_contents);
+				str += "<li><a href='download?fileName=" + fileCallPath + "'>" 
+		        		+ "<img src='/resources/img/attach.png'>" + obj.cc_contents + "</a></li>"
+				}else{
+				var thumbCallPath =  encodeURIComponent( obj.cc_path + "/s_" + obj.cc_uuid + "_" + obj.cc_contents);
+				var fileCallPath =  encodeURIComponent( obj.cc_path + "/" + obj.cc_uuid + "_" + obj.cc_contents);
+					str += "<li><a href='download?fileName=" + fileCallPath + "'>" 
+						+ "<img src='display?fileName=" + thumbCallPath + "'></a></li>"
+				}
+		});
+			uploadResult.append(str);
+		} */
 		
 </script>
 </html>
