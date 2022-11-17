@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.tetris.domain.MeetingRoomVO;
+import org.tetris.domain.reservation.MeetingRoomVO;
 import org.tetris.service.MeetingRoomService;
 
 import lombok.AllArgsConstructor;

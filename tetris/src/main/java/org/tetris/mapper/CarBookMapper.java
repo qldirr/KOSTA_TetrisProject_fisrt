@@ -2,7 +2,7 @@ package org.tetris.mapper;
 
 import java.util.List;
 
-import org.tetris.domain.CarBookVO;
+import org.tetris.domain.reservation.CarBookVO;
 
 public interface CarBookMapper {
 	

@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tetris.domain.RoomBookVO;
+import org.tetris.domain.reservation.RoomBookVO;
 import org.tetris.mapper.MeetingRoomMapper;
 import org.tetris.mapper.RoomBookMapper;
 

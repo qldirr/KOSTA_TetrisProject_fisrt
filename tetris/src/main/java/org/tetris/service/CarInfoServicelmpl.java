@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tetris.domain.CarInfoVO;
+import org.tetris.domain.reservation.CarInfoVO;
 import org.tetris.mapper.CarInfoMapper;
 
 import lombok.AllArgsConstructor;

@@ -2,7 +2,7 @@ package org.tetris.mapper;
 
 import java.util.List;
 
-import org.tetris.domain.CarInfoVO;
+import org.tetris.domain.reservation.CarInfoVO;
 
 public interface CarInfoMapper {
 	

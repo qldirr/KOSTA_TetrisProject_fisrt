@@ -3,7 +3,7 @@ package org.tetris.service;
 import java.util.List;
 import java.util.Map;
 
-import org.tetris.domain.RoomBookVO;
+import org.tetris.domain.reservation.RoomBookVO;
 
 public interface RoomBookService {
 

@@ -1,4 +1,4 @@
-package org.tetris.domain;
+package org.tetris.domain.reservation;
 
 import java.util.Date;
 

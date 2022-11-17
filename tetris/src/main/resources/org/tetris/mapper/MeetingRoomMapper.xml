@@ -4,16 +4,16 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tetris.mapper.MeetingRoomMapper">
 
-	<insert id="insertRoom" parameterType="org.tetris.domain.MeetingRoomVO">
+	<insert id="insertRoom" parameterType="org.tetris.domain.reservation.MeetingRoomVO">
 		insert into MeetingRoom (mr_num, mr_name, mr_total) 
 		values (#{mr_num}, #{mr_name}, #{mr_total})
 	</insert>
 	
-	<select id="getListRoom" resultType="org.tetris.domain.MeetingRoomVO">
+	<select id="getListRoom" resultType="org.tetris.domain.reservation.MeetingRoomVO">
 	    select * from MeetingRoom order by mr_num
 	</select>
 	
-	<select id="readRoom"  resultType="org.tetris.domain.MeetingRoomVO">
+	<select id="readRoom"  resultType="org.tetris.domain.reservation.MeetingRoomVO">
 	   select * from MeetingRoom where mr_num = #{mr_num}	
 	</select>
 	

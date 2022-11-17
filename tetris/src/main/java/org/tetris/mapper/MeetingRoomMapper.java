@@ -2,7 +2,7 @@ package org.tetris.mapper;
 
 import java.util.List;
 
-import org.tetris.domain.MeetingRoomVO;
+import org.tetris.domain.reservation.MeetingRoomVO;
 
 public interface MeetingRoomMapper {
 	

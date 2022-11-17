@@ -5,16 +5,16 @@
 <mapper namespace="org.tetris.mapper.CarInfoMapper">
 
 
-	<insert id="insertCar" parameterType="org.tetris.domain.CarInfoVO">
+	<insert id="insertCar" parameterType="org.tetris.domain.reservation.CarInfoVO">
 		insert into carinfo (ca_num, ca_model, ca_type,ca_age) 
 		values (#{ca_num}, #{ca_model}, #{ca_type}, #{ca_age})
 	</insert>
 	
-	<select id="getListCar" resultType="org.tetris.domain.CarInfoVO">
+	<select id="getListCar" resultType="org.tetris.domain.reservation.CarInfoVO">
 	    select * from carinfo order by ca_num
 	</select>
 	
-	<select id="readCar"  resultType="org.tetris.domain.CarInfoVO">
+	<select id="readCar"  resultType="org.tetris.domain.reservation.CarInfoVO">
 	   select * from carinfo where ca_num = #{ca_num}	
 	</select>
 

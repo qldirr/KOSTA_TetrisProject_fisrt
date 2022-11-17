@@ -6,7 +6,7 @@
 
 	<!-- 회의실 예약 목록 가져오기 -->
 	<select id="getListResRoom"
-		resultType="org.tetris.domain.RoomBookVO">
+		resultType="org.tetris.domain.reservation.RoomBookVO">
 		select rb_num, mr_num, e_id, rb_startday, rb_starttime,
 		rb_endday, rb_endtime
 		from roombook
@@ -14,7 +14,7 @@
 
 	<!-- 회의실 예약 하기 -->
 	<insert id="insertResRoom"
-		parameterType="org.tetris.domain.RoomBookVO">
+		parameterType="org.tetris.domain.reservation.RoomBookVO">
 		insert into roombook
 		(rb_num,mr_num,rb_startday,rb_starttime,rb_endday,rb_endtime,e_id)
 		values
@@ -23,7 +23,7 @@
 
 	<!-- 내 예약목록 가져오기 -->
 	<select id="readResRoom"
-		resultType="org.tetris.domain.RoomBookVO">
+		resultType="org.tetris.domain.reservation.RoomBookVO">
 		select * from roombook where rb_num =#{rb_num} and e_id #{e_id}
 
 	</select>
@@ -31,12 +31,12 @@
 	<!-- 회의실별 예약목록 가져오기 -->
 
 	<select id="setResRoom" 
-		resultType="org.tetris.domain.RoomBookVO">
+		resultType="org.tetris.domain.reservation.RoomBookVO">
 		select * from roombook where mr_num =#{mr_num}
 	</select>
 	
 	
-	<select id="checkDate" resultType="int" parameterType="org.tetris.domain.RoomBookVO">
+	<select id="checkDate" resultType="int" parameterType="org.tetris.domain.reservation.RoomBookVO">
 	select count(*) from
 	 <![CDATA[
 	  (

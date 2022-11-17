@@ -6,27 +6,27 @@
 
 
      <!-- 예약 목록 가져오기 -->
-	<select id="getListResCar" resultType="org.tetris.domain.CarBookVO">
+	<select id="getListResCar" resultType="org.tetris.domain.reservation.CarBookVO">
 		select cb_num, ca_num, e_id, cb_startday, cb_endday,cb_starttime,cb_endtime	
 		from carbook where cb_state is null
 	</select>
 	
     <!-- 차량 예약 하기 -->
-	<insert id="insertResCar" parameterType="org.tetris.domain.CarBookVO">
+	<insert id="insertResCar" parameterType="org.tetris.domain.reservation.CarBookVO">
 		insert into carbook (cb_num,ca_num,cb_startday,cb_endday,cb_starttime,cb_endtime,e_id)
 		values (cb_num_seq.nextval,#{ca_num},#{cb_startday},#{cb_endday},#{cb_starttime},#{cb_endtime},#{e_id})
 	</insert>
 	
 
  	<!-- 예약 상세보기 -->
-	<select id="readResCar" resultType="org.tetris.domain.CarBookVO">
+	<select id="readResCar" resultType="org.tetris.domain.reservation.CarBookVO">
 	select * from carbook where cb_num = #{cb_num} 
 	
 	</select>
 		 
 	 
 	<!--내 예약목록 가져오기 -->
-	<select id="readResMyCar" resultType="org.tetris.domain.CarBookVO">
+	<select id="readResMyCar" resultType="org.tetris.domain.reservation.CarBookVO">
 	select * from carbook 
 	where e_id = #{e_id} 
 	AND cb_state = '승인'
