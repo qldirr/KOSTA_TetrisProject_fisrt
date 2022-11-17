@@ -16,7 +16,7 @@
 	</insert>
 	
 	
-	<select id="getListEmployees" resultType="org.tetris.domain.UserVO">
+	<select id="getListEmployees" resultType="org.tetris.domain.user.UserVO">
 		select * from employee order by d_num
 	</select>
 	

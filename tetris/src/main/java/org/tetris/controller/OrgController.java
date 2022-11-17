@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tetris.domain.UserVO;
+import org.tetris.domain.user.UserVO;
 import org.tetris.service.OrgService;
 
 import com.google.gson.Gson;

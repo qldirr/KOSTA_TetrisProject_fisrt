@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tetris.domain.AuthVO;
-import org.tetris.domain.UserVO;
+import org.tetris.domain.user.UserVO;
 import org.tetris.mapper.UserMapper;
 
 import lombok.AllArgsConstructor;

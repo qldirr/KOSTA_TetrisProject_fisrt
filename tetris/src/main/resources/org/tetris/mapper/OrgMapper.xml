@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tetris.mapper.OrgMapper">
-	<select id="read" resultType="org.tetris.domain.UserVO">
+	<select id="read" resultType="org.tetris.domain.user.UserVO">
 		select e_id, e_name, e_birth, e_picfile, e_pnum, e_position, d.d_name, d.d_num
 		from employee e
 		left join department d
@@ -15,7 +15,7 @@
 		select * from department order by d_num
 	</select>
 	
-	<select id="listAllMember" resultType="org.tetris.domain.UserVO">
+	<select id="listAllMember" resultType="org.tetris.domain.user.UserVO">
 		select * from employee order by d_num
 		
 		

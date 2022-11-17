@@ -3,7 +3,7 @@ package org.tetris.mapper;
 import java.util.List;
 
 import org.tetris.domain.AuthVO;
-import org.tetris.domain.UserVO;
+import org.tetris.domain.user.UserVO;
 
 
 public interface UserMapper {
