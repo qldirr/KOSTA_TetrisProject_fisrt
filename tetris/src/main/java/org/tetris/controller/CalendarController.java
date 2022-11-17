@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tetris.domain.CalendarVO;
+import org.tetris.domain.calendar.CalendarVO;
 import org.tetris.security.domain.CustomUser;
 import org.tetris.service.CalendarService;
 
@@ -37,12 +37,13 @@ public class CalendarController {
 	private CalendarService service;
 	
 	
-	
+	//일정관리 페이지에 접속
 	@GetMapping(value="/list", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void getList() {
 		
 	}
 	
+	//저장된 일정을 불러오기
 	@GetMapping(value="/listCal", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<HashMap<String, Object>>> getCalendarList() {
@@ -74,6 +75,7 @@ public class CalendarController {
 		return new ResponseEntity<>(calList, HttpStatus.OK);
 	}
 
+	//일정 등록 form 보여주기
 	@GetMapping("/register")
 	public void registerCalForm(Model model) {
 		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -82,6 +84,7 @@ public class CalendarController {
 
 	}
 
+	//일정 등록
 	@PostMapping("/register")
 	public String registerCal(CalendarVO calendar) {
 
@@ -89,6 +92,7 @@ public class CalendarController {
 		return "redirect: /calendar/list";
 	}
 	
+	//일정 조회
 	@GetMapping("/get")
 	public void get(@RequestParam("cl_num") int cl_num, Model model) {
 		log.info("get..");
@@ -96,6 +100,7 @@ public class CalendarController {
 		model.addAttribute("calendar", calendar);
 	}
 	
+	//일정 수정
 	@PostMapping("/modify")
 	public String modifyCal(CalendarVO calendarVO) {
 		if (service.modify(calendarVO)) {
@@ -113,6 +118,8 @@ public class CalendarController {
 	}*/
 	
 
+	
+	//일정 삭제
 	@PostMapping("/remove")
 	public String removeCal(CalendarVO calendar) {
 		if (service.remove(calendar)) {

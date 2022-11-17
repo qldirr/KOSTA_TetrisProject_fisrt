@@ -30,12 +30,14 @@ public class OrgController {
 	@Autowired
 	private OrgService service;
 	
+	//조직도 화면 출력
 	@GetMapping("/list")
 	public void orgPage(Model model) {
 		model.addAttribute("dept", service.listDept());
 		model.addAttribute("memberList", service.listAllMember());
 	}
 	
+	//사원 상세 정보
 	@GetMapping(value="/read", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<UserVO> orgRead(Model model, @RequestParam("e_id") String e_id) {

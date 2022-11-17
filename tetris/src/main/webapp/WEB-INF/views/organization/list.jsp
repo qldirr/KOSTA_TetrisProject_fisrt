@@ -105,7 +105,7 @@ ul{
 			animated : "medium",
 
 			persist : "location"
-		});
+		});   //treeview 플러그인 사용
 
 		function showEmplInfo(e_id) {
 			var objDiv = document.getElementById("d-table");
@@ -157,6 +157,8 @@ ul{
 				<td style="font-size: 40px;">조직도</td>
 
 			</tr>
+			
+			<!-- 조직도 treeview -->
 			<tr>
 				<td rowspan="11">
 					<div id="sidetree">
@@ -187,6 +189,8 @@ ul{
 
 		</table>
 
+
+		<!-- 사원 상세 정보 테이블 -->
 		<div class="d-table" id="d-table">
 			<form action="/organization/read" method="post" id="memInfo">
 	

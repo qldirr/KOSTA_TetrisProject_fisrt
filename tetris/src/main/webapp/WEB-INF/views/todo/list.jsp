@@ -93,6 +93,7 @@ p.info {
 				<ul class="todo-list">
 
 				</ul>
+				
 				<div class="todo-bottom">
 					<div class="left-items">0 items left</div>
 					<div class="button-group">
@@ -103,6 +104,7 @@ p.info {
 					<button class="clear-completed-btn">Clear Completed</button>
 				</div>
 			</div>
+			
 			<p class="info">더블클릭 시 수정 가능</p>
 
 		</div>

@@ -2,9 +2,7 @@ package org.tetris.domain.user;
 
 import java.sql.Date;
 import java.util.List;
-
-import org.tetris.domain.AuthVO;
-
+import org.tetris.domain.user.AuthVO;
 import lombok.Data;
 @Data
 public class UserVO {

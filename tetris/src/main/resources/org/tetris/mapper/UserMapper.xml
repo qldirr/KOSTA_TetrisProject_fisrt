@@ -22,7 +22,7 @@
 		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
 	
-	<resultMap type="org.tetris.domain.AuthVO" id="authMap">
+	<resultMap type="org.tetris.domain.user.AuthVO" id="authMap">
 	<result property="e_id" column="e_id"/>
 	<result property="a_auth" column="a_auth"/>
 	
@@ -158,7 +158,7 @@
 	d_num
 	FROM employee where e_id = #{e_id} 
 	</select>
-	 <select id="detailAuth" resultType="org.tetris.domain.AuthVO">
+	 <select id="detailAuth" resultType="org.tetris.domain.user.AuthVO">
 	SELECT
 	a.e_id, 
 	a_auth 

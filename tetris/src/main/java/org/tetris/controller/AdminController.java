@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tetris.domain.AuthVO;
+import org.tetris.domain.user.AuthVO;
 import org.tetris.domain.user.UserVO;
 import org.tetris.security.CustomNoOpPasswordEncoder;
 

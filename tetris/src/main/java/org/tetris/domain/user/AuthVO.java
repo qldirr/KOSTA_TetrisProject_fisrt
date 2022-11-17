@@ -1,4 +1,4 @@
-package org.tetris.domain;
+package org.tetris.domain.user;
 
 import lombok.Data;
 

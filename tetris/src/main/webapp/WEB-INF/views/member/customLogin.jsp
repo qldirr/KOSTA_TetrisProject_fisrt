@@ -34,7 +34,7 @@ $(document).ready(
 				}
 		}
 		
-	})
+	)}
 	)
 
 </script>

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tetris.mapper.CalendarMapper">
 
-<select id="getList" resultType="org.tetris.domain.CalendarVO">
+<select id="getList" resultType="org.tetris.domain.calendar.CalendarVO">
 	select cl_num, cl_name, cl_startdate, cl_enddate, cl_starttime, cl_endtime, cl_color, cl_contents, c.e_id
 	from calendar c
 	inner join employee e
@@ -12,7 +12,7 @@
 	
 </select>
 
-<select id="read" resultType="org.tetris.domain.CalendarVO">
+<select id="read" resultType="org.tetris.domain.calendar.CalendarVO">
 	select * from calendar where cl_num = #{cl_num}
 </select>
 
