@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.Criteria;
-import org.tetris.domain.HrVO;
 import org.tetris.domain.PageDTO;
+import org.tetris.domain.attendance.HrVO;
 import org.tetris.security.domain.CustomUser;
 import org.tetris.service.HrService;
 
@@ -146,6 +146,13 @@ public class HrController {
 		  int total = service.getTotal(cri);
 		  log.info("total: " + total);
 		  model.addAttribute("pageMaker", new PageDTO(cri, total));
+	  }
+	  
+	  @GetMapping("/searchAction.do")
+	  public String searchAction() {
+		  log.info("/searchAction.do");
+		  
+		  return "redirect: /personAll";
 	  }
 	 
 //vacation list 占쏙옙占쏙옙占쏙옙占쏙옙占�
