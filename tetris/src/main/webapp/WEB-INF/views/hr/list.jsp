@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<<<<<<< HEAD
+<%-- <<<<<<< HEAD
     
 <!DOCTYPE html>
 <html>
@@ -24,7 +24,7 @@
 		</thread>
 	<c:forEach items="${list}" var="u" >
 		<tr>
-			<%-- <td><a href="/hr/detail?userNumber=${u.userNumber}">${u.userNumber}</a></td> --%>
+			<td><a href="/hr/detail?userNumber=${u.userNumber}">${u.userNumber}</a></td>
 			<td style="text-align: center">${u.e_num}</td>
 			<td style="text-align: center"><a href="/hr/detail?e_id=${u.e_id}">${u.e_id}</a></td>	
 			<td style="text-align: center">${u.e_name}</td>
@@ -38,7 +38,7 @@
 
 
 </div>
-=======
+======= --%>
     <%@ include file="../includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -116,6 +116,6 @@
 </div>
 <%-- 	<jsp:include page="../includes/footer.jsp"></jsp:include> --%>
 
->>>>>>> branch 'main' of https://github.com/joon411/TetrisFinal.git
+
 </body>
 </html>

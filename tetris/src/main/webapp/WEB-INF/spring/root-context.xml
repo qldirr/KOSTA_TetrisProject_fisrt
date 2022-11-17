@@ -32,7 +32,7 @@
 	
 	<mybatis-spring:scan base-package="org.tetris.mapper"/>
 	
-	<context:component-scan base-package="org.tetris.*"/>
+	<context:component-scan base-package="org.tetris.**"/>
 	
 	<tx:annotation-driven/>
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>

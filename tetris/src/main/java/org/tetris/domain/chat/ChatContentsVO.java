@@ -1,6 +1,6 @@
 package org.tetris.domain.chat;
 
-import org.tetris.domain.UserVO;
+import org.tetris.domain.user.UserVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

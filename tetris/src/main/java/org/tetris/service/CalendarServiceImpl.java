@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tetris.domain.CalendarVO;
+import org.tetris.domain.calendar.CalendarVO;
 import org.tetris.mapper.CalendarMapper;
 
 import lombok.AllArgsConstructor;

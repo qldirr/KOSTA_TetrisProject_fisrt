@@ -16,7 +16,7 @@
 	<!-- <collection property="chatRoomVO" resultMap="chatRoomMap"/> -->
 </resultMap>
 
-<resultMap type="org.tetris.domain.UserVO" id="UserMap">
+<resultMap type="org.tetris.domain.user.UserVO" id="UserMap">
 	<result property="e_id" column="e_id"/>
 	<result property="e_name" column="e_name"/>
 </resultMap>

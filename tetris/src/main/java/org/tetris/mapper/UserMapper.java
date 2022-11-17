@@ -2,8 +2,8 @@ package org.tetris.mapper;
 
 import java.util.List;
 
-import org.tetris.domain.AuthVO;
-import org.tetris.domain.UserVO;
+import org.tetris.domain.user.AuthVO;
+import org.tetris.domain.user.UserVO;
 
 
 public interface UserMapper {
@@ -17,5 +17,5 @@ public interface UserMapper {
 	public AuthVO detailAuth(String e_id);
 	public void updateUser(UserVO user);
 	public int idCheck(UserVO user);
-	
+
 }

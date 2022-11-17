@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tetris.mapper.UserMapper">
-	<resultMap type="org.tetris.domain.UserVO" id="userMap">
+	<resultMap type="org.tetris.domain.user.UserVO" id="userMap">
 	<id property="e_id" column="e_id"/>
 		<result property="e_id" column="e_id"/>
 		<result property="e_name" column="e_name"/>
@@ -22,7 +22,7 @@
 		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
 	
-	<resultMap type="org.tetris.domain.AuthVO" id="authMap">
+	<resultMap type="org.tetris.domain.user.AuthVO" id="authMap">
 	<result property="e_id" column="e_id"/>
 	<result property="a_auth" column="a_auth"/>
 	
@@ -31,7 +31,7 @@
 	<select id="read" resultMap="userMap">
 	SELECT
 		e.e_id, e_name, e_pw, e_pnum, e_hireddate, e_resigndate,
-	e_totalvac,e_usevac,e_birth,e_num,e_picfile, e_position,e.d_num,e.enabled,auth.a_auth FROM
+	e_totalvac,e_usevac,e_birth,e_num,e_picfile, e_position,e.d_num,e.enabled, auth.a_auth FROM
 	employee e LEFT OUTER JOIN authmapping auth on e.e_id = auth.e_id
 	WHERE e.e_id = #{e_id}
 	</select>
@@ -114,7 +114,7 @@
  	'ROLE_USER'
  	) -->
 	</insert>
-	<select id="getList" resultType="org.tetris.domain.UserVO"  resultMap="userMap">
+	<select id="getList" resultType="org.tetris.domain.user.UserVO"  resultMap="userMap">
 	
 	SELECT 
 
@@ -142,7 +142,7 @@
 	d_num AS departmentNumber
 	FROM employee where e_num = #{userNumber} AND e_num>0
 	</select> -->
-	<select id="detailUser" resultType="org.tetris.domain.UserVO">
+	<select id="detailUser" resultType="org.tetris.domain.user.UserVO">
 	SELECT
 	
 	e_id ,
@@ -158,7 +158,7 @@
 	d_num
 	FROM employee where e_id = #{e_id} 
 	</select>
-	 <select id="detailAuth" resultType="org.tetris.domain.AuthVO">
+	 <select id="detailAuth" resultType="org.tetris.domain.user.AuthVO">
 	SELECT
 	a.e_id, 
 	a_auth 

@@ -18,6 +18,7 @@ import org.tetris.domain.project.ProjectVO;
 import org.tetris.domain.user.UserVO;
 import org.tetris.mapper.ProjectMapper;
 import org.tetris.security.domain.CustomUser;
+import org.tetris.service.ElecAuthService;
 import org.tetris.service.ProjectBoardService;
 import org.tetris.service.ProjectService;
 
@@ -38,6 +39,7 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectBoardService boardService;
+	
 
 
 	
@@ -62,7 +64,9 @@ public class ProjectController {
 		
 		}
 		
+		
 		log.info(projectList);
+	
 	
 		model.addAttribute("list", projectList);
 	}

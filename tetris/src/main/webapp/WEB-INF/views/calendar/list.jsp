@@ -65,7 +65,7 @@
 
 			$(data).each(function(index, value) {
 				calArr.push(value)
-			}); //controller의 list를 get방식으로 가져옴
+			}); //controller의 list를 get방식으로 가져옴(Ajax 사용)
 
 			var calendarEl = document.getElementById('calendar');
 			var calendar = new FullCalendar.Calendar(calendarEl, {

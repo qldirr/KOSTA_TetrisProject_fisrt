@@ -46,7 +46,14 @@ public class ElecAuthController {
 	private UserService userService;
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/main")
-	public void getMain() {
+	public void getMain(Model model) {
+		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
+		List<ElecAuthVO> list1 = elecService.getListElecAuth(e_id);
+		List<ElecAuthVO> list2 = elecService.getListUncheckedList(e_id);
+		model.addAttribute("authlist1", list1);
+		model.addAttribute("authlist2", list2);
 		
 	}
 	

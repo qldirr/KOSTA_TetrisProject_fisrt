@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.tetris.domain.UserVO;
+import org.tetris.domain.user.UserVO;
 import org.tetris.mapper.UserMapper;
 import org.tetris.security.domain.CustomUser;
 
@@ -22,7 +22,7 @@ public class CustomUserDetailService implements UserDetailsService {
 		UserVO vo = usermapper.read(userid);
 		
 		log.warn("queried by user mapper: " + vo);
-		
+		 
 		return vo == null? null: new CustomUser(vo);
 	}
 

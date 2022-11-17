@@ -25,7 +25,7 @@ public void loginInput(String error, String logout, Model model) {
 	log.info("logout: " + logout);
 	
 	if(error!=null) {
-		model.addAttribute("error", "�Է��Ͻ� ������ �߸��Ǿ����ϴ�.");
+		model.addAttribute("error", "입력하신 정보가 올바르지 않습니다.");
 	}
 	
 	if(logout!=null) {

@@ -100,8 +100,9 @@ h1 {
 			dropdown : true,
 			scrollbar : true
 		});
-
-		var moveTo = (function() { //일정등록 버튼 눌렀을때 등록 폼으로 이동
+		
+		//일정등록 버튼 눌렀을때 등록 폼으로 이동
+		var moveTo = (function() { 
 			function listCal() {
 				self.location = "/calendar/list";
 			}
@@ -119,10 +120,10 @@ h1 {
 
 		var form = $("#form");
 
-		$("#remove").on("click", function(e) {
+		$("#remove").on("click", function(e) {   //삭제버튼 눌렀을때 
 			form.attr("action", "/calendar/remove").submit();
 		});
-		$("#modify").on("click", function(e) {
+		$("#modify").on("click", function(e) {   //수정버튼 눌렀을때
 			form.attr("action", "/calendar/modify").submit();
 		});
 

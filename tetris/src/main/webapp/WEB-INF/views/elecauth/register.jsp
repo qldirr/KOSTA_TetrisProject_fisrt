@@ -13,14 +13,9 @@
 
 <style type="text/css">
 
+.elecLine{
 
-/* .docForm{
-	height: 600px;
-	overflow-y: scroll;
-}
-
-.docForm::-webkit-scrollbar {
-    display: none; */
+margin-left: 100px;
 }
 
 </style>
@@ -131,7 +126,7 @@ $(function(){
 		} else {
 			var child;
 			child = window.open("/elecauth/line", "_blank",
-					"width=800, height=800");
+					"width=500, height=450");
 		}
 				
 	});

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.tetris.domain.UserVO;
+import org.tetris.domain.user.UserVO;
 import org.tetris.service.OrgService;
 
 import com.google.gson.Gson;
@@ -30,12 +30,14 @@ public class OrgController {
 	@Autowired
 	private OrgService service;
 	
+	//조직도 화면 출력
 	@GetMapping("/list")
 	public void orgPage(Model model) {
 		model.addAttribute("dept", service.listDept());
 		model.addAttribute("memberList", service.listAllMember());
 	}
 	
+	//사원 상세 정보
 	@GetMapping(value="/read", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<UserVO> orgRead(Model model, @RequestParam("e_id") String e_id) {

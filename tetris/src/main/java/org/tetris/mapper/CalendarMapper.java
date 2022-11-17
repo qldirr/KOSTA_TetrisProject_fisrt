@@ -3,7 +3,7 @@ package org.tetris.mapper;
 import java.util.List;
 import java.util.Map;
 
-import org.tetris.domain.CalendarVO;
+import org.tetris.domain.calendar.CalendarVO;
 
 public interface CalendarMapper {
 

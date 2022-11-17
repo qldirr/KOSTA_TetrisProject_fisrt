@@ -209,6 +209,7 @@ $(document).ready(
 	function() {
 		
 		referrer = document.referrer;
+	
 		
 		connectWebSocket(); 
 		
@@ -247,7 +248,13 @@ $(document).ready(
 			</div>
 
 			<div class="sidebar-item">
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<a class="a" href="/attendance/personAll"><i class="bi bi-clock"></i> 근태관리</a>
+				</sec:authorize>
+				
+			<sec:authorize access="hasRole('ROLE_USER')">
 				<a class="a" href="/attendance/person"><i class="bi bi-clock"></i> 근태관리</a>
+				</sec:authorize>
 			</div>
 			
 			<div class="sidebar-item">
@@ -276,7 +283,7 @@ $(document).ready(
 				<a class="a" href="/elecauth/main"><i class="bi bi-file-text"></i> 전자결재</a>
 			</div>
 			<div class="sidebar-item">
-				<a class="a" href="/suggestions/suggestionslist"><i class="bi bi-easel"></i>
+				<a class="a" href="/notice/list"><i class="bi bi-easel"></i>
 					게시판</a>
 			</div>
 			<div class="sidebar-item">
@@ -289,9 +296,6 @@ $(document).ready(
 		<!-- navbar 시작 -->
 
 		<div class="nav-bar">
-			
-		
-		
 				<div class="nav-bar-right">
 					<sec:authorize access="isAuthenticated()">
 					<button id="btn-alarm">
@@ -304,7 +308,7 @@ $(document).ready(
 
 					</button>
 					<button id="btn-info">
-						<img src="../resources/img/res/hi.png" alt="사진"> 
+						<img src="../resources/img/res/<sec:authentication property="principal.username" />.png" alt="사진"> 
 						<span class="user"><sec:authentication property="principal.user.e_name" /></span>						
 					</button>
 	

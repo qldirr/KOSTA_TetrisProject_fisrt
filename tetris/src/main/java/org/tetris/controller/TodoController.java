@@ -17,7 +17,7 @@ public class TodoController {
 
 
 
-	
+	//ToDoList 출력
 	@GetMapping("/list")
 	public void getTodoList() {
 		

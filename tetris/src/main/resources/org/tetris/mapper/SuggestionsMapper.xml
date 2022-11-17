@@ -11,6 +11,9 @@
 	]]>
 	</select>
 
+
+
+
 	<insert id="insert">
 		insert into Suggestions (s_num, e_id, s_title,s_contents,s_regdate,s_moddate)
 		values
