@@ -19,8 +19,11 @@ public class Criteria {
 	private String e_id;
 	private String type;
 	private String d_num;
+	private String keyword;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date hr_date;
+	
 	private String e_name;
 	
 	public Criteria() {
