@@ -74,19 +74,6 @@
 			value="${suggestions.s_contents}"/></textarea>
 		</div>
 
-	 <!-- <div class="form-group">
-			<label>RegDate</label> 
-			<input class="form-control" name='s_regdate'
-				value='<c:out value="${suggestions.s_regdate}"/>' readonly="readonly">
-		</div>
-
-		<div class="form-group">
-			<label>ModDate</label> 
-			<input class="form-control" name='s_moddate'
-				value='<c:out value="${suggestions.s_moddate}"/>' readonly="readonly">
-		</div>   -->
-		
-
 		  <button type="submit" data-oper='modify' class="btn btn-info">수정</button>
 		  <button type="submit" data-oper='remove' class="btn btn-info">삭제</button>			  
 		  <button type="submit" data-oper='list' class="btn btn-info">리스트</button>

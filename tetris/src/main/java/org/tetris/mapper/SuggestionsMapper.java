@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 import org.tetris.domain.Criteria;
-import org.tetris.domain.SuggestionsVO;
+import org.tetris.domain.suggestions.SuggestionsVO;
 
 import jdk.jshell.SourceCodeAnalysis.Suggestion;
 

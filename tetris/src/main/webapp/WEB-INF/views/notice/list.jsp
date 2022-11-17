@@ -66,7 +66,7 @@
 
 						<c:forEach items="${list}" var="notice">
 							<tr>
-								<td><c:out value="${notice.n_num}" /></td>
+								<td><c:out value="${notice.n_num}" /></td>  <!-- 데이터 받아서 출력  -->
 								<td><c:out value="${notice.e_id}" /></td>
 								<td>
 								<a class='move' href='<c:out value="${notice.n_num}"/>'>
@@ -105,7 +105,7 @@
 					</div>
 					<!-- /.modal -->	
 
-					<div class='pull-right'>
+					<div class='pull-right'> <!--페이징 처리  -->
 						<ul class="pagination justify-content-center">
 
 							<li><c:if test="${pageMaker.prev}">
@@ -133,7 +133,7 @@
 					</form>
 
 					<script type="text/javascript">
-					$(document).ready(function() {
+					$(document).ready(function() { 
 					
 						var result = '<c:out value="${result}"/>';
 
@@ -189,7 +189,7 @@
 			<!-- 내용 끝 -->
 
 		<!-- 전체 wrapper 끝 -->
-		<jsp:include page="../includes/footer.jsp"></jsp:include> 
+		<!-- <jsp:include page="../includes/footer.jsp"></jsp:include>--> 
 	
 </body>
 

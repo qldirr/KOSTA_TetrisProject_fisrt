@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.Criteria;
-import org.tetris.domain.NoticeVO;
+import org.tetris.domain.notice.NoticeVO;
 import org.tetris.domain.PageDTO;
 import org.tetris.security.domain.CustomUser;
 import org.tetris.service.NoticeService;
@@ -27,14 +27,8 @@ import lombok.extern.log4j.Log4j;
 public class Noticecontroller {
 	
 	private NoticeService service;
-	
-	/*@GetMapping("/list")
-	public void list(Model model) {
-		
-		log.info("list");
-		model.addAttribute("list", service.getList());
-	}*/
 
+	//리스트
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
 		
@@ -43,6 +37,7 @@ public class Noticecontroller {
 		model.addAttribute("pageMaker", new PageDTO(cri, 123));
 	}		
 	
+	//글 등록
 	@PostMapping("/register")
 	public String register(NoticeVO notice, RedirectAttributes rttr) {
 		
@@ -59,15 +54,8 @@ public class Noticecontroller {
 		String user_id = user.getUsername();
 		model.addAttribute("userId", user_id);
 	}
-
 	
-	/*@GetMapping("/get")
-	public void get(@RequestParam("n_num") Long n_num, Model model) {
-		
-		log.info("/get");
-		model.addAttribute("notice", service.get(n_num));
-	}*/
-	
+	//자세히 보기, 수정
 	@GetMapping({"/get","/modify"})
 	public void get(@RequestParam("n_num") Long n_num,  @ModelAttribute("cri")
 	Criteria cri, Model model) {
@@ -75,22 +63,6 @@ public class Noticecontroller {
 		log.info("/get or modify");
 		model.addAttribute("notice", service.get(n_num));
 	}	
-	
-	
-	
-	/*@PostMapping("/modify")
-	public String modify(RedirectAttributes rttr) {		
-		//NoticeVO notice, 
-		
-		
-		log.info("modify : ");	
-		// + notice
-		
-		//if (service.modify(notice)) {
-			//rttr.addFlashAttribute("result", "success");
-		//}
-		return "redirect:/notice/list";
-	}*/	
 	
 	@PostMapping("/modify")
 	public String modify(NoticeVO notice, RedirectAttributes rttr) {
@@ -101,9 +73,8 @@ public class Noticecontroller {
 		}
 		return "redirect:/notice/list";
 	}
-	
 
-	
+	//삭제
 	@PostMapping("remove")
 	public String remove(@RequestParam("n_num") Long n_num, RedirectAttributes rttr) {
 	

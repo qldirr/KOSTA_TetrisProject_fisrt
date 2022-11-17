@@ -3,7 +3,7 @@ package org.tetris.service;
 import java.util.List;
 
 import org.tetris.domain.Criteria;
-import org.tetris.domain.ReplyVO;
+import org.tetris.domain.suggestions.ReplyVO;
 
 public interface ReplyService {
 

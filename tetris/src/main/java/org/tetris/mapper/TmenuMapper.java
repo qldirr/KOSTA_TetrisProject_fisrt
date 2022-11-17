@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Select;
 import org.tetris.controller.TmenuController;
-import org.tetris.domain.SuggestionsVO;
-import org.tetris.domain.TmenuVO;
+import org.tetris.domain.suggestions.SuggestionsVO;
+import org.tetris.domain.tmenu.TmenuVO;
 
 
 public interface TmenuMapper {

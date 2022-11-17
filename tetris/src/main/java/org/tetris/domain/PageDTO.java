@@ -1,5 +1,7 @@
 package org.tetris.domain;
 
+import org.tetris.domain.Criteria;
+
 import lombok.Getter;
 import lombok.ToString;
 

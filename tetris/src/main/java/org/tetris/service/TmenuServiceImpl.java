@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tetris.domain.TmenuVO;
+import org.tetris.domain.tmenu.TmenuVO;
 import org.tetris.mapper.SuggestionsMapper;
 import org.tetris.mapper.TmenuMapper;
 

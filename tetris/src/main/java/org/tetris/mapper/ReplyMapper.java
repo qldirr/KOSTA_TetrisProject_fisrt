@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.tetris.domain.Criteria;
-import org.tetris.domain.ReplyVO;
+import org.tetris.domain.suggestions.ReplyVO;
 
 public interface ReplyMapper {
 

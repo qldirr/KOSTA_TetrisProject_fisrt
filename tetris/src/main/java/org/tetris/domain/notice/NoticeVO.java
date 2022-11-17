@@ -1,4 +1,4 @@
-package org.tetris.domain;
+package org.tetris.domain.notice;
 
 import java.util.Date;
 

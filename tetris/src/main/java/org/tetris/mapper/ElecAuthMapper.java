@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.tetris.domain.Criteria;
-import org.tetris.domain.SuggestionsVO;
 import org.tetris.domain.elecauth.ElecAuthVO;
 import org.tetris.domain.elecauth.ElecLineVO;
+import org.tetris.domain.suggestions.SuggestionsVO;
 
 public interface ElecAuthMapper {
 	

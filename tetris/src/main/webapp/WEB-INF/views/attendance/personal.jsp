@@ -212,9 +212,9 @@
                      </dl>
                      <!-- 출퇴근버튼 -->
                      <div class="my-5">
-                        <i id="startD" class="fa-solid fa-circle-play fa-3x"></i>
-                        <i id="endD" class="fa-solid fa-circle-stop fa-3x"></i>
-                        <i id="outD" class="fa-solid fa-circle-pause fa-3x"></i>
+                      <i id="startD" style="color: #151d66 ; background:white" class="fa-solid fa-circle-play fa-3x"></i> <i
+									id="endD" style="color: #151d66 ; background:white" class="fa-solid fa-circle-stop fa-3x"></i> <i
+									id="outD" style="color: #151d66 ; background:white" class="fa-solid fa-circle-pause fa-3x"></i>
                      </div>
                   </div>
             </div>

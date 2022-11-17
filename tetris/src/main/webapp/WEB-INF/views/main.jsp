@@ -417,7 +417,7 @@
 								href='/notice/get?pageNum=1&amount=10&n_num=<c:out value="${notice.n_num}"/>'> <c:out
 										value="${notice.n_title}" /></a></td>
 										
-										
+						
 						</tr>
 					</c:forEach>
 				</table>

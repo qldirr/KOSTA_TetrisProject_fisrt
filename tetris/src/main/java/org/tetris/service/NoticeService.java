@@ -3,8 +3,8 @@ package org.tetris.service;
 import java.util.List;
 
 import org.tetris.domain.Criteria;
-import org.tetris.domain.NoticeVO;
-import org.tetris.domain.SuggestionsVO;
+import org.tetris.domain.notice.NoticeVO;
+import org.tetris.domain.suggestions.SuggestionsVO;
 
 public interface NoticeService {
 

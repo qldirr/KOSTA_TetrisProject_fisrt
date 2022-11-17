@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tetris.domain.Criteria;
-import org.tetris.domain.NoticeVO;
+import org.tetris.domain.notice.NoticeVO;
 import org.tetris.mapper.NoticeMapper;
 import org.tetris.mapper.SuggestionsMapper;
 
@@ -57,7 +57,7 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<NoticeVO> getList(Criteria cri) {
+	public List<NoticeVO> getList(Criteria cri) {//페이징 처리
 		log.info("get List with criteria" + cri);
 		return mapper.getListWithPaging(cri);
 	}

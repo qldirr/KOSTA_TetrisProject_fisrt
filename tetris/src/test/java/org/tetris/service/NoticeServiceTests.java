@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.tetris.domain.NoticeVO;
-import org.tetris.domain.SuggestionsVO;
+import org.tetris.domain.notice.NoticeVO;
+import org.tetris.domain.suggestions.SuggestionsVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -28,7 +28,7 @@ public class NoticeServiceTests {
 	}*/
 	
 	/*@Test
-	public void testRegister() {
+	public void testRegister() {//데이터 삽입 서비스
 		NoticeVO notice = new NoticeVO();
 		notice.setE_id("gdong123");
 		notice.setN_title("새로 작성");

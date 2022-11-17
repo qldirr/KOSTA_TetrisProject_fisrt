@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.tetris.domain.Criteria;
 import org.tetris.domain.PageDTO;
-import org.tetris.domain.SuggestionsVO;
+import org.tetris.domain.suggestions.SuggestionsVO;
 import org.tetris.service.SuggestionsService;
 
 import lombok.AllArgsConstructor;
@@ -25,13 +25,7 @@ public class SuggestionsController {
 
 	private SuggestionsService service;
 	
-	/*@GetMapping("/suggestionslist")
-	public void list(Model model) {
-		
-		log.info("list");
-		model.addAttribute("list", service.getList());
-	}*/
-	
+	//리스트
 	@GetMapping("/suggestionslist")
 	public void list(Criteria cri, Model model) {
 		
@@ -40,6 +34,7 @@ public class SuggestionsController {
 		model.addAttribute("pageMaker", new PageDTO(cri, 123));
 	}	
 	
+	//글 등록
 	@PostMapping("/suggestionsregister")
 	public String register(SuggestionsVO suggestions, RedirectAttributes rttr) {
 		
@@ -54,13 +49,7 @@ public class SuggestionsController {
 		
 	}
 	
-	/*@GetMapping("/suggestionsget")  
-	public void get(@RequestParam("s_num") Long s_num, Model model) {
-		
-		log.info("/get");
-		model.addAttribute("suggestions", service.get(s_num));
-	}*/
-	
+	//자세히 보기, 수정
 	@GetMapping({"/suggestionsget", "/suggestionsmodify"})  
 	public void get(@RequestParam("s_num") Long s_num, @ModelAttribute("cri") //@ModelAttribute("cri") Criteria cri -> 실행x 316
 	Criteria cri, Model model) {
@@ -70,31 +59,6 @@ public class SuggestionsController {
 		log.info("get");
 	}	
 	
-	/*@PostMapping("/suggestionsmodify")
-	public String modify(RedirectAttributes rttr) {		
-		//SuggestionsVO suggestions, 
-		
-		
-		log.info("modify : ");	
-		// + suggestions
-		
-		//if (service.modify(suggestions)) {
-			//rttr.addFlashAttribute("result", "success");
-		//}
-		return "redirect:/suggestions/suggestionslist";
-	}*/
-
-//	@PostMapping("/suggestionsmodify")  
-//	public String modify(SuggestionsVO suggestions, RedirectAttributes rttr) {  //객체가 값 전달을 못한다고 함 ...
-//		
-//		log.info("modify :" + suggestions);
-//		
-//		if(service.modify(suggestions)) {
-//			rttr.addFlashAttribute("result", "success");
-//		}
-//		return "redirect:/suggestions/suggestionslist";
-//	}
-	
 	@PostMapping("/suggestionsmodify")
 	public String modify(SuggestionsVO suggestions, RedirectAttributes rttr) {
 		
@@ -103,10 +67,8 @@ public class SuggestionsController {
 		}	
 		return "redirect:/suggestions/suggestionslist";
 	}
-	
-	
-	
-	
+
+	//삭제
 	@PostMapping("remove")
 	public String remove(@RequestParam("s_num") Long s_num, RedirectAttributes rttr) {
 

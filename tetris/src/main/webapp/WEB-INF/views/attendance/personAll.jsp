@@ -15,7 +15,9 @@
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
 <script src="/resources/vender/bootstrap/js/bootstrap-datepicker.js" type="text/javascript" defer></script>
 <script>
-	$(document).ready(function(){
+	$(document)
+			.ready(
+					function() {
 
 						//출퇴근버튼 활성화
 						var currentDate = new Date();
@@ -33,8 +35,6 @@
 
 						var lateCheck = '09:00:00';
 						var checkTime = today;//출근시간확인
-
-						
 
 						//출근클릭
 						$('#startD').click(function() {
@@ -153,7 +153,8 @@
 									actionForm.submit();
 								});
 
-						$(".move").on(
+						$(".move")
+								.on(
 										"click",
 										function(e) {
 											e.preventDefault();
@@ -166,17 +167,17 @@
 													"/attendance/personal");
 											actionForm.submit();
 										});
-						
+
 						var searchForm = $("#searchForm");
-						
-						$("#searchForm button").on("click", function(e){
-							
+
+						$("#searchForm button").on("click", function(e) {
+
 							searchForm.find("input[name='pageNum']").val("1");
 							e.preventDefault();
-							
+
 							searchForm.submit();
 						});
-						
+
 						if (checkTime > lateCheck) {
 							$('[id^=lateChecking]').css("color", "red");
 						}
@@ -234,11 +235,11 @@
 </script>
 </head>
 <body onload="printClock()">
+	<div class="wrap">
+		<!-- jsp 인클루드 사용-->
+		<jsp:include page="../includes/header.jsp"></jsp:include>
 
-	<!-- jsp 인클루드 사용-->
-	<jsp:include page="../includes/header.jsp"></jsp:include>
-
-	
+		<div class="wrap-box">
 			<!-- 보조사이드바 -->
 			<div class="s-menu">
 				<div class="s-menu-title">
@@ -247,8 +248,9 @@
 				</div>
 				<div class="s-list-item text-center">
 					<div id="date"></div>
-					<div style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
-								id="clock"></div>
+					<div
+						style="width: 200px; height: 80px; line-height: 80px; color: #666; font-size: 40px; text-align: center;"
+						id="clock"></div>
 				</div>
 				<!-- <div class="s-list-item ">
 					<a href=""></a>
@@ -261,131 +263,136 @@
 
 			<!-- 내용 시작 -->
 			<div class="s-container">
-			
+
 				<h2 id="c-title">근태리스트</h2>
 				<div class="container2 mt-3">
-										
-								<form id='searchForm' action="/attendance/personAll" method="get">
-								<div class="form-row">
-											<!-- 부서선택 -->
-											<div class="form-group col-md-3">
-											<h6>부서	</h6>
-											<input type="hidden" name="type" value="NDE">
-											<select class="form-control w-60 mx-2" name="search_dnum">
-												<option>전체부서</option>
-												<option value='01'>개발부</option>
-												<option value='02'>기획부</option>
-												<option value='03'>영업부</option>
-											</select>
-											</div>
 
-
-											<!-- 선택일자 -->
-											<div class="form-group col-md-4">
-											<h6>일자선택</h6>
-											<input type="text" id="datePicker" name="seacrh_date">
-											</div>
-
-											<div class="form-group col-md-3">
-											<!-- 사원이름검색 -->
-											<h6>이름</h6>
-											<input type="text" name='keyword' value='<c:out value="${pageMaker.cri.e_name}"/>'/>
-											<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
-											<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount}"/>'/>
-											</div>
-
-											<div class="form-group col-md-2">
-											<button class="btn btn-primary mx-2">검색</button>
-											</div>
-										</div>
-									</form>
+					<form id='searchForm' action="/attendance/personAll" method="get">
+						<div class="form-row">
+							<!-- 부서선택 -->
+							<div class="form-group col-md-3">
+								<h6>부서</h6>
+								<input type="hidden" name="type" value="NDE"> <select
+									class="form-control w-60 mx-2" name="search_dnum">
+									<option>전체부서</option>
+									<option value='01'>개발부</option>
+									<option value='02'>기획부</option>
+									<option value='03'>영업부</option>
+								</select>
 							</div>
-							<!-- container끝 -->
-							<!-- 검색폼끝 -->
-
-							<!-- 출력테이블 -->
-							<table class="table table-striped"
-								style="text-align: center; border: 1px solid #dddddd">
-								<thead>
-									<tr>
-										<th style="background-color: #eeeeee; text-align: center;">일자</th>
-										<th style="background-color: #eeeeee; text-align: center;">사원번호</th>
-										<th style="background-color: #eeeeee; text-align: center;">이름</th>
-										<th style="background-color: #eeeeee; text-align: center;">부서</th>
-										<th style="background-color: #eeeeee; text-align: center;">출근시간</th>
-										<th style="background-color: #eeeeee; text-align: center;">퇴근시간</th>
-										<th style="background-color: #eeeeee; text-align: center;">근무상태</th>
-										<th style="background-color: #eeeeee; text-align: center;">비고</th>
-									</tr>
-								</thead>
-								<!-- 부서리스트 받아오기 -->
-								<tbody>
-									<c:forEach items="${list}" var="hr">
-										<tr>
 
 
-											<td><fmt:formatDate value="${hr.hr_date }"
-													pattern="yyyy-MM-dd" /></td>
-											<td><c:out value="" />${hr.e_num }</td>
-											<td>
-											<a class='move' href='/attendance/personal?e_id=<c:out value="${hr.e_id}"/>'>
-													<c:out value="${hr.e_name}" />
-											</a></td>
-											<td><c:out value="" />${hr.d_name}</td>
-											<!-- 출근시간 -->
-											<td id="lateChecking"><fmt:formatDate
-													value="${hr.hr_date }" pattern="HH:mm:ss" /></td>
-											<!-- 퇴근시간 -->
-											<td><fmt:formatDate value="${hr.hr_leave }"
-													pattern="HH:mm:ss" /></td>
-											<td><c:out value="${hr.hr_status }" /></td>
-											<td><c:out value="${hr.hr_note }" /></td>
-										</tr>
-										<input type="hidden" id="timecheck"
-											value="<fmt:formatDate value="${hr.hr_date}" pattern="HH:mm:ss" />">
-									</c:forEach>
-								</tbody>
-							</table>
-
-							<!-- 페이징 -->
-							<nav aria-label="page">
-							<div class="pull-right">
-								<ul class="pagination">
-
-									<c:if test="${pageMaker.prev }">
-										<li class="page-item paginate_button previous"><a
-											href="${pageMaker.startPage -1 }" class="page-link">Previous</a></li>
-									</c:if>
-
-									<c:forEach var="num" begin="${pageMaker.startPage }"
-										end="${pageMaker.endPage}">
-										<li class="page-item paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }">
-											<a href="${num }" class="page-link">${num }</a>
-										</li>
-									</c:forEach>
-
-									<c:if test="${pageMaker.next }">
-										<li class="page-item paginate_button next"><a
-											href="${pageMaker.endPage +1 }" class="page-link">Next</a></li>
-									</c:if>
-								</ul>
+							<!-- 선택일자 -->
+							<div class="form-group col-md-4">
+								<h6>일자선택</h6>
+								<input type="text" id="datePicker" name="seacrh_date">
 							</div>
-							</nav>
-							<!-- end Pagination -->
 
-							<form id='actionForm' action="/attendance/personAll" method='get'>
-								<input type='hidden' name='pageNum'
-									value='${pageMaker.cri.pageNum }'> <input type='hidden'
-									name='amount' value='${pageMaker.cri.amount }'>
+							<div class="form-group col-md-3">
+								<!-- 사원이름검색 -->
+								<h6>이름</h6>
+								<input type="text" name='keyword'
+									value='<c:out value="${pageMaker.cri.e_name}"/>' /> <input
+									type="hidden" name="pageNum"
+									value='<c:out value="${pageMaker.cri.pageNum}"/>' /> <input
+									type="hidden" name="amount"
+									value='<c:out value="${pageMaker.cri.amount}"/>' />
+							</div>
 
-							</form>
+							<div class="form-group col-md-2">
+								<button class="btn btn-primary mx-2">검색</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- container끝 -->
+				<!-- 검색폼끝 -->
+
+				<!-- 출력테이블 -->
+				<table class="table table-striped"
+					style="text-align: center; border: 1px solid #dddddd">
+					<thead>
+						<tr>
+							<th style="background-color: #eeeeee; text-align: center;">일자</th>
+							<th style="background-color: #eeeeee; text-align: center;">사원번호</th>
+							<th style="background-color: #eeeeee; text-align: center;">이름</th>
+							<th style="background-color: #eeeeee; text-align: center;">부서</th>
+							<th style="background-color: #eeeeee; text-align: center;">출근시간</th>
+							<th style="background-color: #eeeeee; text-align: center;">퇴근시간</th>
+							<th style="background-color: #eeeeee; text-align: center;">근무상태</th>
+							<th style="background-color: #eeeeee; text-align: center;">비고</th>
+						</tr>
+					</thead>
+					<!-- 부서리스트 받아오기 -->
+					<tbody>
+						<c:forEach items="${list}" var="hr">
+							<tr>
+
+
+								<td><fmt:formatDate value="${hr.hr_date }"
+										pattern="yyyy-MM-dd" /></td>
+								<td><c:out value="" />${hr.e_num }</td>
+								<td><a class='move'
+									href='/attendance/personal?e_id=<c:out value="${hr.e_id}"/>'>
+										<c:out value="${hr.e_name}" />
+								</a></td>
+								<td><c:out value="" />${hr.d_name}</td>
+								<!-- 출근시간 -->
+								<td id="lateChecking"><fmt:formatDate
+										value="${hr.hr_date }" pattern="HH:mm:ss" /></td>
+								<!-- 퇴근시간 -->
+								<td><fmt:formatDate value="${hr.hr_leave }"
+										pattern="HH:mm:ss" /></td>
+								<td><c:out value="${hr.hr_status }" /></td>
+								<td><c:out value="${hr.hr_note }" /></td>
+							</tr>
+							<input type="hidden" id="timecheck"
+								value="<fmt:formatDate value="${hr.hr_date}" pattern="HH:mm:ss" />">
+						</c:forEach>
+					</tbody>
+				</table>
+
+				<!-- 페이징 -->
+				<nav aria-label="page">
+					<div class="pull-right">
+						<ul class="pagination">
+
+							<c:if test="${pageMaker.prev }">
+								<li class="page-item paginate_button previous"><a
+									href="${pageMaker.startPage -1 }" class="page-link">Previous</a></li>
+							</c:if>
+
+							<c:forEach var="num" begin="${pageMaker.startPage }"
+								end="${pageMaker.endPage}">
+								<li
+									class="page-item paginate_button ${pageMaker.cri.pageNum == num ? "active" : "" }">
+									<a href="${num }" class="page-link">${num }</a>
+								</li>
+							</c:forEach>
+
+							<c:if test="${pageMaker.next }">
+								<li class="page-item paginate_button next"><a
+									href="${pageMaker.endPage +1 }" class="page-link">Next</a></li>
+							</c:if>
+						</ul>
+					</div>
+				</nav>
+				<!-- end Pagination -->
+
+				<form id='actionForm' action="/attendance/personAll" method='get'>
+					<input type='hidden' name='pageNum'
+						value='${pageMaker.cri.pageNum }'> <input type='hidden'
+						name='amount' value='${pageMaker.cri.amount }'>
+
+				</form>
 			</div>
 
 			<!-- 내용 끝 -->
+		</div>
+	</div>
+	<!-- 전체 wrapper 끝 -->
+	<jsp:include page="../includes/footer.jsp"></jsp:include>
 
-		<!-- 전체 wrapper 끝 -->
-		<jsp:include page="../includes/footer.jsp"></jsp:include>
-	
 </body>
 
 </html>
