@@ -118,9 +118,7 @@
 		
 		
 		
-		
-		
-		
+
 		
 		var mode = $("#mode").val();
 		if ("write" == mode) {
@@ -136,73 +134,77 @@
 
 </head>
 <body>
-	<jsp:include page="../includes/header.jsp"></jsp:include>
-	<!-- 보조메뉴바 시작 -->
-	<div class="s-menu">
-		<div class="s-menu-title">
-			<p>
-				예약 <i class="bi bi-tags"></i>
-				<!-- 메인 메뉴바랑 동일한 i테그 넣음 -->
-		</div>
-		<div class="s-list-item ">
-			<a href="/meetingroom/resroomcal?mr_num=RS001">회의실(블록)예약</a>
-		</div>
-		<div class="s-list-item ">
-			<a href="/meetingroom/resroomcal?mr_num=RS002">회의실(콤보)예약</a>
-		</div>
-		<div class="s-list-item ">
-			<a href="/reservation/rescarmain">차량예약</a>
-		</div>
+	<div class="wrap">
+		<jsp:include page="../includes/header.jsp"></jsp:include>
+		<!-- 보조메뉴바 시작 -->
+		<div class="s-menu">
+			<div class="s-menu-title">
+				<p>
+					예약 <i class="bi bi-tags"></i>
+					<!-- 메인 메뉴바랑 동일한 i테그 넣음 -->
+			</div>
+			<div class="s-list-item ">
+				<a href="/meetingroom/resroomcal?mr_num=RS001">회의실(블록)예약</a>
+			</div>
+			<div class="s-list-item ">
+				<a href="/meetingroom/resroomcal?mr_num=RS002">회의실(콤보)예약</a>
+			</div>
+			<div class="s-list-item ">
+				<a href="/reservation/rescarmain">차량예약</a>
+			</div>
 
+		</div>
+		<!-- 보조메뉴바 끝 -->
+
+		<!-- 내용 시작 -->
+		<div class="wrap-box">
+			<div class="s-container">
+				<h2 id="c-title">회의실예약</h2>
+
+				<div class="contents">
+					<form action="/meetingroom/registerrseroom" method="post"
+						id="registerrseroom">
+						<input type="hidden" name="mode" id="mode" value="write" />
+
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="e_id">예약자</label> <input type="text" name="e_id"
+									class="form-control" id="e_id" value=${userName
+									} readonly="readonly">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="mr_num">예약 회의실</label> <input type="text"
+									name="mr_num" class="form-control" id="mr_num"
+									value="${registerrseroom.mr_num}" readonly=readonly>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="rb_startday">예약시작 일자</label> <input type="text"
+									name="rb_startday" class="form-control" id="datepickerstartday">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="timepicker">예약시작 시간</label> <input type="text"
+									name="rb_starttime" class="form-control" id="timepicker">
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="datepickerendday">예약종료 일자</label> <input type="text"
+									name="rb_endday" class="form-control" id="datepickerendday">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="timepicker2">예약종료 시간</label> <input type="text"
+									name="rb_endtime" class="form-control" id="timepicker2">
+							</div>
+						</div>
+
+						<input type="button" class="write_Btn" value="예약" id="resroom">
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
-	<!-- 보조메뉴바 끝 -->
-
-	<!-- 내용 시작 -->
-	<div class="s-container">
-		<h2 id="c-title">회의실예약</h2>
-		
-		<div class="contents">
-			<form action="/meetingroom/registerrseroom" method="post"
-				id="registerrseroom">
-				<input type="hidden" name="mode" id="mode" value="write" />
-
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<label for="e_id">예약자</label> <input type="text" name="e_id"
-							class="form-control" id="e_id" value= ${userName} readonly="readonly">
-					</div>
-					<div class="form-group col-md-6">
-						<label for="mr_num">예약 회의실</label> <input type="text" name="mr_num"
-							class="form-control" id="mr_num"
-							value="${registerrseroom.mr_num}" readonly=readonly>
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<label for="rb_startday">예약시작 일자</label> <input type="text"
-							name="rb_startday" class="form-control" id="datepickerstartday">
-					</div>
-					<div class="form-group col-md-6">
-						<label for="timepicker">예약시작 시간</label> <input type="text"
-							name="rb_starttime" class="form-control" id="timepicker">
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="form-group col-md-6">
-						<label for="datepickerendday">예약종료 일자</label> <input type="text"
-							name="rb_endday" class="form-control" id="datepickerendday">
-					</div>
-					<div class="form-group col-md-6">
-						<label for="timepicker2">예약종료 시간</label> <input type="text"
-							name="rb_endtime" class="form-control" id="timepicker2">
-					</div>
-				</div>
-
-				<input type="button" class="write_Btn" value="예약"
-					id="resroom">
-			</form>
-		</div>
-	</div>
-
+	<jsp:include page="../includes/footer.jsp"></jsp:include>
 </body>
 </html>

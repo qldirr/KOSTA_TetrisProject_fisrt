@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<bean id="customAccessDenied" class="org.tetris.security.CustomAccessDeniedHandler"/>
+<bean id="customLoginSuccess" class="org.tetris.security.CustomLoginSuccessHandler"/>
+<bean id="customLogoutSuccess" class="org.tetris.security.CustomLogoutSuccessHandler"/>
+<bean id="customPasswordEncoder" class="org.tetris.security.CustomNoOpPasswordEncoder"/>
+<bean id="customUserDetailService" class="org.tetris.service.CustomUserDetailService"/>
+<security:http>
+	
+	<!-- <security:intercept-url pattern="/user/all" access="permitAll"/>
+	<security:intercept-url pattern="/user/user" access="hasRole('ROLE_USER')"/> -->
+ <!-- 	<security:intercept-url pattern="/user/user" access="hasRole('ROLE_ADMIN')"/> -->
+<!--  	<security:intercept-url pattern="/user/admin" access="hasRole('ROLE_ADMIN')"/> -->
+
+	<security:access-denied-handler ref="customAccessDenied"/>
+	<!-- <security:form-login/> -->
+	<security:form-login login-page="/member/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
+	<security:csrf disabled="true"/>
+	<security:logout logout-url="/member/customLogout" invalidate-session="true" logout-success-url="/member/customLogin" delete-cookies="remember-me,JSESSION-ID"/>
+	<!-- <security:access-denied-handler error-page="/accessError/"/> -->
+	<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+</security:http>
+
+<security:authentication-manager>
+	<security:authentication-provider user-service-ref="customUserDetailService">
+	
+	<!-- <security:user-service>
+	
+	<security:user name="admin" password="pw00" authorities="ROLE_ADMIN"/>
+	<security:user name="user" password="pw11" authorities="ROLE_USER"/>
+	
+	</security:user-service>
+	 -->
+	 <!-- <security:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select e_id, e_pw, enabled from employee where e_id = ?"
+	 authorities-by-username-query="select e_id, a_auth from authmapping where e_id= ? "/> -->
+	 <security:password-encoder ref="customPasswordEncoder"/>
+	
+	</security:authentication-provider>
+
+</security:authentication-manager>
+
+</beans>

@@ -55,11 +55,11 @@
 				</div>
 			</div>
 			
-			
+			<div class="wrap-box">			
 		<div class="s-container"><br>
 			<h2 id="c-title">반려문서함</h2><br>
 
-	<table class="table table-bordered table-sm" style="width: 100%">
+	<table class="table table-bordered table-sm" style="width: 110%">
 		<thead>
 			<tr>
 				<th scope="col" style="width: 18%">문서번호</th>
@@ -94,5 +94,16 @@
 		</tbody>
 	</table>
 </div>
+</div>
+</div>
+			</div>
+
+			<!-- 내용 끝 -->
+
+		<!-- 전체 wrapper 끝 -->
+		<jsp:include page="../includes/footer.jsp"></jsp:include>
 </body>
 </html>
+
+
+

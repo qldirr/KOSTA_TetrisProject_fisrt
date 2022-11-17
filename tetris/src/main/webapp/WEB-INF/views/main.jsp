@@ -17,6 +17,7 @@
 <script type="text/javascript">
 	//날씨 api - fontawesome 아이콘
 	$(function() {
+
 		var weatherIcon = {
 			'01' : 'fas fa-sun',
 			'02' : 'fas fa-cloud-sun',
@@ -28,9 +29,11 @@
 			'13' : 'far fa-snowflake',
 			'50' : 'fas fa-smog'
 		};
+
 		// 날씨 api - 서울
 		var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="
 				+ 'seoul' + "&appid=" + "56bff2528df80541a31119dee50abe0b";
+
 		$
 				.ajax({
 					url : apiURI,
@@ -39,6 +42,7 @@
 					async : "false",
 					success : function(resp) {
 						console.log("ddd");
+
 						var $Icon = (resp.weather[0].icon).substr(0, 2);
 						var $weather_description = resp.weather[0].main;
 						var $Temp = Math.floor(resp.main.temp - 273.15) + 'º';
@@ -53,6 +57,7 @@
 								+ Math.floor(resp.main.temp_min - 273.15) + 'º';
 						var $temp_max = '최고 온도&nbsp;&nbsp;&nbsp;&nbsp;'
 								+ Math.floor(resp.main.temp_max - 273.15) + 'º';
+
 						$('.weather_icon')
 								.append(
 										'<i class="' + weatherIcon[$Icon] +' fa-5x" style="height : 150px; width : 150px;"></i>');
@@ -66,10 +71,12 @@
 						$('.temp_max').append($temp_max);
 					}
 				})
+
 	})
 	
 	$(document).ready(
 			function() {
+
 				//출퇴근버튼 활성화
 				var currentDate = new Date();
 				var currentHours = addZeros(currentDate.getHours(), 2);
@@ -79,6 +86,7 @@
 						+ (currentDate.getMonth() + 1) + "-"
 						+ currentDate.getDate() + " " + currentHours + ":"
 						+ currentMinute + ":" + currentSeconds;
+
 				//출근클릭
 				$('#startD').click(function() {
 					if (confirm('출근하시겠습니까?')) {
@@ -96,6 +104,7 @@
 							}),
 							success : function(result) {
 								alert("출근성공");
+
 							},
 							error : function(result) {
 								alert("출근실패 (관리자에게 문의해주세요)");
@@ -103,12 +112,16 @@
 						}); //$.ajax 
 					}
 				});
+
 				var today = $('#timecheck').val();
+
 				var lateCheck = '09:00:00';
 				var checkTime = today;//출근시간확인
+
 				if (checkTime > lateCheck) {
 					$('[id^=startTime2]').css("color", "red");
 				}
+
 				//퇴근클릭
 				$("#endD").on("click", function() {
 					if (confirm('퇴근하시겠습니까?')) {
@@ -117,6 +130,7 @@
 						var e_id = getParam('e_id');
 						//e_id = e_id.slice(3, -3);
 						console.log(e_id);
+
 						$.ajax({
 							url : 'endAction.do',
 							type : 'POST',
@@ -133,11 +147,13 @@
 						}); //$.ajax 
 					}
 				});
+
 				$("#outD").on("click", function() {
 					if (confirm('외근하시겠습니까?')) {
 						alert('안녕히다녀오세요');
 						var e_id = getParam('e_id');
 						console.log(e_id);
+
 						$.ajax({
 							url : 'outAction.do',
 							type : 'POST',
@@ -149,6 +165,7 @@
 					}
 				});
 			});
+
 	function getParameterByName(name) {
 		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex
@@ -156,6 +173,7 @@
 		return results == null ? "" : decodeURIComponent(results[1].replace(
 				/\+/g, " "));
 	}
+
 	function getParam(sname) {
 		var params = location.search.substr(location.search.indexOf("?") + 1);
 		var sval = "";
@@ -168,6 +186,7 @@
 		}
 		return sval;
 	}
+
 	function printClock() {
 		var clock = document.getElementById("clock"); // 출력할 장소 선택
 		var currentDate = new Date(); // 현재시간
@@ -185,6 +204,7 @@
 				+ "일";
 		setTimeout("printClock()", 1000); // 1초마다 printClock() 함수 호출
 	}
+
 	function addZeros(num, digit) { // 자릿수 맞춰주기
 		var zero = '';
 		num = num.toString();
@@ -227,8 +247,8 @@
 				<div class="main-left">
 					<!-- 사원정보 -->
 					<div class="myProfile Box">
-						<span class="m-title">MyProfile </span> <a href=""> <img
-							alt="사진" src="../resources/img/res/hi.png"></a>
+						<span class="m-title">MyProfile </span> <a href="/member/user?e_id=${userid}"> <img
+							alt="사진" src="../resources/img/res/${userid}.png"></a>
 						<div style="font-size: 18px;">${userName }</div>
 						
 						<div>
@@ -285,7 +305,7 @@
 				<div class="main-center">
 					<div class="project Box">
 						<a href="/project/main"><span class="m-title">프로젝트</span></a>
-						<c:forEach items="${list }" var="myProject">
+						<c:forEach items="${list }" var="myProject" begin="0" end="2" varStatus="status">
 							<c:if test="${myProject.pj_type eq '협업'}">
 								<div class="bs-callout bs-callout-info">
 								<span class="badge badge-secondary">${myProject.pj_type }</span>
@@ -390,12 +410,14 @@
 						</tr>
 					</thead>
 
-					<c:forEach items="${suglist}" var="suggestions" begin="0" end="2"
+					<c:forEach items="${notlist}" var="notice" begin="0" end="2"
 						varStatus="status">
 						<tr>
 							<td><a class='move'
-								href='/suggestions/suggestionsget?pageNum=1&amount=10&s_num=<c:out value="${suggestions.s_num}"/>'> <c:out
-										value="${suggestions.s_title}" /></a></td>
+								href='/notice/get?pageNum=1&amount=10&n_num=<c:out value="${notice.n_num}"/>'> <c:out
+										value="${notice.n_title}" /></a></td>
+										
+										
 						</tr>
 					</c:forEach>
 				</table>

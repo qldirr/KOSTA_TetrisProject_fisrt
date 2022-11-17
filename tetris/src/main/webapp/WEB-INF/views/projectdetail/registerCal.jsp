@@ -9,23 +9,32 @@
 <link rel="stylesheet" href="/resources/css/bootstrap-datepicker3.css" />
 <link rel="stylesheet" href="/resources/css/jquery.timepicker.min.css" />
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
-<script src="/resources/lib/bootstrap-datepicker.js" type="text/javascript"></script>
-<script src="/resources/lib/jquery.timepicker.min.js" type="text/javascript"></script>
+<script src="/resources/lib/bootstrap-datepicker.js" type="text/javascript" defer></script>
+<script src="/resources/lib/jquery.timepicker.min.js" type="text/javascript" defer></script>
 <script type="text/javascript">
 	$(document).ready(
 			function() {
 				
-				$('#datePickerstart').datepicker({
+				$('#dateStart').datepicker({
 					format: "yyyy-mm-dd",
 					autoclose: true
 				});
 				
-				$('#datePickerend').datepicker({
+				$('#dateEnd').datepicker({
 					format: "yyyy-mm-dd",
 					autoclose: true
 				});
 				
-				$('input.timepicker').timepicker({
+				$('#timepickerStart').timepicker({
+		            timeFormat: 'HH:mm',
+		            interval: 30,
+		            startTime: '06:00',
+		            dynamic: false,
+		            dropdown: true,
+		            scrollbar: true
+		        });
+				
+				$('#timepickerEnd').timepicker({
 		            timeFormat: 'HH:mm',
 		            interval: 30,
 		            startTime: '06:00',
@@ -40,19 +49,77 @@
 </head>
 <body>
 
-<h1>새 일정 생성</h1>
+<div class="wrap">
+		<jsp:include page="../includes/header.jsp"></jsp:include>
+			<!-- 보조메뉴바 시작 -->
+				<div class="s-menu">
+				<div class="s-menu-title">
+					<p>프로젝트 <i class="bi bi-clipboard-data"></i>
+				</div>
+				<div class="s-list-item ">
+				    <input id="newbtn" type="button" value="새 글쓰기" onclick="self.location = '/projectdetail/register';">
+				</div><br>
+				<div class="s-list-item ">
+					<a href="/projectdetail/home/${pj_num}">프로젝트 홈</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/calendar">캘린더</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/taskboard">업무보드</a>
+				</div>
+				<div class="s-list-item ">
+					<a href="/projectdetail/tasklist">업무리스트</a>
+				</div>
+				<br><br>
+				<div class="s-list-item ">
+					<a href="/project/main" style="color:gray"><i class="fa fa-thin fa-door-open"></i> 나가기</a>
+				</div>
 
-	<form action="/projectdetail/registerCal" method="post" accept-charset="UTF-8">
-		<input type="hidden" name="pj_num" value="${pj_num }">
-		일정명: <input type="text" name="pc_name"><br> 
-		일정시작일: <input id="datePickerstart" type="text" name="pc_startdate"><br> 
-		일정시작시간: <input type="text" name="pc_starttime" class="timepicker"><br>
-		일정마감일: <input id="datePickerend" type="text" name="pc_enddate"><br>
-		일정마감시간: <input type="text" name="pc_endtime" class="timepicker"><br>
-		<input type="button" id="test" value="테스트 버튼">
-		<input type="submit" value="새 일정 생성">
-		
-	</form>
+			</div>
+	<div class="wrap-box">		
+		<div class="s-container">
+		<br>
+		<h2 id="c-title">새 프로젝트 일정</h2><br> 
 
+            <div class="contents_wrap">
+	
+	  		<form action="/projectdetail/registerCal" method="post"
+                     accept-charset="UTF-8">
+				<input type="hidden" name="pj_num" value="${pj_num }">
+                     <div class="form-group">
+                        <label for="pc_name">일정명</label> <input type="text"
+                           name="pc_name" class="form-control" id="pc_name">
+                     </div>
+                      <div class="form-group">
+                        <label for="pc_startdate">일정시작일</label><input
+                           id="dateStart" type="text" class="form-control"
+                           name="pc_startdate">
+                     </div>
+                      <div class="form-group">
+                        <label for="pc_starttime">일정시작시간</label><input
+                           id="timepickerStart" type="text" class="form-control"
+                           name="pc_starttime">
+                     </div>
+                     
+                     <div class="form-group">
+                        <label for="pc_enddate">일정마감일</label><input
+                           id="dateEnd" type="text" class="form-control"
+                           name="pc_enddate">
+                     </div>
+                      <div class="form-group">
+                        <label for="pc_endtime">일정시작시간</label><input
+                           id="timepickerEnd" type="text" class="form-control"
+                           name="pc_endtime">
+                     </div>
+                     <input type="submit" value="새 일정 생성" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none; padding: 5px; float: right; margin-right: 10px;">
+                  </form>
+               </div>
+	
+	
+</div>
+</div>
+</div>
+<jsp:include page="../includes/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package org.tetris.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.tetris.domain.project.ProjectVO;
 import org.tetris.domain.user.UserVO;
 import org.tetris.mapper.ProjectMapper;
 import org.tetris.security.domain.CustomUser;
+import org.tetris.service.ElecAuthService;
+import org.tetris.service.ProjectBoardService;
 import org.tetris.service.ProjectService;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +36,11 @@ public class ProjectController {
 
 	@Autowired
 	private ProjectMapper mapper;
+	
+	@Autowired
+	private ProjectBoardService boardService;
+	
+
 
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
@@ -45,8 +53,21 @@ public class ProjectController {
 		List<ProjectVO> projectList =  service.getListProject(user_id);
 		//해당하는 사용자가 속한 프로젝트 목록
 		
-		projectList.forEach(list -> log.info(list + "................."));
+		List<UserVO> projectMember = new ArrayList<UserVO>();
+		List<Integer> task = new ArrayList<Integer>();
 		
+		for(int i=0; i<projectList.size(); i++) {
+			
+			projectMember = boardService.getProjectInfo(String.valueOf(projectList.get(i).getPj_num()));
+			projectList.get(i).setPj_finishedTask(boardService.countTaskFinished(projectList.get(i).getPj_num()));
+			projectList.get(i).setPj_members(projectMember);
+		
+		}
+		
+		
+		log.info(projectList);
+	
+	
 		model.addAttribute("list", projectList);
 	}
 

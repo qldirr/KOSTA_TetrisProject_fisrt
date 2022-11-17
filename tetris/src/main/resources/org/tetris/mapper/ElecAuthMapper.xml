@@ -59,13 +59,25 @@
 	</select>
 	
 	
+	<select id="countListProceeding" resultType="int">
+		select count(*) from elecauth where el_status = '결재진행중' and e_id = #{e_id}	
+	</select>
+	
+	
 	<update id="updateElecStatus">
 		update elecline set l_status = #{l_status}, l_checkdate = sysdate where l_num = #{l_num} and e_id = #{e_id}
 	</update>
 	
 	<select id="getListDisapproved" resultType="org.tetris.domain.elecauth.ElecAuthVO">
-		select el_num, el_name, el_contents, el_regdate, el_status, dm_num, el.l_num, el.e_id, el_startdate, el_enddate
-			from elecauth el join elecline l on l.l_num = el.l_num where l.l_status='반려' and el.e_id = #{e_id}
+		select el_num, el_name, el_contents, el_regdate, el_status, dm_num, el.l_num, el.e_id, el.e_name, el_startdate, el_enddate
+			from elecauth_v el join elecline l on l.l_num = el.l_num where l.l_status='반려' and el.e_id = #{e_id}
+	</select>
+	
+	<select id="countListDisapproved" resultType="int">
+		select count(*) from (
+    		select el_num, el_name, el_contents, el_regdate, el_status, dm_num, el.l_num, el.e_id, el.e_name, el_startdate, el_enddate
+				from elecauth_v el join elecline l on l.l_num = el.l_num where l.l_status='반려' and el.e_id = 'gdong123'
+		)
 	</select>
 	
 	<update id="updateElecProcess" parameterType="String">
@@ -97,14 +109,6 @@
 		select * from elecauth_v where e_id = #{e_id} order by el_regdate desc
 	</select>	
 
-	<!-- 수신함 : 결재 완료 상태인 수신 문서  
-	<select id="getList" parameterType="String" resultType="org.tetris.domain.elecauth.ElecAuthVO">
-		select el.el_num, el.el_name, el.el_contents, el.e_id, el.el_status, el.el_regdate, el.el_enddate
-   			from elecauth el join elecline l on el.l_num = l.l_num
-   				where el_status=('결재완료') 
-   			and l.e_id = #{e_id}
-	</select>	-->
-
 	<!-- 수신함 : 결재 완료 상태인 수신 문서  -->
 	<select id="getList" parameterType="String" resultType="org.tetris.domain.elecauth.ElecAuthVO">
 		select *
@@ -112,7 +116,6 @@
    			where el_status=('결재완료') 
    			and l.e_id = #{e_id} order by el_regdate desc
 	</select>	
-
 
 
 

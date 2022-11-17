@@ -3,6 +3,8 @@ package org.tetris.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.tetris.domain.Criteria;
+import org.tetris.domain.SuggestionsVO;
 import org.tetris.domain.elecauth.ElecAuthVO;
 import org.tetris.domain.elecauth.ElecLineVO;
 
@@ -26,4 +28,6 @@ public interface ElecAuthMapper {
 	public List<ElecAuthVO> sendList(String e_id);
 	public List<ElecAuthVO>getList(String e_id);
 	public int countListUncheckedList(String e_id);
+	public int countListProceeding(String e_id);
+	public int countListDisapproved(String e_id);
 }

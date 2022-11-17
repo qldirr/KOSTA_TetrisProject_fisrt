@@ -18,71 +18,79 @@
 <script src="/resources/vender/jquery/jquery-3.6.1.min.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
-
 	document.addEventListener('DOMContentLoaded', function() {
 
-		 var resArr = [];
+		var num = '${mr_num.mr_num}';
+		var resArr = [];
 
 		$.ajax({
-			url : '/meetingroom/listresroomcal',
+			url : '/meetingroom/listresroomcal?mr_num='+ num,
 			type : 'get',
 			dataType : 'json',
 			contentType : "application/json"
 		}).done(function(data, textStatus, xhr) {
 
 			$(data).each(function(index, value) {
-				resArr.push(value)				
+				resArr.push(value)
 				console.log(value);
-				
-			}); 
-			 
+
+			});
+
 			var calendarEl = document.getElementById('calendar');
 			var calendar = new FullCalendar.Calendar(calendarEl, {
 				initialView : 'timeGridWeek',
 				contentHeight : 600,
 				editable : true,
 				events : resArr
-				
 
 			});
-			
+
 			calendar.render();
-			
+
 		});
-		
 
 	});
-	
-		
 </script>
 </head>
 <body>
-<jsp:include page="../includes/header.jsp"></jsp:include>
-<!-- 보조메뉴바 시작 -->
-<div class="s-menu">
-		<div class="s-menu-title">
-			<p>예약
-				<i class="bi bi-tags"></i><!-- 메인 메뉴바랑 동일한 i테그 넣음 -->
+	<div class="wrap">
+		<jsp:include page="../includes/header.jsp"></jsp:include>
+		<!-- 보조메뉴바 시작 -->
+		<div class="s-menu">
+			<div class="s-menu-title">
+				<p>
+					예약 <i class="bi bi-tags"></i>
+					<!-- 메인 메뉴바랑 동일한 i테그 넣음 -->
+			</div>
+			<div class="s-list-item ">
+				<a href="/meetingroom/resroomcal?mr_num=RS001">회의실(블록)예약</a>
+			</div>
+			<div class="s-list-item ">
+				<a href="/meetingroom/resroomcal?mr_num=RS002">회의실(콤보)예약</a>
+			</div>
+			<sec:authorize access="hasRole('ROLE_USER')">
+				<div class="s-list-item ">
+					<a href="/reservation/rescarmain">차량예약</a>
+				</div>
+			</sec:authorize>
 		</div>
-	<div class="s-list-item "><a href="/meetingroom/resroomcal?mr_num=RS001">회의실(블록)예약</a></div>
-	<div class="s-list-item "><a href="/meetingroom/resroomcal?mr_num=RS002">회의실(콤보)예약</a></div>
-	<sec:authorize access="hasRole('ROLE_USER')">
-	<div class="s-list-item "><a href="/reservation/rescarmain">차량예약</a></div>
-	</sec:authorize>
-</div>
-<!-- 보조메뉴바 끝 -->
+		<!-- 보조메뉴바 끝 -->
 
- 	<!-- 내용 시작 -->
-  <div class="s-container">
-  
-	<h2 id="c-title">${mr_num.mr_name} 회의실 예약현황 (${mr_num.mr_total})</h2>
-	<sec:authorize access="hasRole('ROLE_USER')">
-	<input type="button" class="write_Btn" id="resRoomBtn" value="회의실예약"
-	onclick="location.href = '/meetingroom/registerrseroom?mr_num=${mr_num.mr_num}'"/>
-	</sec:authorize>
-	<div id='calendar'></div>
-	
+		<!-- 내용 시작 -->
+		<div class="wrap-box">
+			<div class="s-container">
+
+				<h2 id="c-title">${mr_num.mr_name}회의실 예약현황 (${mr_num.mr_total})</h2>
+				<sec:authorize access="hasRole('ROLE_USER')">
+					<input type="button" class="write_Btn" id="resRoomBtn"
+						value="회의실예약"
+						onclick="location.href = '/meetingroom/registerrseroom?mr_num=${mr_num.mr_num}'" />
+				</sec:authorize>
+				<div id='calendar'></div>
+			</div>
+		</div>
+	</div>
 	<jsp:include page="../includes/footer.jsp"></jsp:include>
- </div>
+
 </body>
 </html>

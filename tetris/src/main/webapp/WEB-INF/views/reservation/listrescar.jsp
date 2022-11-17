@@ -21,6 +21,18 @@
 			cb_num = $(this).parent().parent().find('.num').text();
 
 			console.info(cb_num);
+			
+			
+			var alarm_id = $(this).parent().parent().find('.e_id').text();
+			console.log(alarm_id);
+			
+			var resalarm = {
+					
+					e_id : alarm_id,
+					al_type : "예약",
+					al_contents : "신청하신 차랑이 예약되었습니다."
+					
+			}
 
 			$.ajax({
 				url : "/reservation/setCarApp",
@@ -30,9 +42,29 @@
 				type : "post",
 			}).done(function() {
 
-				self.location = "/reservation/listrescar";
+				$.ajax({
+					url : '/notification/register',
+					type : 'post',
+					data : JSON.stringify(resalarm),
+					contentType: 'application/json'
+				}).done(function() {
+
+					if(socket){
+						var socketMsg = "book," + alarm_id + "," + "신청하신 차랑이 예약되었습니다." + "," + "/reservation/listcar";
+						
+						console.log("msg: " + socketMsg);
+						socket.send(socketMsg);
+					}
+					self.location = "/reservation/listrescar";
+					
+
+				});
+			
+				
 
 			});
+			
+			
 		})
 
 	});
@@ -87,7 +119,7 @@
 								<td class="num"><a
 									href="/reservation/readrescar?cb_num=${carreslist.cb_num}">${carreslist.cb_num }</a></td>
 								<td>${carreslist.ca_num}</td>
-								<td>${carreslist.e_id}</td>
+								<td class="e_id">${carreslist.e_id}</td>
 
 								<td><fmt:parseDate var="datefmt"
 										value="${carreslist.cb_startday}" pattern="yyyy-MM-dd" /> <fmt:formatDate
@@ -104,7 +136,7 @@
 						</c:forEach>
 					</tbody>
 				</table>
-					<jsp:include page="../includes/footer.jsp"></jsp:include>
+					
 			</div>
 		
 		</div>

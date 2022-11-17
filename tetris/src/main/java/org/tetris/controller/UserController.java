@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.tetris.domain.AuthVO;
+import org.tetris.domain.DepartmentVO;
+import org.tetris.domain.EmployeeVO;
 import org.tetris.domain.UserVO;
 import org.tetris.security.CustomNoOpPasswordEncoder;
 import org.tetris.service.UserService;
@@ -26,7 +28,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-@RequestMapping("/*")
+@RequestMapping("/member/*")
 @Controller
 @AllArgsConstructor
 public class UserController {
@@ -36,16 +38,31 @@ public class UserController {
  @Autowired
  CustomNoOpPasswordEncoder passEncoder;
 	
- @GetMapping("/member/all")
+ @GetMapping("/all")
  public void doAll() {
 	 log.info("all access");
  }
  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
- @GetMapping("/member/user")
- public void doUser() {
+ @GetMapping("/user")
+ public void doUser(Model model, String e_id) {
+UserVO vo = service.detailUser(e_id); 
+model.addAttribute("u",vo);
+		 
 	 log.info("UserOnly");
  }
 
+ @GetMapping("/modifyView")
+ public void modify(Model model, String e_id) {
+		UserVO vo = service.detailUser(e_id);
+		model.addAttribute("u",vo);	
+	 log.info("get UPDATE");
+ }
+ 
+ @PostMapping("/modify")
+ public String modify(UserVO user) {
+	service.updateUser(user);
+	return "redirect:/";
+ }
 
  
  

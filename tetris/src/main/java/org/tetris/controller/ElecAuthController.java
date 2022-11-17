@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.tetris.domain.Criteria;
+import org.tetris.domain.PageDTO;
 import org.tetris.domain.elecauth.ElecAuthVO;
 import org.tetris.domain.elecauth.ElecLineVO;
 import org.tetris.domain.user.UserVO;
@@ -44,7 +46,14 @@ public class ElecAuthController {
 	private UserService userService;
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/main")
-	public void getMain() {
+	public void getMain(Model model) {
+		
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
+		List<ElecAuthVO> list1 = elecService.getListElecAuth(e_id);
+		List<ElecAuthVO> list2 = elecService.getListUncheckedList(e_id);
+		model.addAttribute("authlist1", list1);
+		model.addAttribute("authlist2", list2);
 		
 	}
 	
@@ -263,22 +272,26 @@ public class ElecAuthController {
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/sendList")
-	public void sendList(Model model) {
+	public void sendList(Model model) {//Criteria cri, 
 		
 		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String e_id = user.getUsername();
 		List<ElecAuthVO> list = elecService.sendList(e_id);
-		model.addAttribute("authlist", list);
+		model.addAttribute("authlist", list); 
+		//model.addAttribute("authlist", elecService.sendList(cri)); 
+		//model.addAttribute("pageMaker", new PageDTO(cri, 123));		
 	}	
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@GetMapping("/getList")
-	public void getList(Model model) {
+	public void getList(Model model) {//Criteria cri, 
 		
 		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String e_id = user.getUsername();
 		List<ElecAuthVO> list = elecService.getList(e_id);
-		model.addAttribute("authlist", list);
+		model.addAttribute("authlist", list); 		
+		//model.addAttribute("authlist", elecService.getList(cri)); 
+		//model.addAttribute("pageMaker", new PageDTO(cri, 123));		
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")

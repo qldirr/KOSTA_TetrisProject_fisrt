@@ -82,7 +82,9 @@ public class CarBookController {
 	@PostMapping("/registerrsecar")
 	public String registerRseCar(CarBookVO cb, Model model, RedirectAttributes rttr) {
 		log.info("registerrescar...........");
-
+		CustomUser user = (CustomUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String e_id = user.getUsername();
+		cb.setE_id(e_id);
 		service.registerRseCar(cb);
 
 		return "redirect:/reservation/rescarmain";

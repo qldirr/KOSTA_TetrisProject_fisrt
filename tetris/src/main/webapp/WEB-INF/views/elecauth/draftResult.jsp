@@ -29,6 +29,12 @@
 	
 }
 
+
+table{
+	margin-left: 100px;
+}
+
+
 </style>
 <script type="text/javascript">
 
@@ -271,7 +277,7 @@ $(function(){
 </div>
 
 <div id="modifyDoc">
-	<input type="button" class="modify" value="문서수정">
+	<input type="button" class="modify" value="문서수정" style="background-color: #161E67; color: #FFF2CA; border-radius: 5px; border-style: none; padding: 5px; float: right; margin-right:80px;">
 </div>
 </div>
 </body>

@@ -173,6 +173,18 @@
       "css": "help-circled",
       "code": 59410,
       "src": "fontawesome"
+    },
+    {
+      "uid": "0be76e79cf83a68ecb961121c00b9f2d",
+      "css": "attach",
+      "code": 59392,
+      "src": "elusive"
+    },
+    {
+      "uid": "21115bb09fa242341cb91ed34710aa13",
+      "css": "attach-1",
+      "code": 59411,
+      "src": "websymbols"
     }
   ]
 }

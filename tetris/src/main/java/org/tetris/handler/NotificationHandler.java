@@ -60,6 +60,9 @@ public class NotificationHandler extends TextWebSocketHandler {
 				} else if("docs".equals(type) && targetSession != null) {
 					TextMessage tmpMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>결재</b>] " + contents + "</a>" );
 					targetSession.sendMessage(tmpMsg);
+				} else if("book".equals(type) && targetSession != null) {
+					TextMessage tmpMsg = new TextMessage("<a target='_blank' href='+ url +'>[<b>예약</b>] " + contents + "</a>" );
+					targetSession.sendMessage(tmpMsg);
 				} else {
 					TextMessage tmpMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + contents + "</a>" );
 					session.sendMessage(tmpMsg);

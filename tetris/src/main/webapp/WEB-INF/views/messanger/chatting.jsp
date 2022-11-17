@@ -15,7 +15,7 @@
 <meta name="robotos" content="noindex, nofollow">
 <link rel="stylesheet" href="/resources/css/chat-room.css">
 <link rel="stylesheet" href="/resources/css/general.css">
-<link rel="stylesheet" href="fontello/css/fontello.css">
+<link rel="stylesheet" href="/resources/fontello/css/fontello.css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">
         
@@ -107,11 +107,12 @@
 
 </head>
 <body>
-	<input type="hidden" id="roomId" value="${cr_id}">
-	<div><h4><sec:authentication property="principal" var="principal"/></h4></div>
 	
 	<!-- bbu-chat-room 적용 -->
 	<div id="chat-body">
+				<!-- 방번호, 사용자 정보 -->
+				<input type="hidden" id="roomId" value="${cr_id}">
+				<div><h4><sec:authentication property="principal" var="principal"/></h4></div>
             <!-- 설정바(최소화, 닫기 버튼 등) -->
             <!-- <div class="setting_bar">
                 <i class="icon-window-minimize" alt="최소화버튼" title="최소화"></i>
@@ -255,26 +256,28 @@
                 </div>
                 <!-- 채팅 입력창 -->
                 <div class="insert-content">
-					<input type="text" id="message" />
-					<input type="button" id="sendBtn" value="전송"/>
-                    <!-- <form name="chatform" action="#" method="post">
-                        <textarea name="chat-insert" required></textarea>
-                        <input type="submit" class="chat-submit" value="전송">
-                    </form> -->
+					<!-- <input type="text" id="message" />
+					<input type="button" id="sendBtn" value="전송"/> -->
+                    <form name="chatform" action="#" method="post">
+                        <textarea name="chat-insert" id="message" onkeypress="javascript: if(event.keyCode==13) return false;" onkeyup="javascript: limitMemo(this, 10);" required></textarea>
+                        <input type="submit" class="chat-submit" id="sendBtn" value="전송">
+                    </form>
                     <!-- 채팅 입력 관련 기능(파일 첨부, 캡쳐 등) -->
                     <div class="insert-menu">
-                        <i class="icon-smile"></i>
-                        <i class="icon-attach"></i>
-                        <i class="icon-phone"></i>
+                        <!-- <i class="icon-smile"></i> -->
+                        <label className="input-file-button" for="file">
+                        	<i class="icon-attach-1" style='cursor:pointer;'></i>
+                        </label>
+                        <!-- <i class="icon-phone"></i>
                         <i class="icon-calendar-empty"></i>
-                        <i class="icon-camera"></i>
+                        <i class="icon-camera"></i> -->
                     </div>
                 </div>
             </main>
         </div>
     <!-- 파일 업로드 버튼 -->
     <div class='uploadDiv'>
-		<input type='file' id="file" name='uploadFile' multiple>
+		<input type='file' id="file" name='uploadFile' style="display:none;" multiple />
 	</div>
 	
 	
@@ -288,7 +291,7 @@
 	webSocket.onopen = onOpen;
 	webSocket.onmessage = onMessage;
 	webSocket.onclose = onClose;
-
+	
 	
 	
 	
@@ -380,6 +383,10 @@
         			+ '<time datetime="07:30:00+09:00">오전 7:30</time>' + '</div>';
     	
 		$(".main-chat").append(html);
+		
+		/* let chat = document.querySelector('.chat-content');
+		chat.scrollTop = chat.scrollHeight; */
+		/* $('.chat-content').scrollTop($('.chat-content')[0].scrollHeight); */
 		
 		new Notification(roomId, {body: data, icon:"/resources/img/TETRIS.jpg"});
 	}

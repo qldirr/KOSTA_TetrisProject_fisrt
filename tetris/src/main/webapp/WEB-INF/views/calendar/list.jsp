@@ -35,12 +35,11 @@
 	height: 70px;
 }
 
-#calendar{
+#calendar {
 	width: 1000px;
 	height: 630px;
 	margin-top: 10px;
 }
-
 </style>
 
 <script src="/resources/fullcalendar/main.js" type="text/javascript"></script>
@@ -77,7 +76,7 @@
 				},
 				locale : 'ko',
 				initialView : 'dayGridMonth',
-				
+
 				editable : true,//수정 여부
 				events : calArr, //일정 리스트 출력
 				eventClick : function(info) { //일정 클릭 시 일정 상세 페이지로 이동
@@ -116,39 +115,43 @@
 <body>
 
 	<!-- jsp 인클루드 사용-->
-	<jsp:include page="../includes/header.jsp"></jsp:include>
+	<div class="wrap">
+		<jsp:include page="../includes/header.jsp"></jsp:include>
 
 
-	<!-- 보조사이드바 -->
-	<div class="s-menu">
-		<div class="s-menu-title">
-			<p>일정 관리<i class="bi bi-table"></i>
-			
+		<!-- 보조사이드바 -->
+		<div class="s-menu">
+			<div class="s-menu-title">
+				<p>
+					일정 관리<i class="bi bi-table"></i>
+			</div>
+			<div class="s-list-item ">
+				<input id="newbtn" type="button" value="일정 등록">
+			</div>
+			<div class="s-list-item ">
+				<a href="/calendar/list">일정 관리</a>
+			</div>
+			<div class="s-list-item ">
+				<a href="/todo/list">ToDoList</a>
+			</div>
 		</div>
-		<div class="s-list-item ">
-			<input id="newbtn" type="button" value="일정 등록">
+		<!-- 보조사이드바 끝-->
+
+		<!-- 내용 시작 -->
+		<div class="wrap-box">
+			<div class="s-container">
+
+
+
+				<div id="calendar"></div>
+
+
+
+
+
+
+			</div>
 		</div>
-		<div class="s-list-item ">
-			<a href="/calendar/list">일정 관리</a>
-		</div>
-		<div class="s-list-item ">
-			<a href="/todo/list">ToDoList</a>
-		</div>
-	</div>
-	<!-- 보조사이드바 끝-->
-
-	<!-- 내용 시작 -->
-	<div class="s-container">
-		
-
-		
-		<div id="calendar"></div>
-
-
-
-
-
-
 	</div>
 
 	<!-- 내용 끝 -->

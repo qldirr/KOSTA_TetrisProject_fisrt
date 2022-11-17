@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tetris.domain.Criteria;
 import org.tetris.domain.elecauth.ElecAuthVO;
 import org.tetris.domain.elecauth.ElecLineVO;
 import org.tetris.mapper.BoardAttachMapper;
@@ -114,6 +115,16 @@ public class ElecAuthServiceImpl implements ElecAuthService {
 	@Override
 	public int countListUncheckedList(String e_id) {
 		return mapper.countListUncheckedList(e_id);
+	}
+
+	@Override
+	public int countListProceeding(String e_id) {
+		return mapper.countListProceeding(e_id);
+	}
+
+	@Override
+	public int countListDisapproved(String e_id) {
+		return mapper.countListDisapproved(e_id);
 	}
 
 	
