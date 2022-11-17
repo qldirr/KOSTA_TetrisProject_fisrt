@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tetris.domain.notification.AlarmVO;
-import org.tetris.domain.project.Criteria;
-import org.tetris.domain.project.PageDTO;
+import org.tetris.domain.Criteria;
+import org.tetris.domain.PageDTO;
 import org.tetris.security.domain.CustomUser;
 import org.tetris.service.NotificationService;
 

@@ -3,8 +3,8 @@ package org.tetris.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.tetris.domain.Criteria;
 import org.tetris.domain.notification.AlarmVO;
-import org.tetris.domain.project.Criteria;
 
 public interface NotificationMapper {
 	

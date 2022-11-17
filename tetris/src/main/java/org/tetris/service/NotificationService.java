@@ -3,7 +3,7 @@ package org.tetris.service;
 import java.util.List;
 
 import org.tetris.domain.notification.AlarmVO;
-import org.tetris.domain.project.Criteria;
+import org.tetris.domain.Criteria;
 
 public interface NotificationService {
 	

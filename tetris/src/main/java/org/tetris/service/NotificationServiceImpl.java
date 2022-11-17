@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tetris.domain.notification.AlarmVO;
-import org.tetris.domain.project.Criteria;
+import org.tetris.domain.Criteria;
 import org.tetris.mapper.NotificationMapper;
 import org.tetris.mapper.ProjectMapper;
 

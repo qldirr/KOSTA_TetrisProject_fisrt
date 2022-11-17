@@ -1,4 +1,4 @@
-package org.tetris.domain;
+package org.tetris.domain.attendance;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

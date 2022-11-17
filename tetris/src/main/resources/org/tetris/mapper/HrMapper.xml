@@ -6,7 +6,7 @@
 
 	<!-- person.jsp -->
 	<!-- 사원페이지 처음들어갔을때 -->
-	<select id="getHr" resultType="org.tetris.domain.HrVO">
+	<select id="getHr" resultType="org.tetris.domain.attendance.HrVO">
 		select h.hr_num as hr_num, e.e_id as e_id,
 		e.e_name as e_name, e.e_num as e_num, d.d_name as d_name,
 		e.e_position as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
@@ -21,7 +21,7 @@
 	</select>
 
 	<!-- 사원이 속한 부서의 리스트 가지고오기 -->
-	<select id="getHrList" resultType="org.tetris.domain.HrVO">
+	<select id="getHrList" resultType="org.tetris.domain.attendance.HrVO">
 		select h.hr_num as hr_num,
         e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position
 		as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
@@ -81,7 +81,7 @@
 
 	<!-- personal.jsp -->
 	<!-- 개인근태페이지 개인정보만 가져온다 -->
-	<select id="getPersonal" resultType="org.tetris.domain.HrVO">
+	<select id="getPersonal" resultType="org.tetris.domain.attendance.HrVO">
 		select h.hr_num as hr_num,
 		e.e_name as e_name, e.e_num as e_num, d.d_name as d_name,
 		e.e_position as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
@@ -97,7 +97,7 @@
 
 	<!-- personAll.jsp -->
 	<!-- 들어가자마자 모든부서의 리스트 가져오기(페이징처리, 검색) -->
-	<select id="getHrAll" resultType="org.tetris.domain.HrVO">
+	<select id="getHrAll" resultType="org.tetris.domain.attendance.HrVO">
 		select h.hr_num as hr_num,
 		e.e_name as e_name, e.e_num as e_num, d.d_name as d_name, e.e_position
 		as e_position, h.hr_date as hr_date, h.hr_leave as hr_leave,
@@ -136,7 +136,7 @@
 		</trim>
 	</sql>
 
-	<select id="getHrWithPaging" resultType="org.tetris.domain.HrVO">
+	<select id="getHrWithPaging" resultType="org.tetris.domain.attendance.HrVO">
 		<![CDATA[
 			select rn, hr_num, e_name, e_num, d_name, e_position, hr_date, hr_leave, e_id,
 				hr_status, hr_note from
@@ -178,7 +178,7 @@
 	</select>
 
 	<!-- 지각일수 구하기 -->
-	<select id="getAttendance" resultType="org.tetris.domain.HrVO2">
+	<select id="getAttendance" resultType="org.tetris.domain.attendance.HrVO2">
 		select count(DISTINCT hr_date) as working_day, count('지각') 
 		as late_day from hr 
 		where e_id = 'az123' 
@@ -186,13 +186,13 @@
 		
 	</select>
 	
-	<select id="getHrVA" resultType="org.tetris.domain.HrVO2">
+	<select id="getHrVA" resultType="org.tetris.domain.attendance.HrVO2">
 		select e_totalvac, e_usevac from employee
 		where e_id = #{e_id}
 	</select>
 	
 	<!-- vacation.jsp -->
-	<select id="getVac" resultType="org.tetris.domain.VacVO">
+	<select id="getVac" resultType="org.tetris.domain.attendance.VacVO">
 		select v.v_num as v_num, v.v_startdate as v_startdate, v.v_enddate as v_enddate, 
 			e.e_num as e_num, e.e_name as e_name, l.el_num as el_num
 		from employee e left join elecauth l

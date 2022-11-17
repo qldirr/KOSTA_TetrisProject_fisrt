@@ -9,6 +9,11 @@
 <head>
 <meta charset="UTF-8">
 <title>TETRIS Groupware</title>
+
+<link href="/resources/vender/bootstrap/css/bootstrap-datepicker3.css"
+	rel="stylesheet">
+<script src="/resources/vender/jquery/jquery-3.6.1.min.js"></script>
+<script src="/resources/vender/bootstrap/js/bootstrap-datepicker.js" type="text/javascript" defer></script>
 <script>
 	$(document).ready(function(){
 

@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.tetris.domain.HrVO;
 import org.tetris.domain.NoticeVO;
 import org.tetris.domain.SuggestionsVO;
+import org.tetris.domain.attendance.HrVO;
 import org.tetris.domain.elecauth.ElecAuthVO;
 import org.tetris.domain.project.ProjectVO;
 import org.tetris.security.domain.CustomUser;
@@ -74,7 +74,7 @@ public class HomeController {
       
        HrVO vo= hrService.getHr(e_id);
        List<ElecAuthVO> list = elecService.getListUncheckedList(e_id);
-       List<ProjectVO> projectList = projectService.getListProject(e_id); //해당하는 사용자가 속한
+       List<ProjectVO> projectList = projectService.getListProject(e_id); //�빐�떦�븯�뒗 �궗�슜�옄媛� �냽�븳
        
        List<Integer> task = new ArrayList<Integer>();
          

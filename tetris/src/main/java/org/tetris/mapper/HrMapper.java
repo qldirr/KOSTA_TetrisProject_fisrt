@@ -3,9 +3,9 @@ package org.tetris.mapper;
 import java.util.List;
 
 import org.tetris.domain.Criteria;
-import org.tetris.domain.HrVO;
-import org.tetris.domain.HrVO2;
-import org.tetris.domain.VacVO;
+import org.tetris.domain.attendance.HrVO;
+import org.tetris.domain.attendance.HrVO2;
+import org.tetris.domain.attendance.VacVO;
 
 public interface HrMapper {
 
