@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.tetris.domain.Criteria;
-import org.tetris.domain.HrVO;
+import org.tetris.domain.attendance.HrVO;
 
 import lombok.extern.log4j.Log4j;
 

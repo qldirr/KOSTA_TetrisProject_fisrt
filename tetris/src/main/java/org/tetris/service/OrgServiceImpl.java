@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tetris.domain.DepartmentVO;
+import org.tetris.domain.user.DepartmentVO;
 import org.tetris.domain.user.UserVO;
 import org.tetris.mapper.OrgMapper;
 

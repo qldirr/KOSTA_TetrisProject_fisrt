@@ -2,7 +2,7 @@ package org.tetris.service;
 
 import java.util.List;
 
-import org.tetris.domain.DepartmentVO;
+import org.tetris.domain.user.DepartmentVO;
 import org.tetris.domain.user.UserVO;
 
 public interface OrgService {

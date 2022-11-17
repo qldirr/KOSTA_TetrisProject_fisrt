@@ -58,7 +58,7 @@ public class AdminController {
 			e.printStackTrace();
 		}
 	
-		return "redirect:/member/all";
+		return "redirect:/hr/list";
 
 	}
 	

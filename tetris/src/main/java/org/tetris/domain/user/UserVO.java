@@ -24,5 +24,5 @@ public class UserVO {
 	private String d_name;
 	
 	private List<AuthVO> authList;
-
+	
 }

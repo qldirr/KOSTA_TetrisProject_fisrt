@@ -36,15 +36,15 @@
 	<collection property="userVO" resultMap="UserMap"/>
 </resultMap>
 	
-	<select id="getListEmp" resultType="org.tetris.domain.EmployeeVO">
+	<select id="getListEmp" resultType="org.tetris.domain.user.UserVO">
 		select * from employee
 	</select>
 	
-	<select id="getListDept" resultType="org.tetris.domain.DepartmentVO">
+	<select id="getListDept" resultType="org.tetris.domain.user.DepartmentVO">
 		select * from department
 	</select>
 	
-	<select id="getEmp" resultType="org.tetris.domain.EmployeeVO">
+	<select id="getEmp" resultType="org.tetris.domain.user.UserVO">
 		select * from employee where e_id = #{e_id}
 	</select>
 	
@@ -74,27 +74,24 @@
 	
 	<insert id="registerMsg" parameterType="org.tetris.domain.chat.ChatContentsVO">
 		insert into chatcontents (cc_num, e_id, cr_id, cc_to, cc_uuid, cc_contents, cc_size, cc_regdate, cc_status, cc_image, cc_path, cc_file)
-			values(cc_num_seq.nextval, #{e_id}, #{cr_id}, 'null', 'null', #{cc_contents}, 0, to_char(sysdate,'yyyy/mm/dd hh:mi:ss'), 'null', 'false', 'null', 'false')
+			values(cc_num_seq.nextval, #{e_id}, #{cr_id}, 'null', 'null', #{cc_contents}, 0, to_char(sysdate,'yyyy/mm/dd hh24:mi:ss'), 'null', 'false', 'null', 'false')
 	</insert>
-	
-	<select id="getListMsg" parameterType="String" resultType="org.tetris.domain.chat.ChatMsgVO">
-		select cm_num, e_id, cr_id, cm_contents, cm_regdate, cm_status from chatmsg where cr_id = #{cr_id}
-    		union all
-        		select cf_num cm_num, e_id, cr_id, cf_name as cm_contents, cf_regdate as cm_regdate, cf_status as cm_status from chatfile where cr_id = #{cr_id}
-        			order by cm_regdate
-	</select>
 	
 	<select id="getListCC" parameterType="String" resultMap="chatContentsMap">
 		select cc.cc_num, cc.e_id, e.e_name, cc.cr_id, cc.cc_to, cc.cc_uuid, cc.cc_contents, cc.cc_size, cc.cc_regdate, cc.cc_status, cc.cc_image, cc.cc_path, cc.cc_file
     		from chatcontents cc left outer join employee e
 		    on cc.e_id = e.e_id
     		where cc.cr_id = #{cr_id}
-    		order by cc.cc_regdate
+    		order by cc.cc_num
 	</select>
 	
 	<insert id="registerCFile" parameterType="org.tetris.domain.chat.ChatContentsVO">
 		insert into chatcontents (cc_num, e_id, cr_id, cc_to, cc_uuid, cc_contents, cc_size, cc_regdate, cc_status, cc_image, cc_path, cc_file)
-				values(cc_num_seq.nextval, #{e_id}, #{cr_id}, 'null', #{cc_uuid}, #{cc_contents}, #{cc_size}, to_char(sysdate,'yyyy/mm/dd hh:mi:ss'), 'null', #{cc_image}, #{cc_path}, 'true')
+				values(cc_num_seq.nextval, #{e_id}, #{cr_id}, 'null', #{cc_uuid}, #{cc_contents}, #{cc_size}, to_char(sysdate,'yyyy/mm/dd hh24:mi:ss'), 'null', #{cc_image}, #{cc_path}, 'true')
 	</insert>
+	
+	<select id="getListCPart" parameterType="String" resultType="org.tetris.domain.chat.ChatParticipantVO">
+		select * from chatparticipant where cr_id = #{cr_id}
+	</select>
 
 </mapper>

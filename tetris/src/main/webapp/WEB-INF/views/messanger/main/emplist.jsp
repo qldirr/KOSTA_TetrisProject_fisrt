@@ -39,22 +39,39 @@
 			persist: "location"
 		});
 		
+		
+		
+		
+		
+		
 		$("#empname li").on('dblclick', function(){
 			var empId = $(this).attr('class');
-			/* alert(empid); */
-			$.ajax({
-				url: '/messanger/register',
-				type: 'post',
-				contentType: 'application/json',
-				data: JSON.stringify({"e_id" : empId}),
-				success : function(result) {
-					/* alert(result); */
-					window.open('http://localhost:8081/messanger/chatting', 'Tetris Chatting', 'width=450, height=600, left=2000, top=500, location=no, status=no, scrollbars=yes');
-					/* location.href = "/messanger/chatting"; */
-				}
-			});
+			var actionForm = $("#actionForm")
+			
+			var str = "";
+			str += '<input type="hidden" name="e_id" value=';
+			str += empId;
+			str += '>';
+			actionForm.html(str);
+			
+			
+			
+			actionForm.attr("action", "/messanger/register").attr("method", "post")
+					.attr("target", "Tetris Chatting")
+					.attr("onsubmit", "window.open('', 'Tetris Chatting', 'width=450, height=600, left=2000, top=500, location=no, status=no, scrollbars=yes');");
+			actionForm.submit();
+			location.reload(true);
 		})
+		
+		
+		
 	})
+	
+	
+	
+	
+	
+	
 	
 	function notify(){if(!("Notification" in window)){
 			alert("데스크톱 알림을 지원하지 않는 브라우저입니다.");
@@ -172,6 +189,10 @@
                 </div>
                 <!-- 친구 프로필 모음 -->
                 <div>
+                
+                	<form action="/messanger/register" id="actionForm" method="post">
+                	
+                	
                 	<c:forEach items="${listDept }" var="dept">
                 		<div class="profile-title">
                         	<h2>${dept.d_name }</h2>
@@ -181,16 +202,28 @@
                     		<c:forEach items="${listEmp}" var="emp">
                     			<c:if test="${dept.d_num eq emp.d_num }">
                         			<li class="${emp.e_id }">
+                        			<%-- <li class="${emp.e_id }" value="${emp.e_id }" name="e_id" ondblclick="javascript:document.registerCR.submit();"> --%>
+                        			
+                        			<%-- <input type="submit" style="display: none" value="${emp.e_id }" id="e_id" ondblclick="javascript:document.registerCR.submit();"> --%>
+                        			<%-- <input type="hidden" value="${emp.e_id }" name="e_id" id="e_id"> --%>
+                        			
+                        			
                             			<img src="/resources/pic/default.png" alt="친구3프로필사진">
                             			<div class="profile">
 											<p>${emp.e_name }</p>
                                 			<p>Tetris 화이팅</p>
                             			</div>
-                        			</li>
+                        			</li>	
                         		</c:if>
                         	</c:forEach>
                     	</ul>
 					</c:forEach>
+					
+					
+					</form>
+					
+					
+					
 					</ul>
 					</div>
 					
